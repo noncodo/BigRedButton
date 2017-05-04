@@ -53,7 +53,8 @@
         }
     }{\end{list}\par\vspace{12pt}}
 
-\title{ Identification and classification of common RNA structure motifs }
+
+\title{Identification and classification of common RNA structure motifs }
 
 %% Notice placement of commas and superscripts and use of &
 %% in the author list
@@ -74,8 +75,9 @@
  m.smith[at]garvan.org.au 
 \end{affiliations}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent  The abundance  and diversity of processed transcripts in eukaryotic genomes poses a challenge 
 for the systemic classification of their biological functions. Sparse sequence conservation in 
 non-coding sequences and the unreliable nature of RNA structure prediction algorithms further 
@@ -89,7 +91,9 @@ threshold, this method identifies both known and novel RNA structure motifs from
 immuno-precipitation data for 44 proteins, further expanding the lexicon of functional transcriptomic motifs. 
 \end{abstract}
 
-\section{INTRODUCTION}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The human genome is pervasively transcribed into RNA with less than 2\%
 encoding protein sequences. As genome technologies progress, an ever 
 increasing amount of non-protein coding RNAs (ncRNA) are being discovered.
@@ -97,9 +101,10 @@ Once class of ncRNAs--long noncoding RNAs (lncRNAs)--are of particular
 interest for functional genome annotation given the large expanses they encompass. 
 So far, only a relatively small quantity of lncRNAs have been functionally characterised, 
 with regulation of gene expression and epigenetic states recurring as common 
-biological functions \cite{morris2014rise,engreitz2016long}. Understanding the molecular mechanisms 
-underlying the biological functions of lncRNAs--and how they are disrupted in disease--is
-required to improve the functional annotation of the human genome. This is of
+biological functions \cite{morris2014rise,engreitz2016long}. 
+Understanding the molecular mechanisms underlying the biological functions of 
+lncRNAs--and how they are disrupted in disease--is required to improve 
+the functional annotation of the human genome. This is of
 particular importance in the era of personalised genomics, as over 80\% of 
 trait-associated single nucleotide polymorphisms occur in  non-coding regions 
 \cite{hindorff2009potential,ritchie2014functional}.\\
@@ -138,7 +143,7 @@ In addition, competing structures and
 suboptimal structures may support or even drive the functionality of an RNA
 domain. Hence, methods are needed that find structural similarity independent
 from sequence conservation and freed from one single optimal RNA secondary
-structure.
+structure.\\
 
 For clustering of RNA domains a dissimilarity measurement of all pairs of query
 structures is needed. The dissimilarity is described through a pairwise weighted
@@ -149,7 +154,7 @@ maximizing the similarity. The consideration of pairs of nucleotides in each
 sequence that form intra-molecular interactions extends the problem to pairwise
 dependencies among positions in each string. This problem variant is
 MAX-SNP-hard. However, the problem can be attacked by intelligent heuristics
-that avoid the examination of all possible alignment states.
+that avoid the examination of all possible alignment states.\\
 
 Simultaneous alignment and folding \cite{sankoff85} is the acknowledged gold
 standard to predict the consensus structure and alignment of a set of related
@@ -157,7 +162,7 @@ RNA sequences. Because the Sankoff algorithm is practically not applicable, the
 pre-calculation of the structure ensemble of each sequence, e.g. basepair
 probabilities in thermodynamically equilibrated RNA structure ensembles
 \cite{McCaskill:1990}, is used by different methods to speed up the calculation
-of structure-based alignments. 1The programs \pmcomp{} for pairwise and
+of structure-based alignments. {\color{red} include a review of structural alignments }. In particualr, tThe programs \pmcomp{} for pairwise and
 \pmmulti{} for multiple alignments \cite{Hofacker15073017}, as well as
 \locarna{} \cite{Will17432929} score the alignment based on the notion of a
 common secondary structure. Despite of the usage of the basepair probability
@@ -166,7 +171,7 @@ do not explicitely consider suboptimal structures in the alignment. The pairwise
 alignment of basepair probability matrices (dot plots) has been first introduced
 by \carna{} \cite{Palu2010,Sorescu2012}. \carna{} finds iteratively better
 alignments with an effective constraint programming technique using a branch and
-bound scheme (propagator).
+bound scheme (propagator).\\
 
 Beside of \locarna{} and a method based on directed acyclic graph kernels
 \cite{Sato18647390}, the alignment-free approach \clustgraph{}
@@ -175,9 +180,43 @@ Here, we propose an alternative heuristic for the pairwise weighted string
 alignment with arbitrary pairwise dependencies that can deliver dissimilarity
 scores of dot plots in time close to an Needleman-Wunsch alignment which makes
 the approach applicable for clustering of large numbers of putative RNA domains.
+We combine this algorithm with cluster analysis for applications with 
+noise to impartially and reliably extract homologous structural RNA motifs. \\ 
 
-\section{ Materials and Methods }
-\section*{ Ensemble-guided pairwise RNA structure alignment} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ Results }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{ Ensemble-guided pairwise RNA structure alignment} 
+
+A structural alignment of two RNAs with similar higher-order structures 
+involves aligning both sequence similarities and homologous paired,
+helical regions of the molecules. This often produces results that 
+can differ significantly from the optimal sequence alignment since 
+the conservation of sequence may be under less selective pressure than 
+conservation of structural features. However, the relative importance 
+of sequence  versus structural integrity varies across all ncRNAs; micro 
+RNAs have strong sequence and structure constraints, whereas tRNAs
+are mostly constrained with respect to their tertiary structures, with mostly
+the anti-codon being constrained for sequence compostion. It is 
+therefore essential to accommodate a dynamic range of sequence-structure 
+weight functions when comparing two RNA sequences impartially. \\
+ 
+Consequently, we developed a new heuristic method of aligning two RNA 
+basepair probability matrices (dot plots) called \dotaligner{}. It leverages the diversity of 
+suboptimal solutions from a partition function of RNA secondary structure 
+predictions to identify an optimal sequence-structure alignment of two RNAs. 
+\dotaligner{} thus overcomes the limitations of comparing unique RNA 
+secondary structures (such as minimum free energy predictions) to yield 
+an optimal sequence alignment that considers mutual basepair probabilities.\\
+
+\dotaligner{} employs the heuristics alignment-envelope, which imposes
+constraints to sub-optimal string alignments, and fold-envelope, which imposes
+constraints to pre-calculated base pairing probabilities, to build pairwise 
+sequence-structure alignments from pre-calculated RNA dot plots.\\
+
+A major criteria for the implementation was a fast
+running time to make \dotaligner{} applicable for RNA structure clustering of
+large data sets. The alignment procedure consists of two steps:
 
 \begin{figure}
  \includegraphics[width=\textwidth]{figX}
@@ -196,36 +235,7 @@ the approach applicable for clustering of large numbers of putative RNA domains.
  }
 \end{figure}
 
-\subsection{ Benchmarking and parameter optimisation. }
-
-The \dotaligner{} algorithm implements several theoretical parameters that first need to 
-be tuned before being applied to biological sequence analysis.\textbf{ All combinations} of 
-core parameters were tested on the 8,976 pairwise RNA structure alignments curated in the 
-\bralibase{} reference dataset \cite{Wilm2006enhanced}. For each set of parameter combinations, 
-the amount of alignments producing identical structural topologies to the reference alignment
-was determined using \textit{RNAdistance}. The Structural Conservation Index (SCI), a robust 
-measure of RNA structural alignment integrity, were  also calculated for all resulting alignments. 
-Baseline parameters were then selected via a product rank of the 2 aforementioned metrics 
-(\textbf{supplementary data?}).\\
-
-\subsection{ Classification of RNA secondary structure families. }
-
-%include a distribution of the pairwise sequence identities for bin classification in supplementary
-
-This was achieved by sampling the entire collection of RFAM entries with published structures 
-(extracted from the Stockholm file description fields as detailed in script \textit{getFastaFromRfamSeed.sh}). 
- 
-in a stochastic manner (using the script . , while ensuring that all sampled sequences respected constraints 
-on their sequence composition. Specifically, we extracted a high Pairwise Sequence Identity (PSI) 
-and a low PSI set, where any two sequences from the same set present greater than or less than, respectively, 
-55\% PSI. 
-
-\subsection{ Clustering of RNA structures }
-
-We resampled 
-
-\section{ Results }
-\section*{ Fast and accurate classification of RNA structures  } 
+\subsection*{ Fast and accurate classification of RNA structures  } 
 We compared the quality of the alignments produced by \dotaligner{} with the results of
 three state of the art RNA structure alignment algorithms: \carna{}, \foldalign{} and \locarna{} \textbf{(ADD REFS)}
 (\textbf{Figure 1}). In all three qualitative metrics we assessed,  \dotaligner{} performed the 
@@ -235,7 +245,8 @@ alignments are poorly annotated (a possibility given that RFAM entries may have 
 generated based on similarity to a covariance model), this comparison exposes the possible 
 tendency of global optimization algorithms to overestimate the amount of paired bases in 
 consensus RNA structure predictions. In this regard, \dotaligner{} stands apart as it reports this 
-phenomenon less than the other surveyed tools (\textbf{Figure 1B}). 
+phenomenon less than the other surveyed tools (\textbf{Figure 1B}). \\
+
 
 \begin{figure}
  \includegraphics[width=\textwidth]{fig1}
@@ -269,9 +280,9 @@ of stretches of homologous sequence within biologically related RNAs. On
 larger datasets derived from experimental data, NWA would likely suffer from 
 higher false positive rates given the repetitive nature of higher-eukaryote genomes.
 
-\section{ De novo identification of homologous RNA structures in noisy samples }
+\subsection*{ De novo identification of homologous RNA structures in noisy samples }
 
-\section{ Identifying protein-binding RNA motifs from eCLIP data }
+\subsection*{ Identifying protein-binding RNA motifs from eCLIP data }
 We applied this clustering methodology to recently published Enhanced Cross-Linking 
 and ImmunoPrecipitation (eCLIP) sequencing data from the ENCODE consortium [\textbf{REF}], 
 which contains eCLIP peaks associated to 44 RNA binding proteins (RBPs). We submitted the
@@ -312,9 +323,9 @@ compared to XXX random peaks.
  }
 \end{figure}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Discussion}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Given its relative speed and accuracy, \dotaligner{} can be used to generate larger 
 (dis)similarity matrices for cluster analysis than other pairwise structure 
 alignment algorithms, or at least produce them with reasonable computational 
@@ -322,12 +333,28 @@ power.
 
 
 
-% \begin{thebibliography}{1}
-% \bibitem{dummy} Articles are restricted to 50 references, Letters
-% to 30.
-% \bibitem{dummyb} No compound references -- only one source per
-% reference.
-% \end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ Materials and Methods }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{ Benchmarking and parameter optimisation. }
+The \dotaligner{} algorithm implements several theoretical parameters that first need to 
+be tuned before being applied to biological sequence analysis.\textbf{ All combinations} of 
+core parameters were tested on the 8,976 pairwise RNA structure alignments curated in the 
+\bralibase{} reference dataset \cite{Wilm2006enhanced}. For each set of parameter combinations, 
+the amount of alignments producing identical structural topologies to the reference alignment
+was determined using \textit{RNAdistance}. The Structural Conservation Index (SCI), a robust 
+measure of RNA structural alignment integrity, were  also calculated for all resulting alignments. 
+Baseline parameters were then selected via a product rank of the 2 aforementioned metrics 
+(\textbf{supplementary data?}).\\
+
+\subsection{ Classification of RNA secondary structure families. }
+%include a distribution of the pairwise sequence identities for bin classification in supplementary
+This was achieved by sampling the entire collection of RFAM entries with published structures 
+in a stochastic manner, while ensuring that all sampled sequences respected constraints 
+on their sequence composition. Specifically, we extracted a high Pairwise Sequence Identity (PSI) 
+and a low PSI set, where any two sequences from the same set present greater than or less than 
+55\% PSI. The 
+
 
 \bibliographystyle{apalike} 
 \bibliography{dotaligner}
