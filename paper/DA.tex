@@ -53,7 +53,7 @@
         }
     }{\end{list}\par\vspace{12pt}}
 
-\title{Identification and classification of common RNA structure motifs }
+\title{ Identification and classification of common RNA structure motifs }
 
 %% Notice placement of commas and superscripts and use of &
 %% in the author list
@@ -213,11 +213,16 @@ Baseline parameters were then selected via a product rank of the 2 aforementione
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
 
 This was achieved by sampling the entire collection of RFAM entries with published structures 
-in a stochastic manner, while ensuring that all sampled sequences respected constraints 
+(extracted from the Stockholm file description fields as detailed in script \textit{getFastaFromRfamSeed.sh}). 
+ 
+in a stochastic manner (using the script . , while ensuring that all sampled sequences respected constraints 
 on their sequence composition. Specifically, we extracted a high Pairwise Sequence Identity (PSI) 
-and a low PSI set, where any two sequences from the same set present greater than or less than 
-55\% PSI. The 
+and a low PSI set, where any two sequences from the same set present greater than or less than, respectively, 
+55\% PSI. 
 
+\subsection{ Clustering of RNA structures }
+
+We resampled 
 
 \section{ Results }
 \section*{ Fast and accurate classification of RNA structures  } 
