@@ -137,11 +137,25 @@ structures facilitate compensatory and covariating mutations
   
 It has been shown that if sequence similarity falls below 60\%--the 
 `twilight zone' of multiple sequence alignment--sequence-centric approaches 
-for the identification of RNA structures perform poorly  \cite{Gardner15860779}. 
+for the identification of RNA structures perform poorly  \cite{Gardner15860779}.
+For ncRNAs, sequence alignments often consider structural elements of
+the molecules to accurately compare their biological features. A structural 
+alignment of two RNAs with similar higher-order structures 
+involves aligning both sequence similarities and homologous paired,
+helical regions of the molecules. This often produces results that 
+can differ significantly from the optimal sequence alignment, since 
+the conservation of sequence may be under less selective pressure than 
+conservation of structural features. However, the relative biological 
+importance of sequence versus structure
+varies across all ncRNAs; micro RNAs have strong sequence and structure constraints, 
+whereas tRNAs are mostly constrained at the level of tertiary structure
+(the anti-codon being the exception). It is therefore essential to 
+accommodate a dynamic range of sequence-structure weight functions 
+when comparing two RNA sequences impartially.
 
-In addition, competing structures and
+competing structures and
 suboptimal structures may support or even drive the functionality of an RNA
-domain. Hence, methods are needed that find structural similarity independent
+domain (e.g.  riboswitches). Hence, methods are needed that find structural similarity independent
 from sequence conservation and freed from one single optimal RNA secondary
 structure.\\
 
@@ -162,20 +176,27 @@ RNA sequences. Because the Sankoff algorithm is practically not applicable, the
 pre-calculation of the structure ensemble of each sequence, e.g. basepair
 probabilities in thermodynamically equilibrated RNA structure ensembles
 \cite{McCaskill:1990}, is used by different methods to speed up the calculation
-of structure-based alignments. {\color{red} include a review of structural alignments }. In particular, the programs \pmcomp{} for pairwise (now RNApaln {\color{red}CITATION}) and
+of structure-based alignments. {\color{red} include a review of structural alignments }. 
+In particular, the programs \pmcomp{} for pairwise (now RNApaln {\color{red}CITATION}) and
 \pmmulti{} for multiple alignments \cite{Hofacker15073017}, as well as
 \locarna{} \cite{Will17432929} score the alignment based on the notion of a
-common secondary structure. Despite of the usage of the basepair probability
+common secondary structure. {\color{red}ProbAlign, StrAL as well}. \\
+
+Despite of the usage of the basepair probability
 matrices these methods extract the maximum-weight common secondary structure but
-do not explicitely consider suboptimal structures in the alignment. The pairwise
+do not explicitly consider suboptimal structures in the alignment. The pairwise
 alignment of basepair probability matrices (dot plots) has been first introduced
 by \carna{} \cite{Palu2010,Sorescu2012}. \carna{} finds iteratively better
 alignments with an effective constraint programming technique using a branch and
-bound scheme (propagator).\\
+bound scheme (propagator). Beside of \locarna{} and a method based on directed 
+acyclic graph kernels \cite{Sato18647390}, the alignment-free approach \clustgraph{}
+\cite{Heyne22689765} has been used to cluster RNA structure in common domains.\\
 
-Beside of \locarna{} and a method based on directed acyclic graph kernels
-\cite{Sato18647390}, the alignment-free approach \clustgraph{}
-\cite{Heyne22689765} has been used to cluster RNA structure in common domains.
+{\color{red} Perhaps we should talk about alternative approaches less in this section, 
+and instead mention them when being compared in the Results. We need to explain
+how \dotaligner{} differs from related existing tools (namely ProbAlign and pmcomp/RNApaln
+to highlight its innovation. We can expand on this in the discussion perhaps as well}
+
 Here, we propose an alternative heuristic for the pairwise weighted string
 alignment with arbitrary pairwise dependencies that can deliver dissimilarity
 scores of dot plots in time close to an Needleman-Wunsch alignment which makes
@@ -187,21 +208,8 @@ noise to impartially and reliably extract homologous structural RNA motifs. \\
 \section{ Results }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{ Ensemble-guided pairwise RNA structure alignment} 
-
-A structural alignment of two RNAs with similar higher-order structures 
-involves aligning both sequence similarities and homologous paired,
-helical regions of the molecules. This often produces results that 
-can differ significantly from the optimal sequence alignment since 
-the conservation of sequence may be under less selective pressure than 
-conservation of structural features. However, the relative importance 
-of sequence  versus structural integrity varies across all ncRNAs; micro 
-RNAs have strong sequence and structure constraints, whereas tRNAs
-are mostly constrained with respect to their tertiary structures, with mostly
-the anti-codon being constrained for sequence composition. It is 
-therefore essential to accommodate a dynamic range of sequence-structure 
-weight functions when comparing two RNA sequences impartially. \\
  
-Consequently, we developed a new algorithm for aligning two RNA 
+Consequently, we developed a new strategy for aligning two RNA 
 basepair probability matrices (dot plots) called \dotaligner{}. It leverages the diversity of 
 suboptimal solutions from a partition function of RNA secondary structure 
 predictions to identify an optimal sequence-structure alignment of two RNAs. 
@@ -214,38 +222,31 @@ in contrast to an alignment that considers only sequence composition.\\
 %%%%%%%%         FIGURE 1       %%%%%%%%%
 \begin{figure}
  \includegraphics[width=\textwidth]{figX}
-\caption \textbf{{Schematic of a pairwise alignment with DotAligner.} 
-  A dynamic  programming matrix is first filled first filled in based on sequence 
-  similarity (top left--color intensity indicates cumulative sequence similarity). 
+\caption { \textbf{Schematic of a pairwise alignment with DotAligner. }
+  A dynamic  programming matrix is first filled in based on sequence 
+  similarity (top left--color intensity indicates cumulative sequence similarity score). 
   A partition function over all pairwise sequence alignments is then calculated and 
-  interrogated for structural similarities by stochastic backtracking. Considering 
-  the ensemble of suboptimal secondary structures--represented by dot plots in the 
-  upper right and lower left quadrants--effectively warps the optimal sequence alignment 
-  path (top left, black outline) towards one that includes structural features 
-  (striped blue cells).  In the bottom right, the optimal sequence alignment 
+  interrogated for structural compatibility by stochastic backtracking. 
+  Two ensemble of suboptimal secondary structures are considered for this purpose
+  (bottom left and top right dot plots; blue lines indicate cumulative basewise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
   and associated consensus secondary structure is contrasted to that produced 
   by DotAligner, exposing the common structural features hidden in the suboptimal 
   base pairing ensemble of both sequences. 
  }
 \end{figure}
 
-The algorithm performs pairwise sequence-structure alignments from 
-pre-calculated RNA dot plots using alignment-envelope heuristics, which 
+A major criteria for the implementation was a fast running time to make 
+\dotaligner applicable for RNA structure clustering of large data sets.
+Consistently, the algorithm performs pairwise sequence-structure alignments from 
+pre-calculated RNA dot plots an using alignment-envelope heuristic, which 
 impose constraints on sub-optimal string alignments, and fold-envelope 
-heuristics, which impose constraints to pre-calculated base pairing probabilities.\\
-
-The alignment procedure consists of two steps: 
-1. pairwise probabilistic string alignments,
-2. stochastic backtracking of string alignments and combined weight 
-of corresponding dot plot alignments.\\
-
-
-
-A major criteria for the implementation was a fast
-running time to make \dotaligner{} applicable for RNA structure clustering of
-large data sets. The alignment procedure consists of two steps:
-
-
+heuristics, which impose constraints to pre-calculated base pairing probabilities.
+The alignment procedure thus consists of two steps, each considering base pairing  
+probabilities: (i) Computation of a partition function over all canonical pairwise 
+string alignments, and (ii) structure-weighted stochastic backtracking of 
+all string alignments, similar to what is described by \cite{muckstein2002stochastic}. 
+A detailed mathematical description of \dotaligner{} can be found 
+ in the \textbf{Supplementary Text}.\\
 
 \subsection*{ Fast and accurate classification of RNA structures  } 
 We compared the quality of the alignments produced by \dotaligner{} with the results of
@@ -259,13 +260,11 @@ tendency of global optimization algorithms to overestimate the amount of paired 
 consensus RNA structure predictions. In this regard, \dotaligner{} stands apart as it reports this 
 phenomenon less than the other surveyed tools (\textbf{Figure 1B}). \\
 
-
+%%%%%%%%%       FIGURE 2       %%%%%%%%%% 
 \begin{figure}
  \includegraphics[width=\textwidth]{fig1}
- \caption {RNA structure alignment quality. (A) Matthews Correlation Coefficient; 
- (B) Structural Conservation Index difference between computed and reference alignments; 
- (C) Topological  edit distance between the \rnaalifold{} consensus of the computed alignment 
- and the and reference consensus.  }
+ \caption {\textbf{Comparison of RNA structure alignment qualities.}  The Matthews Correlation Coefficient (\textbf{A}), Structural Conservation Index difference (\textbf{B}), and \texttt{RNAdistance} calculated topological edit distance (\textbf{C}) are compared between the \rnaalifold{} consensus of the computed alignment 
+ and the and reference \bralibase{} alignment consensus.  }
 \end{figure}
 
 Despite its underwhelming performance in reproducing benchmark alignments, \dotaligner{} 
@@ -279,7 +278,21 @@ were selected with constraints on their sequence composition,  highlighting any
 sequence-dependent bias (see \textbf{Methods} and \textbf{Supplementary Figure 2}). Despite the seemingly
 poor quality of its pairwise alignments, \dotaligner{} reproduces the known classification 
 of RFAM structures as well or better than other pairwise RNA structure alignment tools
-(\textbf{Figure 2A,B}). \\
+(\textbf{Figure 3A,B}). \\
+
+%%%%%%%%%       FIGURE 3      %%%%%%%%%% 
+\begin{figure}
+ \includegraphics[width=\textwidth]{fig2}
+ \caption { \textbf{Classification of known RNA structures. }
+ (\textbf{A}) Receiving Operator Characteristic (ROC) curves measuring the classification
+ accuracy by contrasting the computed similarity matrices of each algorithm 
+ to a binary classification matrix of RFAM  sequences (1 if same family; 
+ 0 if different). High PID =  56-95\% pairwise sequence identity; Low PID  = 1-55\%.
+ (\textbf{B}) Area Under the Curve (AUC) of the ROC values with 95\% confidence intervals; 
+ (\textbf{C}) Distribution of computation time (N.B. a fixed upper limit of 120 s was 
+ imposed for \carna{}). 
+ }
+\end{figure}
 
 The classification accuracy  of \dotaligner{} is most comparable 
 to \carna{}, another ensemble-based structural alignment algorithm, but the latter
@@ -294,14 +307,25 @@ higher false positive rates given the repetitive nature of higher-eukaryote geno
 
 \subsection*{ De novo identification of homologous RNA structures in noisy samples }
 
+%%%%%%%%%       FIGURE 4      %%%%%%%%%% 
+  \begin{figure}
+ \includegraphics[width=\textwidth]{fig3}
+ \caption { Density based clustering of known RNA structures using \dotaligner{} and OPTICS. Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount of clusters (\textbf{B}) from a \dotaligner{} dissimilarity matrix of 580 reference RFAM structures and their dinucleotide-shuffled controls (horizontal dashed line indicates expected amount of clusters, or unique RFAM families). (\textbf{C}) Sorted reachability plot, i.e. distance to nearest neighbour, of RFAM and shuffled sequences using \dotaligner{} with optimal OPTICS parameters from (\textbf{A}). Coloured bars indicate clustered sequences. 
+ }
+\end{figure}
+
 \subsection*{ Identifying protein-binding RNA motifs from eCLIP data }
 We applied this clustering methodology to recently published Enhanced Cross-Linking 
 and ImmunoPrecipitation (eCLIP) sequencing data from the ENCODE consortium [\textbf{REF}], 
 which contains eCLIP peaks associated to 44 RNA binding proteins (RBPs). We submitted the
 sequences from eLCIP peaks with strong, highly significant enrichment over background 
-to the above-mentioned clustering strategy (see \textbf{Methods}). 
+to the above-mentioned clustering strategy (see \textbf{Methods}). \\
 
-[initial clustering data results]. 
+[initial clustering data results]. \\
+
+\begin{center}
+FIGURE 5 ??? 
+\end{center}
 
 If a structural motif is targeted by a RBP, it is highly probably that the associated CLIPseq peaks 
 do not encompass the entire sequence that forms the structural motif, since 
@@ -309,31 +333,13 @@ reverse transcription will terminate at the covalent bond formed between the
 protein and the RNA. Consequently, large RNA structures bound by RBPs are 
 difficult to model without additional structure probing data. This experimental 
 approach also introduces a 3' bias in the sequence-specificity of RBP binding sites 
-given the nature of 3' to 5' reverse transcription required for cDNA synthesis.
+given the nature of 3' to 5' reverse transcription required for cDNA synthesis.\\
 
 To address these caveats, we surveyed the potential to form locally-stable
 RNA secondary structures in the regions directly flanking 36,161 filtered eCLIP 
 peaks (see \textbf{Methods}). XXX\% overlap a predicted RNA secondary structure, 
-compared to XXX random peaks. 
+compared to XXX random peaks. \\
 
-\begin{figure}
- \includegraphics[width=\textwidth]{fig2}
- \caption { Classification of known RNA structures. 
- (A) Receiving Operator Characteristic (ROC) curves measuring the classification
- accuracy by contrasting the computed similarity matrices of each algorithm 
- to a binary classification matrix of RFAM  sequences (1 if same family; 
- 0 if different). High PID =  56-95\% pairwise sequence identity; Low PID  = 1-55\%.
- (B) Area Under the Curve (AUC) of the ROC values with 95\% confidence intervals; 
- (C) Distribution of computation time (N.B. a fixed upper limit of 120 s was 
- imposed for \carna{}). 
- }
-\end{figure}
-
-  \begin{figure}
- \includegraphics[width=\textwidth]{fig3}
- \caption { Density based clustering of known RNA structures using \dotaligner{} and OPTICS. Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount of clusters (\textbf{B}) from a \dotaligner{} dissimilarity matrix of 580 reference RFAM structures and their dinucleotide-shuffled controls (horizontal dashed line indicates expected amount of clusters, or unique RFAM families). (\textbf{C}) Sorted reachability plot, i.e. distance to nearest neighbour, of RFAM and shuffled sequences using optimal parameters from (\textbf{A}). Coloured bars indicate clustered sequences. 
- }
-\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Discussion}
@@ -343,12 +349,21 @@ Given its relative speed and accuracy, \dotaligner{} can be used to generate lar
 alignment algorithms, or at least produce them with reasonable computational 
 power.  
 
-
+In addition to its speed, \dotaligner{}'s strength lies in it's capacity to accurately
+score structurally homoglous RNA sequences. The algorithm appears to 
+generate pairwise alignments that differ somewhat to the reference 
+structural alignments. Despite this, \dotaligner{} can harness the information
+content of base pair probability ensembles to output a reliable 
+structural similarity score of two RNA sequences. Our results show that this
+can nonetheless be sufficient to extract structurally and functionally related
+sequences from a large amount of noisy input; an ideal application 
+for screening high-throughput sequencing data, such as RNA 
+immunoprecipitaion data, for common structural motifs. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{ Materials and Methods }
+\section*{ Materials and Methods }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{ Benchmarking and parameter optimisation. }
+\subsection*{ Benchmarking and parameter optimisation. }
 The \dotaligner{} algorithm implements several theoretical parameters that first need to 
 be tuned before being applied to biological sequence analysis.\textbf{ All combinations} of 
 core parameters were tested on the 8,976 pairwise RNA structure alignments curated in the 
@@ -359,7 +374,7 @@ measure of RNA structural alignment integrity, were  also calculated for all res
 Baseline parameters were then selected via a product rank of the 2 aforementioned metrics 
 (\textbf{supplementary data?}).\\
 
-\subsection{ Classification of RNA secondary structure families. }
+\subsection*{ Classification of RNA secondary structure families. }
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
 This was achieved by sampling the entire collection of RFAM entries with published structures 
 in a stochastic manner, while ensuring that all sampled sequences respected constraints 
@@ -367,15 +382,234 @@ on their sequence composition. Specifically, we extracted a high Pairwise Sequen
 and a low PSI set, where any two sequences from the same set present greater than or less than 
 55\% PSI. The 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{ Acknowledgments }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+MAS and JSM are partially funded by a Cancer Council NSW project grant (RG 14-18). 
+SES was supported by a Carlsberg travel bursary. 
 
 \bibliographystyle{apalike} 
 \bibliography{dotaligner}
 
-%% Here is the endmatter stuff: Supplementary Info, etc.
-%% Use \item's to separate, default label is "Acknowledgements"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage 
+\section*{ Supplementary Information }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{ Acknowledgments }
+\subsection*{ 1. \dotaligner{} implementation }
+\noindent As described in \cite{Palu2010} the weight $W$ of alignment \emph{A}
+of two arc-annotated sequences $(S_a,P_a)$ and $(S_b,P_b)$ is defined by
 
+\begin{equation}\label{eq1}
+\begin{aligned}
+	W(A) ={} & \sigma(A) + \tau(A) + \gamma(A) \\
+	     ={} & \sum_{(i,i^\prime) \in A} \sigma(i,i^\prime) + \sum_{(i,j) \in
+	P_a,\atop {(i^\prime,j^\prime) \in P_b,\atop {(i,i^\prime) \in
+	A,\atop (j,j^\prime) \in A}}} \tau(i,j,i^\prime,j^\prime) + \gamma
+	\times N
+\end{aligned}
+\end{equation}
+
+\noindent where $S$ is a sequence and $P$ is a base pairing probability matrix,
+$\sigma(i,i^\prime)$ is the similarity of sequence positions $S_a[i]$ and
+$S_b[i^\prime]$, $\tau(i,j,i^\prime,j^\prime)$ is the similarity of arcs $(i,j)
+\in P_a$ and $(i^\prime,j^\prime) \in P_b$,
+%$\tau(i,j,i^\prime,j^\primej,) = 1 - 2 \times |
+%P_a(i,j)-P_b(i^\prime,j^\prime) |$)
+and $\gamma$ is the gap cost associated with each sequence position that is not
+matched ($N = |S_a|+|S_b|-2|A|$). The alignment problem finds the maximal
+$W(A)$. As its solution is MAX-SNP-hard, in praxis heuristics are used to find
+near-optimal solutions.\\
+
+\dotaligner{} solves the related problem of aligning two basepair
+probability matrices (dot plots). A major criteria for the implementation was a fast
+running time enable all-vs-all pairwise structural alignments and the 
+associated distance (dissimilarity) matrix, which can be used for 
+cluster analysis of large data sets \cite{Will17432929}. Consequently, 
+it employs a heuristic alignment-envelope, 
+which imposes constraints to sub-optimal string alignments, 
+and a fold-envelope, which imposes constraints to pre-calculated base pairing probabilities, 
+to build pairwise sequence-structure alignments. 
+\dotaligner{} makes use of the observation that large samples from the ensemble 
+of stochastic sequence alignments contain the correct structure-based alignment
+with significant probability,  even though the optimal
+sequence alignment deviates significantly from the structural alignment
+\cite{muckstein2002stochastic}. \\
+
+Below, we describe the alignment procedure and weight functions.
+The alignment procedure consists of two steps:
+\begin{enumerate}
+  \item Pairwise probabilistic string alignments; 
+  \item Stochastic backtracking of string alignments and combining
+	  weights of base pairing probability matrices.
+\end{enumerate}
+
+\subsubsection*{1.1 Pairwise probabilistic string alignments}
+In step 1 the computation of the partition function over all canonical pairwise
+string alignments is adapted from probA \cite{muckstein2002stochastic}. The
+probability of an alignment $A$ in the ensemble of all alignments $Z(T)$ is
+
+\begin{equation}\label{probA}
+	Pr(A;T) = \frac{1}{Z(T)} exp(\beta W(A)),
+\end{equation}
+
+\noindent where $\beta = 1 / T$. The parameter $T$ is analogous to the temperature in the
+thermodynamic interpretation of the alignment problem and determines the
+relative importance of the optimal string alignment. If $T=1$ then we recover the
+'true` probability, if $T\to0$ then $Pr(A;0)=0$ for all alignments with a score
+$W(A)$ less then the score of the optimal string alignment, and if $T\to\infty$ then
+all alignments have the same $Pr(A,\infty)=1/Z(\infty)$.  Hence, $T$ controls
+the search space of suboptimal alignments for step 2. The algorithm runs in
+$O(N^3)$ for calculating the partition function. 
+The weight function $W(A)$ of
+the probA implementation is changed to explore the ensemble of dot plot
+alignments. We reduce the sequence-structure alignment problem to a
+two-dimensional problem similar to the metric introduced in StrAL
+\cite{Dalli16613908}. Hence, step 1 considers only the similarity $\sigma$ and
+the gap cost $\gamma$ described in equation \ref{eq1}:
+
+\begin{equation}\label{wstep1}
+	W_{\mbox{Step1}}(A) = \sigma(A) + \gamma(A)
+\end{equation}
+
+\noindent The similarity $\sigma(i,i^\prime)$ for matched sequence positions $S_a[i]$ and
+$S_b[i^\prime]$ takes into account sequence similarity $M_{Seq}$ and the
+similarity in their unpaired probabilities $\Delta \omega(i,i^\prime)$ weighted
+by the parameter $\theta$:
+
+\begin{equation}\label{sigmam}
+	\sigma(i,i^\prime) = \theta \times
+		M_{Seq}^{(i,i^\prime)} + (1-\theta) \times \Delta \omega(i,i^\prime)
+%	S_{Seq} = \sum_{(i,i^\prime) \in A} \tau \times M_{Seq}^{(i,i^\prime)} 
+\end{equation}
+
+\noindent  $M_{Seq}^{(i,i^\prime)}$ is 1 if sequence positions $S_a[i]$ and
+$S_b[i^\prime]$ match and else 0. The similarity of unpaired probabilities is
+defined as
+
+\begin{equation}\label{eq3}
+	\Delta \omega(i,i^\prime) = \left\{ \begin{array}{cl}
+			0 & \textrm{if } \omega(i) == 0 \\
+			  & \textrm{and } \omega(i^\prime ) == 0 \\
+			1 - | \omega(i) - \omega(i^\prime) | & \textrm{else}
+		\end{array}\right.
+\end{equation}
+
+\noindent so that $\Delta \omega = (0,1)$. Alternatively a statistical substitution model
+$R_{Seq}$ replaces the sequence similarity and is multiplied with the $\zeta$
+weighted sum of $\Delta \omega$ and the similarity in ratios of upstream
+pairing probability $\Delta \omega^{up}$:
+
+\begin{equation}\label{sigmar}
+\begin{aligned}
+	\sigma(i,i^\prime) ={} & R_{Seq}^{(i,i^\prime)} \times \zeta \times \Delta \omega(i,i^\prime) +  \\
+			       & R_{Seq}^{(i,i^\prime)} \times (1-\zeta) \times
+	\Delta \omega^{up}(i,i^\prime)
+\end{aligned}
+\end{equation}
+
+\noindent  $R_{Seq}$ is a $4\times4$ matrix of probabilities for observing
+a given substitution relative to background nucleotide frequencies. We use the
+log-odd scores $L$ from the RIBOSUM85-60 matrix introduced in
+\cite{Klein14499004} which are transformed to probabilities $R_{Seq}$ by
+$2^{L(i,i^\prime)} / (1 + 2^{L(i,i^\prime)})$. The ratio of upstream pairing probability
+$\omega^{up}$ is defined as
+
+\begin{equation}\label{eq5}
+	\omega^{up}(i) = \sum_{k=1}^{i-1} \psi(k,i) /
+	\sum_{k=1}^{|S|} \psi(k,i)
+\end{equation}
+
+\noindent where $i \in S$, $|S|$ is the length of sequence $S$, and $\psi(k,i)$ is the
+pairing probability of sequence positions $S[k]$ and $S[i]$. The downstream
+pairing probability is implicitly considered in the weight function through the
+usage of unpaired probability and upstream pairing probability. The gap term
+in equation \ref{eq1} is replaced with affine gap costs:
+
+\begin{equation}\label{eq6}
+	\gamma(A) = l \times g_o + (N-l) \times g_{ext}
+\end{equation}
+	
+\noindent where $l$ is the number of initiation gaps, $N$ is the number of all gaps,
+$g_o$ is the penalty for opening a gap and $g_{ext}$ is the penalty for gap
+extensions. Start and end gaps are considered as free.\\
+
+\subsubsection*{1.2 Stochastic backtracking and combined weight of dot plot alignments}
+
+Here, a properly weighted sample of stochastic pairwise string alignments
+in the alignment ensemble is examined across both sequences for sequence-structure similarity.
+The stochastic backtracking is adapted from probA \cite{muckstein2006} for
+selecting $s$ suboptimal string alignments $A_s$.  The combined weight
+$W_{\mbox{Step2}}$ is a variant of equation \ref{eq1} to explore the similarity
+of the corresponding dot plot alignments:
+
+\begin{equation}\label{eq7}
+	W_{\mbox{Step2}}(A_s) = \kappa \times \frac{W_{\mbox{Step1}}(A_s)}{|A_s|} + (1-\kappa) \times
+	\frac{\tau(A_s)}{{|\mbox{Match}_{A_s}|}^2}
+\end{equation}
+
+\noindent where the parameter $\kappa$ weights for each alignment $A_s$ between the
+sequence-based similarity $W_{\mbox{Step1}}(A_s)$ normalized by alignment
+length $|A_s|$ and dot plot similarity $\tau(A_s)$ normalized by the number of
+aligned bases $|\mbox{Match}_{A_s}|$ in alignment $A_s$. Similar to equation
+\ref{sigmam} the dot plot similarity $\tau$ sums the parameter $\theta$ weighted
+similarity of aligned basepairs $M_{paired}$ and the similarity in their
+pairing probabilities $\Delta \psi$:
+
+\begin{equation}\label{eq8}
+	\tau(i,j,i^\prime,j^\prime) = \theta \times M_{paired}^{(i,j,i^\prime,j^\prime)}
+	+ (1-\theta) \times \Delta \psi(i,j,i^\prime,j^\prime)
+\end{equation}
+
+\noindent where $M_{paired}^{(i,j,i^\prime,j^\prime)}$ is 1 if $S_a[i]$ and $S_a[j]$ as
+well as $S_b[i^\prime]$ and $S_b[j^\prime]$ form canonical basepairs (G-C, C-G,
+A-U, U-A, G-U or U-G) and else 0. The similarity in pairing probabilities
+$\Delta \psi$ is then calculate by
+
+\begin{equation}\label{eq9}
+	\Delta \psi(i,j,i^\prime,j^\prime) = \left\{ \begin{array}{l}
+			0 \textrm{ if }\psi(i,j) == 0 
+			  \textrm{ and }\psi(i^\prime,j^\prime) == 0 \\
+		1 - | \psi(i,j) - \psi(i^\prime,j^\prime) | \textrm{ else}
+		\end{array}\right.
+\end{equation}
+
+\noindent Similar to $M_{Seq}$ in equation \ref{sigmam}, the basepair similarity matrix
+$M_{paired}$ can be replaced by a statistical substitution model $R_{paired}$
+which describes the probability for observing a given basepair substitution
+relative to background nucleotide frequencies:
+
+\begin{equation}\label{eq10}
+	\tau(i,j,i^\prime,j^\prime) = R_{paired}^{(i,j,i^\prime,j^\prime)}
+\times \Delta \psi(i,j,i^\prime,j^\prime)
+\end{equation}
+
+\noindent Again, the log-odd scores $L$ from the RIBOSUM85-60 matrix \cite{Klein14499004}
+are transformed to probabilities $R_{paired}$.
+
+\noindent For both sequences $S_a$ and $S_b$, the pairing probability matrices $P_a$ and
+$P_b$ are computed in advance using McCaskill's algorithm, implemented in
+RNAfold or RNAplfold. The robustness of the alignment is improved by applying
+log-odds scores $\psi$ of having a specific base pairing against the null model
+of a random pairing \cite{Will17432929}:
+
+\begin{equation}\label{eq11}
+	\psi(i,j) = max \left( 0, log \frac{P(i,j)}{p_0} / log \frac{1}{p_0} \right)
+\end{equation}
+
+\noindent where $p_0$ is the expected probability for a pairing to occur at random. The
+term $log \frac{1}{p_0}$ is a normalization factor that transforms the scores to
+a maximum of 1. $P==1$ results in $\psi=1$, $P>p_0$ results in $\psi>0$, and $P\le
+p_0$ results in $\psi=0$.  This transformation gives weaker similarities if low
+basepair probabilities are compared, but stronger similarities for high basepair
+probabilities. Unpaired probabilities are handled in a similar way by
+
+\begin{equation}\label{eq12}
+	\omega(i) = max \left( 0, log \frac{1 - \sum_k P(i,k)}{p_0} / log \frac{1}{p_0} \right)
+\end{equation}
+
+\noindent  where $p_0$ is the expected probability for an unpaired base to occur at
+random.
 
 
 %%
@@ -384,21 +618,21 @@ and a low PSI set, where any two sequences from the same set present greater tha
 %% If there are any tables, put them here.
 %%
 
-\begin{table}
-\centering
-\caption{This is a table with scientific results.}
-\medskip
-\begin{tabular}{ccccc}
-\hline
-1 & 2 & 3 & 4 & 5\\
-\hline
-aaa & bbb & ccc & ddd & eee\\
-aaaa & bbbb & cccc & dddd & eeee\\
-aaaaa & bbbbb & ccccc & ddddd & eeeee\\
-aaaaaa & bbbbbb & cccccc & dddddd & eeeeee\\
-1.000 & 2.000 & 3.000 & 4.000 & 5.000\\
-\hline
-\end{tabular}
-\end{table}
+%\begin{table}
+%\centering
+%\caption{This is a table with scientific results.}
+%\medskip
+%\begin{tabular}{ccccc}
+%\hline
+%1 & 2 & 3 & 4 & 5\\
+%\hline
+%aaa & bbb & ccc & ddd & eee\\
+%aaaa & bbbb & cccc & dddd & eeee\\
+%aaaaa & bbbbb & ccccc & ddddd & eeeee\\
+%aaaaaa & bbbbbb & cccccc & dddddd & eeeeee\\
+%1.000 & 2.000 & 3.000 & 4.000 & 5.000\\
+%\hline
+%\end{tabular}
+%\end{table}
 
 \end{document}
