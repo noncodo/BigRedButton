@@ -1,12 +1,89 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% http://bibdesk.sourceforge.net/
 
-%% Created for Martin Smith at 2017-05-06 11:59:29 +1000 
+%% Created for Martin Smith at 2017-05-08 14:40:46 +1000 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@inproceedings{ankerst99ordering,
+	Author = {Ankerst, M and Breunig, M and Kriegel, HP and others},
+	Booktitle = {Proc. ACM SIGMOD},
+	Date-Added = {2017-05-08 04:40:44 +0000},
+	Date-Modified = {2017-05-08 04:40:44 +0000},
+	Title = {Ordering points to identify the clustering structure},
+	Volume = {99}}
+
+@inproceedings{ester1996density,
+	Author = {Ester, Martin and Kriegel, Hans-Peter and Sander, J{\"o}rg and Xu, Xiaowei and others},
+	Booktitle = {Kdd},
+	Date-Added = {2017-05-08 04:38:39 +0000},
+	Date-Modified = {2017-05-08 04:38:39 +0000},
+	Number = {34},
+	Pages = {226--231},
+	Title = {A density-based algorithm for discovering clusters in large spatial databases with noise.},
+	Volume = {96},
+	Year = {1996}}
+
+@article{suzuki2006pvclust,
+	Author = {Suzuki, Ryota and Shimodaira, Hidetoshi},
+	Date-Added = {2017-05-08 04:26:16 +0000},
+	Date-Modified = {2017-05-08 04:26:16 +0000},
+	Journal = {Bioinformatics},
+	Number = {12},
+	Pages = {1540--1542},
+	Publisher = {Oxford Univ Press},
+	Title = {Pvclust: an R package for assessing the uncertainty in hierarchical clustering},
+	Volume = {22},
+	Year = {2006}}
+
+@article{needleman1970general,
+	Author = {Needleman, Saul B and Wunsch, Christian D},
+	Date-Added = {2017-05-08 01:18:50 +0000},
+	Date-Modified = {2017-05-08 01:18:50 +0000},
+	Journal = {Journal of molecular biology},
+	Number = {3},
+	Pages = {443--453},
+	Publisher = {Elsevier},
+	Title = {A general method applicable to the search for similarities in the amino acid sequence of two proteins},
+	Volume = {48},
+	Year = {1970}}
+
+@article{washietl2005fast,
+	Author = {Washietl, Stefan and Hofacker, Ivo L and Stadler, Peter F},
+	Date-Added = {2017-05-06 10:41:10 +0000},
+	Date-Modified = {2017-05-06 10:41:10 +0000},
+	Journal = {Proceedings of the National Academy of Sciences of the United States of America},
+	Number = {7},
+	Pages = {2454--2459},
+	Publisher = {National Acad Sciences},
+	Title = {Fast and reliable prediction of noncoding RNAs},
+	Volume = {102},
+	Year = {2005}}
+
+@article{havgaard2007fast,
+	Author = {Havgaard, Jakob H and Torarinsson, Elfar and Gorodkin, Jan},
+	Date-Added = {2017-05-06 10:30:45 +0000},
+	Date-Modified = {2017-05-06 10:30:45 +0000},
+	Journal = {PLoS Comput Biol},
+	Number = {10},
+	Pages = {e193},
+	Publisher = {Public Library of Science},
+	Title = {Fast pairwise structural RNA alignments by pruning of the dynamical programming matrix},
+	Volume = {3},
+	Year = {2007}}
+
+@article{sundfeld2015foldalign,
+	Author = {Sundfeld, Daniel and Havgaard, Jakob H and de Melo, Alba CMA and Gorodkin, Jan},
+	Date-Added = {2017-05-06 10:29:35 +0000},
+	Date-Modified = {2017-05-06 10:29:35 +0000},
+	Journal = {Bioinformatics},
+	Pages = {btv748},
+	Publisher = {Oxford Univ Press},
+	Title = {Foldalign 2.5: multithreaded implementation for pairwise structural RNA alignment},
+	Year = {2015}}
 
 @article{muckstein2002stochastic,
 	Author = {M{\"u}ckstein, Ulrike and Hofacker, Ivo L and Stadler, Peter F},
@@ -239,17 +316,6 @@
 	Volume = {12},
 	Year = {2011}}
 
-@inproceedings{ester1996density,
-	Author = {Ester, Martin and Kriegel, Hans-Peter and Sander, J{\"o}rg and Xu, Xiaowei},
-	Booktitle = {Kdd},
-	Date-Added = {2016-06-14 04:06:40 +0000},
-	Date-Modified = {2016-06-14 04:06:40 +0000},
-	Number = {34},
-	Pages = {226--231},
-	Title = {A density-based algorithm for discovering clusters in large spatial databases with noise.},
-	Volume = {96},
-	Year = {1996}}
-
 @article{van2016robust,
 	Author = {Van Nostrand, Eric L and Pratt, Gabriel A and Shishkin, Alexander A and Gelboin-Burkhart, Chelsea and Fang, Mark Y and Sundararaman, Balaji and Blue, Steven M and Nguyen, Thai B and Surka, Christine and Elkins, Keri and others},
 	Date-Added = {2016-06-14 03:56:45 +0000},
@@ -357,11 +423,12 @@ under the Creative Commons Zero license.},
 @article{Dotu19908358,
 	Abstract = {We describe several dynamic programming segmentation algorithms to segment RNA secondary and tertiary structures into distinct domains. For this purpose, we consider fitness functions that variously depend on (i) base pairing probabilities in the Boltzmann low energy ensemble of structures, (ii) contact maps inferred from 3-dimensional structures, and (iii) Voronoi tessellation computed from 3-dimensional structures. Segmentation algorithms include a direct dynamic programming method, previously discovered by Bellman and by Finkelstein and Roytberg, as well as two novel algorithms - a parametric algorithm to compute the optimal segmentation into k classes, for each value k, and an algorithm that simultaneously computes the optimal segmentation of all subsegments. Since many non-coding RNA gene finders scan the genome by a moving window method, reporting high-scoring windows, we apply structural segmentation to determine the most likely 5' and 3' boundaries of precursor microRNAs. When tested on all precursor microRNAs of length at most 100 nt from the Rfam database, benchmarking studies indicate that segmentation determines the 5' boundary with discrepancy (absolute value of difference between predicted and real boundaries) having mean -0.640 (stdev 15.196) and the 3' boundary with discrepancy having mean -0.266 (stdev. 17.415). This yields a sensitivity of 0.911 and positive predictive value of 0.906 for determination of exact boundaries of precursor microRNAs within a window of approximately 900 nt. Additionally, by comparing the manual segmentation of Jaeger et al. with our optimal structural segmentation of 16S and 16S-like rRNA of E. coli, rat mitochondria, Halobacterium volcanii, and Chlamydomonas reinhardii chloroplast into 4 segments, we establish the usefulness of (automated) structural segmentation in decomposing large RNA structures into distinct domains.},
 	Author = {Dotu, I and Lorenz, W A and {Van Hentenryck}, P and Clote, P},
+	Date-Modified = {2017-05-06 10:12:52 +0000},
 	File = {:media/data/phd/literature/Dotu19908358.pdf:pdf},
 	Journal = {Pac Symp Biocomput},
 	Pages = {57--68},
 	Pmid = {19908358},
-	Title = {{\{RNA\} structural segmentation.}},
+	Title = {{RNA structural segmentation.}},
 	Year = {2010}}
 
 @article{Gardner15860779,
@@ -536,6 +603,7 @@ under the Creative Commons Zero license.},
 @article{Will17432929,
 	Abstract = {The RFAM database defines families of ncRNAs by means of sequence similarities that are sufficient to establish homology. In some cases, such as microRNAs and box H/ACA snoRNAs, functional commonalities define classes of RNAs that are characterized by structural similarities, and typically consist of multiple RNA families. Recent advances in high-throughput transcriptomics and comparative genomics have produced very large sets of putative noncoding RNAs and regulatory RNA signals. For many of them, evidence for stabilizing selection acting on their secondary structures has been derived, and at least approximate models of their structures have been computed. The overwhelming majority of these hypothetical RNAs cannot be assigned to established families or classes. We present here a structure-based clustering approach that is capable of extracting putative RNA classes from genome-wide surveys for structured RNAs. The LocARNA (local alignment of RNA) tool implements a novel variant of the Sankoff algorithm that is sufficiently fast to deal with several thousand candidate sequences. The method is also robust against false positive predictions, i.e., a contamination of the input data with unstructured or nonconserved sequences. We have successfully tested the LocARNA-based clustering approach on the sequences of the RFAM-seed alignments. Furthermore, we have applied it to a previously published set of 3,332 predicted structured elements in the Ciona intestinalis genome (Missal K, Rose D, Stadler PF (2005) Noncoding RNAs in Ciona intestinalis. Bioinformatics 21 (Supplement 2): i77-i78). In addition to recovering, e.g., tRNAs as a structure-based class, the method identifies several RNA families, including microRNA and snoRNA candidates, and suggests several novel classes of ncRNAs for which to date no representative has been experimentally characterized.},
 	Author = {Will, S and Reiche, K and Hofacker, I L and Stadler, P F and Backofen, R},
+	Date-Modified = {2017-05-06 09:54:59 +0000},
 	Doi = {10.1371/journal.pcbi.0030065},
 	File = {:media/data/phd/literature/Will17432929.pdf:pdf},
 	Journal = {PLoS Comput Biol},
@@ -543,7 +611,7 @@ under the Creative Commons Zero license.},
 	Number = {4},
 	Pages = {e65},
 	Pmid = {17432929},
-	Title = {{Inferring noncoding \{RNA\} families and classes by means of genome-scale structure-based clustering.}},
+	Title = {{Inferring noncoding RNA families and classes by means of genome-scale structure-based clustering.}},
 	Volume = {3},
 	Year = {2007},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1371/journal.pcbi.0030065}}
