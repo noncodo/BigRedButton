@@ -221,7 +221,7 @@ in contrast to an alignment that considers only sequence composition.\\
 
 %%%%%%%%         FIGURE 1       %%%%%%%%%
 \begin{figure}
- \includegraphics[width=\textwidth]{figX}
+ \includegraphics[width=\textwidth]{fig1}
 \caption { \textbf{Schematic of a pairwise alignment with DotAligner. }
   A dynamic  programming matrix is first filled in based on sequence 
   similarity (top left--color intensity indicates cumulative sequence similarity score). 
@@ -258,7 +258,7 @@ state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{}
 
 %%%%%%%%%       FIGURE 2       %%%%%%%%%% 
 \begin{figure}
- \includegraphics[width=\textwidth]{fig1}
+ \includegraphics[width=\textwidth]{fig2}
  \caption {\textbf{Comparison of RNA structure alignment qualities.}  The Matthews Correlation Coefficient (\textbf{A}), Structural Conservation Index  (\textbf{B}), and \texttt{RNAdistance} calculated topological edit distance (\textbf{C}) are compared between the \rnaalifold{} consensus of the computed alignment 
  and the and reference \bralibase{} alignment consensus.  }
 \end{figure}
@@ -290,14 +290,15 @@ compared to a binary classification matrix of sampled RFAM entries using the R p
 
 %%%%%%%%%       FIGURE 3      %%%%%%%%%% 
 \begin{figure}
- \includegraphics[width=\textwidth]{fig2}
+ \includegraphics[width=\textwidth]{fig3}
  \caption { \textbf{Classification of known RNA structures. }
  (\textbf{A}) Receiving Operator Characteristic (ROC) curves measuring the classification
  accuracy by contrasting the computed similarity matrices of each algorithm 
  to a binary classification matrix of RFAM  sequences (1 if same family; 
  0 if different). High PID =  56-95\% pairwise sequence identity; Low PID  = 1-55\%.
- (\textbf{B}) Area Under the Curve (AUC) of the ROC values with 95\% confidence intervals; 
- (\textbf{C}) Distribution of computation time (N.B. a fixed upper limit of 120 s was 
+ (\textbf{B}) Precision-recall curve;  
+ (\textbf{C}) Area Under the Curve (AUC) of the ROC values with 95\% confidence intervals; 
+ (\textbf{D}) Distribution of computation time (N.B. a fixed upper limit of 120 s was 
  imposed for \carna{}). 
  }
 \end{figure}
@@ -320,7 +321,7 @@ of stretches of homologous sequence within biologically related RNAs. On
 larger datasets derived from experimental data, NWA would likely suffer from 
 higher false positive rates given the repetitive nature of higher-eukaryote genomes.\\
 
-\subsection*{ Identifying clusters of homologous RNA structures in noisy samples }
+\subsection*{ Density-based clustering of homologous RNA structures }
 
 Given \dotaligner{}'s accurate classification of known structured RNA, we subjected its
 output to cluster analysis to identify and extract input sequences which display common
@@ -339,11 +340,18 @@ The OPTICS (Ordering Points To Identify the Clustering Structure) algorithm \cit
 was chosen for this purpose, as it has very few implementation parameters to optimise. 
 OPTICS is a derivative of the Density-BaSed Clustering for Application with Noise (\texttt{DBSCAN}) 
 \cite{ester1996density} algorithm that, as its name states, is suitable for noisy data, 
-such as high-throughput sequencing of RNA immunoprecipitation. \\
+such as RNA immunoprecipitation followed by high-throughput sequencing (RIPseq).\\
+
+Using the same stochastic sampling protocol described above, we optimised the two main 
+OPTICS clustering parameters: Xi steepness threshold 
+and the minimum number of points in a cluster (\textbf{Figure 4}), in addition to a cluster 
+extraction strategy (minimum cluster extraction or merged into an enveloping cluster). 
+A minimum of 4 points in a cluster 
+
 
 %%%%%%%%%       FIGURE 4      %%%%%%%%%% 
   \begin{figure}
- \includegraphics[width=\textwidth]{fig3}
+ \includegraphics[width=\textwidth]{fig4}
  \caption { \textbf{Density based clustering of known RNA structures using \dotaligner{} and OPTICS}. Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount of clusters (\textbf{B}) from a \dotaligner{} dissimilarity matrix of 580 reference RFAM structures and their dinucleotide-shuffled controls (horizontal dashed line indicates expected amount of clusters, or unique RFAM families). (\textbf{C}) Sorted reachability plot, i.e. distance to nearest neighbour, of RFAM and shuffled sequences using \dotaligner{} with optimal OPTICS parameters from (\textbf{A}). Coloured bars indicate clustered sequences. 
  }
 \end{figure}
@@ -410,7 +418,7 @@ measure of RNA structural alignment integrity, were  also calculated for all res
 Baseline parameters were then selected via a product rank of the 2 aforementioned metrics 
 (\textbf{supplementary data?}).\\
 
-How are MCC and SCI calculated? \\
+{\color{red} How are MCC and SCI calculated? }\\
 
 \subsection*{ Classification of RNA secondary structure families. }
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
@@ -421,13 +429,33 @@ and a low PSI set, where any two sequences from the same set present greater tha
 55\% PSI. The 
 
 \subsection*{ Clustering RNA structures with randomised controls }
-Which implementation of OPTICS ? 
+OPTICS benchmarking was performed by stochastically sampling the collection of RFAM 12.0 
+seed alignments using the accompanying \texttt{JAVA} program \texttt{GenerateRFAMsubsets.java}
+(see \textbf{Supplementary Information}) with parameters {\color{red} GET PARAMETERS FROM SERVER}, 
+with 3 ranges of pairwise sequence identity: 1-55\%, 56-75\%, and 75-95\%.  The resulting
+580 unique sequences were then randomised while controlling their dinucleotide content with 
+the \texttt{easel} program included in the \texttt{Infernal} (v1.1.2) software package 
+\cite{nawrocki2013infernal} with option "-k 2". The 1160 sequences were submitted to 
+all-vs-all pairwise comparisons with \dotaligner{} and the scores were inverted and a 
+normalised (min=1, max=0) into a dissimilarity matrix, which was then imported into
+ the \texttt{R} statistical programming language, converted into a `dist' object without
+ transformation, and subjected to \texttt{OPTICS} clustering as implemented
+in the `dbscan' CRAN repository with a range of parameters (see \textbf{Figure 4A,B}).\\
+
+\noindent {\color{red} CHECK THIS} Specificity and sensitivity were calculated like so: 
+
+Spec  = 1 - (\# non-dominant RFAM IDs in cluster /  cluster size )
+
+Sens =\# dominant RFAM IDs in cluster / cluster size 
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{ Acknowledgments }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-MAS and JSM are partially funded by a Cancer Council NSW project grant (RG 14-18). 
+MAS and JSM are partially supported  by a Cancer Council NSW project grant (RG 14-18). 
 SES was supported by a Carlsberg travel bursary. 
+Michael Hahsler for developing and disseminating a fast DBSCAN R package.
 
 \bibliographystyle{apalike} 
 \bibliography{dotaligner}
