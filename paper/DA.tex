@@ -16,6 +16,28 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage[margin=1in]{geometry}
+\usepackage{listings}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=bash,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 \newcommand\dotaligner{\texttt{DotAligner}}
 \newcommand\bralibase{\texttt{BRAliBase 2.1}}
@@ -174,7 +196,7 @@ probabilities in thermodynamically equilibrated RNA structure ensembles
 of structure-based alignments \cite{Hofacker15073017}, of which there are many variants {\color{red} include a review of structural alignments }. 
 {\color{red}ProbAlign, StrAL as well}. \\
 
-Will et al. first showed that a dissimilarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with  the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \texttt{NoFold}, which clusters query sequences based on their relative dissimilarity to reference structures {\color{red} NOFOLD REFERENCE}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}.\\
+Will et al. first showed that a (dis)similarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with  the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \texttt{NoFold}, which clusters query sequences based on their relative similarity to reference structures {\color{red} NOFOLD REFERENCE}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}.\\
 
 %Despite of the usage of the basepair probability
 %matrices these methods extract the maximum-weight common secondary structure but
@@ -281,9 +303,8 @@ RNA species from a heterogeneous sample of known RNA structure families.
 We performed all versus all pairwise structure alignments of stochastically sampled RFAM sequences, 
 which were selected with constraints on their sequence composition (PID) to 
 control for and ascertain any sequence-dependent biases (see \textbf{Methods}). The alignment scores 
-of \dotaligner{} and other algorithms were then converted into a dissimilarity matrices and 
-compared to a binary classification matrix of sampled RFAM entries using the R package \texttt{pROC}
-{\cite{robin2011proc}. \\
+of \dotaligner{} and other algorithms were then converted into a similarity matrices and 
+compared to a binary classification matrix of sampled RFAM entries. \\
 
 %%%%%%%%%       FIGURE 3      %%%%%%%%%% 
 \begin{figure}
@@ -332,7 +353,7 @@ generated clusters of variable size that often spanned across many disjoint fami
 We therefore opted for a density-based clustering strategy that, in theory, can decipher 
 clusters of varying density (i.e. subsets of the data with greater sequence-structure homology). 
 The OPTICS (Ordering Points To Identify the Clustering Structure) algorithm \cite{ankerst99ordering}
-was chosen for this purpose, as it has very few implementation parameters to optimise. 
+was chosen for this purpose, as it has very few parameters to optimise. 
 OPTICS is a derivative of the Density-BaSed Clustering for Application with Noise
  (\texttt{DBSCAN}) \cite{ester1996density} algorithm that, as its name states, is suitable 
  for noisy data, such as RNA immunoprecipitation followed by high-throughput sequencing 
@@ -340,8 +361,14 @@ OPTICS is a derivative of the Density-BaSed Clustering for Application with Nois
 
 We then benchmarked the two main OPTICS clustering parameters--Xi steepness threshold 
 and the minimum number of points in a cluster (\textbf{Figure 4})--on a pooled set of 580 
-RFAM sequences and their shuffled controls (see \textbf{Methods}). 
-
+stochastically sampled RFAM sequences encompassing various ranges of sequence similarity, 
+as well as a corresponding set of 580 dinucleotide shuffled controls (see \textbf{Methods}). 
+After performing all vs all pairwise alignments with \dotaligner{}, 
+the alignment scores were normalised from 0 to 1 for the minimal and maximal values, respectively. 
+The resulting similarity matrix was then used to evaluate the effect of OPTICS parameters on clustering performance, revealing that a minimum of 4 points (or sequences) and a steepness threshold of 0.006 
+gave the best results \textbf{Figure 4A}. 
+Extracting only the minimum cluster when 
+\\
 
 %%%%%%%%%       FIGURE 4      %%%%%%%%%% 
   \begin{figure}
@@ -357,14 +384,12 @@ RFAM sequences and their shuffled controls (see \textbf{Methods}).
 \end{figure}
 
 
-\subsection*{ Identifying protein-binding RNA motifs from eCLIP data }
-We applied this clustering methodology to recently published Enhanced Cross-Linking 
-and ImmunoPrecipitation (eCLIP) sequencing data from the ENCODE consortium [\textbf{REF}], 
-which contains eCLIP peaks associated to 44 RNA binding proteins (RBPs). We submitted the
-sequences from eLCIP peaks with strong, highly significant enrichment over background 
-to the above-mentioned clustering strategy (see \textbf{Methods}). \\
+Comparing DA+OPTICS to GraphClust and NoFold
 
-[initial clustering data results]. \\
+\subsection*{ Identifying protein-binding RNA motifs from eCLIP data }
+The optimised parameters for OPTICS clustering of \dotaligner{} output were incorporated into 
+a high-performance computing pipeline that extracts clusters of homologous RNA structural motifs from a set of input sequences (see \textbf{Methods}).  This pipeline was applied to enhanced cross-linked 
+RNA immunoprecipitation (eCLIP) sequencing data from 44 RNA binding proteins from the ENCODE consortium  \cite{van2016robust}. 
 
 \begin{center}
 FIGURE 5 ??? 
@@ -419,14 +444,17 @@ Baseline parameters were then selected via a product rank these 2 metrics
 
 {\color{red} How are MCC and SCI calculated? }\\
 
-Further refinement of the optimal parameters was performed using a binary classifier two sets of 
-stochastically sampled RFAM entries with published structures: 
-(i) a low pairwise sequence identity set, and (ii) a high pairwise sequence identity set, 
-where any two sequences from the same family share between 0-55\% and 56-95\% pairwise sequence identity, respectively. 
-
-
 \subsection*{ Classification of RNA secondary structure families. }
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
+
+Further refinement of the optimal parameters was performed using a binary classifier two sets of 
+200 stochastically sampled RFAM entries with published structures: 
+(i) a low pairwise sequence identity set, and (ii) a high pairwise sequence identity set, 
+where any two sequences from the same family share between 0-55\% and 56-95\% pairwise sequence identity, respectively. A binary classification matrix was then constructed, where sequences \texttt{x} and \texttt{y}
+present a score of 1 if they belong to the same RFAM family, versus a score of 0 if they do not. 
+The similarity matrix resulting from all-vs-all pairwise comparisons with \dotaligner{} was tested for 
+accuracy using the Area Under the Curve AUC of the ROC, as calculated R package \texttt{pROC} \cite{robin2011proc}. 
+A more restricted range of parameter values were then tested on both datasets, {\color{red} namely t k e o, which had the highest impact on alignment accuracy in preliminary testing (SUPP FIG X??)}. Finally, a ranked sum for both datasets of the AUC (first) and lowest average runtime (second) was performed to determine the default runtime parameters for \dotaligner{} {\color{red} Supplementary table X}. \\
 
 
 This was achieved by sampling the entire collection of RFAM entries with published structures 
@@ -438,7 +466,7 @@ and a low PID set, where any two sequences from the same set present greater tha
 \subsection*{ Clustering RNA structures with randomised controls }
 OPTICS benchmarking was performed by stochastically sampling the collection of RFAM 12.0 
 seed alignments using the accompanying \texttt{JAVA} program \texttt{GenerateRFAMsubsets.java}
-(see \textbf{Supplementary Information}) with parameters {\color{red} GET PARAMETERS FROM SERVER}, 
+(see \textbf{Supplementary Information}) with parameters {\color{red} GET PARAMETERS FROM SERVER, how many sequences minimum/maximum}, 
 with 3 ranges of pairwise sequence identity: 1-55\%, 56-75\%, and 75-95\%.  The resulting
 580 unique sequences were then randomised while controlling their dinucleotide content with 
 the \texttt{easel} program included in the \texttt{Infernal} (v1.1.2) software package 
@@ -461,7 +489,11 @@ Precision
 
 \subsection*{ Clustering of protein-bound evolutionarily-conserved RNAseq reads }
 
-The full list of eCLIP peaks was downloaded from \cite{  } 
+The genomic coordinates of ENCODE eCLIP peaks were downloaded in .bed format from the April 2016 release via the ENCODE portal (\url{https://www.encodeproject.org/search}). The resulting 5,040,096 peaks 
+were filtered to keep only those with ≥8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50nt to avoid over-representing the same sequence (see \textbf{Supplementary Information }section 2). The remaining peaks were subsequently filtered by 
+retaining only those that present same-strand overlap with any evolutionarily conserved structure (ECS) predictions from \cite{smith2013widespread}. Finally, the associated genomic sequences were extracted into a .fasta file, which was supplemented with 100 reference RNA structures from 11 RFAM families (see Supplementary Table 1). 
+Merging, overlap, and sequence extraction operations were performed with \texttt{bedtools} version v2.26.0.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -694,12 +726,75 @@ probabilities. Unpaired probabilities are handled in a similar way by
 \noindent  where $p_0$ is the expected probability for an unpaired base to occur at
 random.
 
+\subsection*{ 2.  eCLIP data processing }
+Data in .bigBed format was acquired from the ENCODE data hub from the following link:
+\url{https://www.encodeproject.org/search/?type=Experiment&assay_term_name=eCLIP&files.file_type=bigBed+narrowPeak&month_released=April\%2C+2016}
+
+\begin{lstlisting}
+# Convert accessions to protein IDs
+cut -f 1,16,29 metadata.tsv | sed 's/-human /_/g' | while read line 
+do 
+  F1=$(echo $line | awk '{print $1".bed"}' ) 
+  F2=$( echo $line | awk '{ print $2".bed"}') 
+  cp $F1 $F2 
+done 
+
+# Rename files accordingly
+for file in *bed
+do 
+  mv $file $(head -n 1 $file | cut -f 4).bed
+done
+
+# Filter for greater than or equal to 8x fold enrichment
+# And -log10( P-value ) greater than or equal to  4
+for file in *rep0?.bed 
+do
+  awk '{if ($7 >= 4 && $8 >= 4) print }' $file > ../filtering/${file}_filt3
+done
+
+#Intersect both replicates (>1 overlap) 
+for file in *rep01.bed_filt3 ; do     
+    >&2 echo "Processing "$file
+    bedtools intersect -s -u -f 0.5 -a <( cut -f 1-6 $file ) -b <( cut -f 1-6 ${file//rep01/rep02} )  > ${file}_1
+    bedtools intersect -s -u -f 0.5 -b <( cut -f 1-6 $file ) -a <( cut -f 1-6 ${file//rep01/rep02} )  > ${file}_2
+    
+    # merge peaks if they are close together
+    bedtools merge -d 50 -s -delim "|" -c 4,5,6 -o first,count,first -i <( cat ${file}_1 ${file}_2  | sort -k 1,1 -k 2,2n ) > ${file%*.bed_filt3}_filt_0.5_merged_50_s.bed
+    
+   # intersect with ECS (in file ECS_congruous_sorted.bed6) 
+    bedtools intersect -wo -s -b ${file%*.bed_filt3}_filt_0.5_merged_50_s.bed -a ECS_congruous_sorted.bed6 > ${file%*.bed_filt3}_filt_0.5_merged_50_s_anyECS.bed
+done
+
+#merge all files into one
+cat *_50_s_anyECS_merged.bed > All_ECS_merged_50nt_peaks.bed
+# wc -l  All_ECS_merged_50nt_peaks.bed
+## 2650
+
+#edit sequence names and get sequence from reference genome (hg19) 
+awk 'OFS="\t"{print $1,$2,$3,$4"_"$1"_"$2"_"$3"_"$6,$5,$6}'  ./All_ECS_merged_50nt_peaks.bed > ./All_ECS_merged_50nt_peaks_renamed.bed
+bedtools getfasta -s -name -fi ~/data/fasta/hg19.fa -bed ./All_ECS_merged_50nt_peaks_renamed.bed -fo ./All_ECS_merged_50nt_peaks_renamed.fasta
+
+#combine with known control RNA structure
+cat All_ECS_merged_50nt_peaks_renamed.fasta spike-ins.fasta > All_ECS_merged_50nt_peaks_renamed_spikeIns.fasta
+\end{lstlisting}
 
 %%
 %% TABLES
 %%
-%% If there are any tables, put them here.
-%%
+%\begin{table}
+%\centering
+%\caption{Supplementary Table X: }
+%\medskip
+%\begin{tabular}{ccccc}
+%\hline
+%Params 	low_PI rank 	high_PI rank 	merged rank 	Low AUC 	High AUC 	AUC sum 	Low time 	High Time 	Combined 	low time stdev 	high time stdev 
+%T-10_s-1_k- 0.3_t-0.5_o- 1_e-0.05.dot aligner.score .short 	1	112	112	0.98329790 3 	0.99617899 4 	1.97948	0.06335920 4 	0.07691424 1 	0.140273	0.04164723	0.04868907 5 
+%T-1_s-1_k-0. 3_t-0.8_o-1_ e-0.05.dotali gner.score.s hort 	181	1	181	0.95934248 9 	0.99718898 5 	1.95653	0.06386044 8 	0.06963538 7 	0.133496	0.04032855 5 	0.05003469 8 
+%T-1_s-1_k-0. 3_t-0.5_o-1_ e-0.05.dotali gner.score.s hort 	2	110	220	0.98329790 3 	0.99617899 4 	1.97948	0.06399656 7 	0.07126550 4 	0.135262	0.04146411 1 	0.04598433 1 
+%T-5_s-1_k-0. 3_t-0.5_o-1_ e-0.05.dotali gner.score.s hort 	3	109	327	0.98329790 3 	0.99617899 4 	1.97948	0.06506572 1 	0.06912250 6 	0.134188	0.04589721 5 	0.04647907 1 
+%T-10_s-5_k- 0.3_t-0.8_o- 1_e-0.05.dot aligner.score .short 	184	2	368	0.95934248 9 	0.99718898 5 	1.95653	0.06980044 8 	0.07476498 7 	0.144565	0.04664177	0.04667025 8 
+%T-1_s-5_k-0. 3_t-0.5_o-1_ e-0.05.dotali gner.score.s hort 	4	113	452	0.98329790 3 	0.99617899 4 	1.97948	0.07141248 8 	0.07887591 7 	0.150288	0.04276297 3 	0.05162383 7 
+%T-10_s-1_k- 0.3_t-0.8_o- 1_e-0.05.dot aligner.score .short 	182	3	546	0.95934248 9 	0.99718898 5 	1.95653	0.0654999	0.07663676 7 	0.142137	0.04187294 9 	0.04867886 9 
 
 %\begin{table}
 %\centering
@@ -718,4 +813,25 @@ random.
 %\end{tabular}
 %\end{table}
 
+\begin{table}
+\centering
+\caption{\textbf{Supplementary Table 1.}  List of control RNA structures }
+\begin{tabular}{ccc}
+\hline
+Sequences & RNA family & RFAM ID \\
+\hline
+   5 & 5SRNA & RF00002 \\
+   8 & SNORA72 & RF00138 \\
+  10 & SNORD113 & RF00181\\
+  10 & SNORU3 & RF00012\\
+  10 & SNORU8 & RF00096\\
+   8 & SNR5 & RF01252\\
+   9 & YRNA & RF00019\\
+  10 & mir19 & RF00245\\
+   7 & mir2968 & RF02093\\
+   6 & mir29852 & RF02095\\
+  17 & tRNA & RF00005\\
+\hline
+\end{tabular}
+\end{table}
 \end{document}
