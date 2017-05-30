@@ -386,6 +386,21 @@ Extracting only the minimum cluster when
 
 Comparing DA+OPTICS to GraphClust and NoFold
 
+\begin{table}
+\centering
+\caption{\textbf{Table 1.}  Comparative clustering performance }
+\begin{tabular}{ccccc}
+\hline
+Algorithm & \# Clusters & Sensitivity & Specificity & Accuracy \\
+\hline
+\dotaligner{}+\texttt{OPTICS} & 53 & 0.716 & 0.886& 0.802\\
+\texttt{GraphClust} & 201 & \textbf{0.990} & 0.110 & 0.635\\ % TN=78; FN=11
+\texttt{NoFold} (all CMs) & \textbf{62} & 0.866 & 0.965 & \textbf{0.916 }\\ % 
+\texttt{NoFold} (filtered) & 45 & 0.674 & \textbf{0.976} & 0.826\\ % TP=392;TN=575; FP=14;FN=190
+\hline
+\end{tabular}
+\end{table}
+
 \subsection*{ Identifying protein-binding RNA motifs from eCLIP data }
 The optimised parameters for OPTICS clustering of \dotaligner{} output were incorporated into 
 a high-performance computing pipeline that extracts clusters of homologous RNA structural motifs from a set of input sequences (see \textbf{Methods}).  This pipeline was applied to enhanced cross-linked 
@@ -439,10 +454,15 @@ core parameters were tested on the 8,976 pairwise RNA structure alignments curat
 the amount of alignments producing identical structural topologies to the reference alignment
 was determined using \textit{RNAdistance}. The Structural Conservation Index (SCI), a robust 
 measure of RNA structural alignment integrity \cite{gruber2008strategies}, and the Matthews Correlation Coefficient (MCC) were also calculated (see below) for all resulting alignments. 
+
 Baseline parameters were then selected via a product rank these 2 metrics 
 (\textbf{supplementary data?}).\\
 
-{\color{red} How are MCC and SCI calculated? }\\
+Matthews Correlation Coefficient (MCC) = $\frac{(TP * TN) - (FP * FN)}{ \sqrt{ (TP + FP)(TP + FN)(TN + FP)(TN + FN) }}$\\
+
+Structural Conservation Index (SCI) = $ MFE_{consensus}  / \overline{MFE}_{single}  $\\\
+
+$\delta$SCI = $SCI_{observed} / SCI_{reference}$
 
 \subsection*{ Classification of RNA secondary structure families. }
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
@@ -477,24 +497,35 @@ normalised (min=1, max=0) into a dissimilarity matrix, which was then imported i
  transformation, and subjected to \texttt{OPTICS} clustering as implemented
 in the `dbscan' CRAN repository with a range of parameters (see \textbf{Figure 4A,B}).\\
 
-\noindent {\color{red} CHECK THIS} Specificity and sensitivity were calculated like so: 
+\noindent Clustering performance metrics were calculated like so: 
+\begin{itemize}
+\item True Positives (TP) = Number of representatives from the dominant RFAM family in a cluster;
+\item False Positives (FP) = Number of non-dominant RFAM family representatives in cluster, or clusters
+where there is no dominant RFAM family (i.e. equally represented families), or clusters where dominant sequence is a negative control;
+\item False Negatives (FN) = RFAM sequences that fail to cluster; 
+\item True Negatives (TN) = Negative control sequences that fail to cluster. 
+\item Sensitivity (recall) = TP  / (TP + FN) ;
+\item Specificity  = TN / TN + FP ;
+\item False positive rate =  1 - Specificity ;
+\item Precision = TP / (TP + FP) ;
+\item Accuracy = (TP + TN) / ( TP + TN + FP + FN )  ; 
+\end{itemize}
 
-Spec  = 1 - (\# non-dominant RFAM IDs in cluster /  cluster size )
-
-Sens =\# dominant RFAM IDs in cluster / cluster size 
-
-Recall 
-
-Precision
 
 \subsection*{ Clustering of protein-bound evolutionarily-conserved RNAseq reads }
 
 The genomic coordinates of ENCODE eCLIP peaks were downloaded in .bed format from the April 2016 release via the ENCODE portal (\url{https://www.encodeproject.org/search}). The resulting 5,040,096 peaks 
 were filtered to keep only those with ≥8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50nt to avoid over-representing the same sequence (see \textbf{Supplementary Information }section 2). The remaining peaks were subsequently filtered by 
 retaining only those that present same-strand overlap with any evolutionarily conserved structure (ECS) predictions from \cite{smith2013widespread}. Finally, the associated genomic sequences were extracted into a .fasta file, which was supplemented with 100 reference RNA structures from 11 RFAM families (see Supplementary Table 1). 
-Merging, overlap, and sequence extraction operations were performed with \texttt{bedtools} version v2.26.0.
+Merging, overlap, and sequence extraction operations were performed with \texttt{bedtools} version v2.26.0. \\
 
-
+The normalised similarity matrix resulting from all vs all pairwise comparisons with \dotaligner{} was then 
+subjected to clustering with the \texttt{dbscan} 1.1-1 R package from Michael Hahsler
+ \url{https://github.com/mhahsler/dbscan} using the command `\texttt{opticsXi( optics(D, eps=1, minPts=4, search="dist"), xi = 0.006, minimum=T)}'. The sequences for each cluster were then extracted and submitted to multiple structure alignment with \texttt{mLocaRNA} version 1.9.1 using parameters  `\texttt{--probabilistic --iterations=10  --consistency-transformation --noLP}'.\\
+ 
+The complete analytical pipeline is available at \url{https://github.com/noncodo/BigRedButton},
+which will identify and extract homologous RNA structural motifs from a set of 
+input sequences in fasta format. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{ Acknowledgments }
@@ -815,7 +846,45 @@ cat All_ECS_merged_50nt_peaks_renamed.fasta spike-ins.fasta > All_ECS_merged_50n
 
 \begin{table}
 \centering
-\caption{\textbf{Supplementary Table 1.}  List of control RNA structures }
+\caption{\textbf{Supplementary Table 1.}  List of RFAM families from benchmark that did not cluster}
+\begin{tabular}{cll}
+\hline
+Sequence count & RFAM ID & RFAM family \\
+\hline
+2 & RF00005 &  tRNA \\
+5 & RF00015 &  U4 spliceosomal RNA \\
+8 & RF00020 &  U5 spliceosomal RNA \\
+5 & RF00021 &  Spot 42 RNA \\
+1 & RF00026 &  U6 spliceosomal RNA \\
+10 & RF00059 &  TPP riboswitch (THI element) \\
+5 & RF00167 &  Purine riboswitch \\
+11 & RF00169 &  Bacterial small signal recognition particle RNA \\
+13 & RF00199 &  SL2 RNA \\
+4 & RF00374 &  Gammaretrovirus core encapsidation signal \\
+11 & RF00378 &  Qrr RNA \\
+6 & RF00386 &  Enterovirus 5' cloverleaf cis-acting replication element \\
+6 & RF00389 &  Bamboo mosaic virus satellite RNA cis-regulatory element \\
+4 & RF00444 &  PrrF RNA \\
+17 & RF00494 &  Small nucleolar RNA U2-19 \\
+2 & RF00515 &  PyrR binding site \\
+4 & RF00550 &  Hepatitis E virus cis-reactive element \\
+7 & RF01685 &  6S-Flavo RNA \\
+7 & RF01697 &  Chlorobi-RRM RNA \\
+6 & RF01705 &  Flavo-1 RNA \\
+4 & RF01725 &  SAM-I/IV variant riboswitch \\
+2 & RF01728 &  STAXI RNA \\
+7 & RF01734 &  crcB RNA \\
+1 & RF01750 &  pfl RNA \\
+6 & RF01754 &  radC RNA \\
+4 & RF01764 &  yjdF RNA \\
+5 & RF02033 &  HNH endonuclease-associated RNA and ORF (HEARO) RNA \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{\textbf{Supplementary Table 2.}  List of control RNA structures }
 \begin{tabular}{ccc}
 \hline
 Sequences & RNA family & RFAM ID \\
