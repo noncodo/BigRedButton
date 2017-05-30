@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: DA.aux
+Case mismatch error between cite keys Wilm2006enhanced and wilm2006enhanced
+---line 49 of file DA.aux
+ : \citation{Wilm2006enhanced
+ :                           }
+I'm skipping whatever remains of this command
+The style file: apalike.bst
+Database file #1: dotaligner.bib
+Warning--I didn't find a database entry for "muckstein2006"
+Warning--can't use both volume and number fields in ester1996density
+Warning--empty publisher in Palu2010
+You've used 41 entries,
+            1935 wiz_defined-function locations,
+            740 strings with 11686 characters,
+and the built_in function-call counts, 18695 in all, are:
+= -- 1819
+> -- 899
+< -- 20
++ -- 323
+- -- 311
+* -- 1712
+:= -- 3215
+add.period$ -- 125
+call.type$ -- 41
+change.case$ -- 356
+chr.to.int$ -- 41
+cite$ -- 43
+duplicate$ -- 641
+empty$ -- 1227
+format.name$ -- 370
+if$ -- 3620
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 41
+newline$ -- 208
+num.names$ -- 125
+pop$ -- 290
+preamble$ -- 1
+purify$ -- 355
+quote$ -- 0
+skip$ -- 496
+stack$ -- 0
+substring$ -- 1372
+swap$ -- 98
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 246
+warning$ -- 2
+while$ -- 152
+width$ -- 0
+write$ -- 537
+(There was 1 error message)
