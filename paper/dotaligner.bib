@@ -729,3 +729,73 @@ RNA sequences.},
 	Volume = {4},
 	Year = {2003},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1186/1471-2105-4-44}}
+@article{Middleton25234928,
+	author = {Middleton, S.A. and Kim, J.},
+	title = {NoFold: {RNA} structure clustering without folding or alignment.},
+	journal = {RNA},
+	volume = {20},
+	number = {11},
+	year = {2014},
+	month = {Nov},
+	pages = {1671-1683},
+	pmid = {25234928},
+	doi = {10.1261/rna.041913.113},
+	abstract = {Structures that recur across multiple different transcripts, called
+structure motifs, often perform a similar function-for example,
+recruiting a specific RNA-binding protein that then regulates
+translation, splicing, or subcellular localization. Identifying
+common motifs between coregulated transcripts may therefore yield
+significant insight into their binding partners and mechanism
+of  regulation. However, as most methods for clustering structures
+are based on folding individual sequences or doing many pairwise
+alignments, this results in a tradeoff between speed and accuracy
+that can be problematic for large-scale data  sets. Here we describe
+a novel method for comparing and characterizing RNA secondary
+structures that does not require folding or pairwise alignment
+of the input sequences. Our method uses the idea of constructing
+a distance function between two objects by their respective distances
+to a collection of empirical examples or models, which in our
+case consists of 1973 Rfam family covariance models. Using this
+as a basis for measuring structural similarity, we developed a
+clustering pipeline called NoFold to automatically identify and
+annotate structure motifs within large sequence data sets. We
+demonstrate that NoFold can  simultaneously identify multiple
+structure motifs with an average sensitivity of  0.80 and precision
+of 0.98 and generally exceeds the performance of existing methods.
+We also perform a cross-validation analysis of the entire set
+of Rfam families, achieving an average sensitivity of 0.57. We
+apply NoFold to identify motifs enriched in dendritically localized
+transcripts and report 213 enriched motifs, including both known
+and novel structures.}
+}
+@article{Miladi28334186,
+	author = {Miladi, M. and Junge, A. and Costa, F. and Seemann, S.E. and Hull Havgaard, J. and Gorodkin, J. and Backofen, R.},
+	title = {{RNAscClust}: clustering {RNA} sequences using structure conservation and graph based motifs.},
+	journal = {Bioinformatics},
+	year = {2017},
+	month = {Feb},
+	pmid = {28334186},
+	doi = {10.1093/bioinformatics/btx114},
+	abstract = {Motivation: Clustering RNA sequences with common secondary structure
+is an essential step towards studying RNA function. Whereas structural
+RNA alignment strategies typically identify common structure for
+orthologous structured RNAs, clustering seeks to group paralogous
+RNAs based on structural similarities. However, existing approaches
+for clustering paralogous RNAs, do not take the compensatory base
+pair changes obtained from structure conservation in orthologous
+sequences into account. Results: Here, we present RNAscClust,
+the implementation of a new algorithm to cluster a set of structured
+RNAs taking their respective structural conservation into account.
+For a set of multiple structural alignments of RNA sequences,
+each containing a paralog sequence included in a structural alignment
+of its orthologs, RNAscClust computes minimum  free-energy structures
+for each sequence using conserved base pairs as prior information
+for the folding. The paralogs are then clustered using a graph
+kernel-based strategy, which identifies common structural features.We
+show that the clustering accuracy clearly benefits from an increasing
+degree of compensatory base pair changes in the alignments. Availability:
+RNAscClust is available at \verb+http://www.bioinf.uni+-freiburg.de/Software/RNAscClust.
+Contact: gorodkin@rth.dk or backofen@informatik.uni-freiburg.de.
+Supplementary information: Supplementary data are available at
+Bioinformatics online.}
+}

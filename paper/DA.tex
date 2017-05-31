@@ -1,22 +1,101 @@
-%\documentclass{nature}
-\documentclass[a4paper,11pt]{article}
-%% make sure you have the nature.cls and naturemag.bst files where
-%% LaTeX can find them
-% \bibliographystyle{naturemag}
+%% BioMed_Central_Tex_Template_v1.06
+%%                                      %
+%  bmc_article.tex            ver: 1.06 %
+%                                       %
 
+%%IMPORTANT: do not delete the first line of this template
+%%It must be present to enable the BMC Submission system to
+%%recognise this template!!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                     %%
+%%  LaTeX template for BioMed Central  %%
+%%     journal article submissions     %%
+%%                                     %%
+%%          <8 June 2012>              %%
+%%                                     %%
+%%                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% For instructions on how to fill out this Tex template           %%
+%% document please refer to Readme.html and the instructions for   %%
+%% authors page on the biomed central website                      %%
+%% http://www.biomedcentral.com/info/authors/                      %%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%% BioMed Central currently use the MikTex distribution of         %%
+%% TeX for Windows) of TeX and LaTeX.  This is available from      %%
+%% http://www.miktex.org                                           %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% additional documentclass options:
+%  [doublespacing]
+%  [linenumbers]   - put the line numbers on margins
+
+%%% loading packages, author definitions
+
+%\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout and comment line below
+\documentclass{bmcart}
+
+%%% Load packages
+%\usepackage{amsthm,amsmath}
+%\RequirePackage{natbib}
+%\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
+%\RequirePackage{hyperref}
+\usepackage[utf8]{inputenc} %unicode support
+%\usepackage[applemac]{inputenc} %applemac support if unicode package fails
+%\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
 \usepackage{epsfig}
 \usepackage{subfigure}
 \usepackage{amstext}
 \usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{pslatex}
-\usepackage{apalike}
+%\usepackage{apalike}
 \usepackage{color}
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage[margin=1in]{geometry}
+%\usepackage[margin=1in]{geometry}
 \usepackage{listings}
+
+%Removing Paragraph Indenting in LaTeX
+\setlength{\parindent}{0in}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                             %%
+%%  If you wish to display your graphics for   %%
+%%  your own use using includegraphic or       %%
+%%  includegraphics, then comment out the      %%
+%%  following two lines of code.               %%
+%%  NB: These line *must* be included when     %%
+%%  submitting to BMC.                         %%
+%%  All figure files must be submitted as      %%
+%%  separate graphics through the BMC          %%
+%%  submission process, not included in the    %%
+%%  submitted article.                         %%
+%%                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\def\includegraphic{}
+%\def\includegraphics{}
+
+
+
+%%% Put your definitions there:
+\startlocaldefs
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -39,7 +118,6 @@
   tabsize=3
 }
 
-
 \newcommand\dotaligner{\texttt{DotAligner}}
 \newcommand\bralibase{\texttt{BRAliBase 2.1}}
 \newcommand\pmcomp{\texttt{pmcomp}}
@@ -54,46 +132,122 @@
 \newcommand\rnaalifold{\texttt{RNAalifold}}	
 \newcommand\nw{\texttt{Needleman-Wunsch}}
 
-\newenvironment{affiliations}{%
-    \setcounter{enumi}{1}%
-    \setlength{\parindent}{0in}%
-    \slshape\sloppy%
-    \begin{list}{\upshape$^{\arabic{enumi}}$}{%
-        \usecounter{enumi}%
-        \setlength{\leftmargin}{0in}%
-        \setlength{\topsep}{0in}%
-        \setlength{\labelsep}{0in}%
-        \setlength{\labelwidth}{0in}%
-        \setlength{\listparindent}{0in}%
-        \setlength{\itemsep}{0ex}%
-        \setlength{\parsep}{0in}%
-        }
-    }{\end{list}\par\vspace{12pt}}
+\endlocaldefs
 
-\title{Identification and classification of common RNA structure motifs }
 
-%% Notice placement of commas and superscripts and use of &
-%% in the author list
-
-\author{Martin A. Smith$^{1,2,*\#}$, Stefan E. Seemann$^{2,3,*}$, XiuCheng Quek$^{1,2}$ \& John S. Mattick $^2$}
-
+%%% Begin ...
 \begin{document}
 
-\maketitle
+%%% Start of article front matter
+\begin{frontmatter}
 
-\begin{affiliations}
-\item Garvan Institute of Medical Research, 384 Victoria Street, Sydney 2010, Australia
-\item  St Vincent’s Clinical School, UNSW Australia
-\item University of Copenhagen, Groennegaardsvej 3, Frederiksberg, Denmark\\
- $^*$Contributed equally\\
- $^\#$Corresponding author\\
- m.smith[at]garvan.org.au 
-\end{affiliations}
+\begin{fmbox}
+\dochead{Method}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{abstract}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent  The abundance  and diversity of processed transcripts in eukaryotic genomes poses a challenge 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Identification and classification of common RNA structure motifs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors here                   %%
+%%                                          %%
+%% Specify information, if available,       %%
+%% in the form:                             %%
+%%   <key>={<id1>,<id2>}                    %%
+%%   <key>=                                 %%
+%% Comment or delete the keys which are     %%
+%% not used. Repeat \author command as much %%
+%% as required.                             %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author[
+   addressref={aff1,aff2},                   % id's of addresses, e.g. {aff1,aff2}
+   corref={aff1},                       % id of corresponding address, if any
+   noteref={n1},                        % id's of article notes, if any
+   email={m.smith[at]garvan.org.au}   % email address
+]{\inits{MAS}\fnm{Martin A} \snm{Smith}}
+\author[
+   addressref={aff3},
+   noteref={n1},
+   email={seemann[at]rth.dk}
+]{\inits{SES}\fnm{Stefan E} \snm{Seemann}}
+\author[
+   addressref={aff1,aff2},
+]{\inits{XQ}\fnm{XiuCheng} \snm{Queck}}
+\author[
+   addressref={aff2},
+]{\inits{JSM}\fnm{John S} \snm{Mattick}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors' addresses here        %%
+%%                                          %%
+%% Repeat \address commands as much as      %%
+%% required.                                %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\address[id=aff1]{%                           % unique id
+  \orgname{Garvan Institute of Medical Research}, % university, etc
+  \street{384 Victoria Street},                     %
+  \postcode{NSW 2010}                                % post or zip code
+  \city{Sydney},                              % city
+  \cny{Australia}                                    % country
+}
+\address[id=aff2]{%
+  \orgname{St Vincent’s Clinical School, UNSW Australia},
+  \street{Victoria Street},
+  \postcode{NSW 2010}
+  \city{Sydney},
+  \cny{Australia}
+}
+\address[id=aff3]{%
+  \orgname{Center for non-coding RNA in Technology and Health (RTH), University of Copenhagen},
+  \street{Groennegaardsvej 3},
+  \postcode{1870}
+  \city{Frederiksberg},
+  \cny{Denmark}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter short notes here                   %%
+%%                                          %%
+%% Short notes will be after addresses      %%
+%% on first page.                           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{artnotes}
+%\note{Sample of title note}     % note to the article
+\note[id=n1]{Contributed equally} % note, connected to author
+\end{artnotes}
+
+\end{fmbox}% comment this for two column layout
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Abstract begins here                 %%
+%%                                          %%
+%% Please refer to the Instructions for     %%
+%% authors on http://www.biomedcentral.com  %%
+%% and include the section headings         %%
+%% accordingly for your article type.       %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstractbox}
+
+\begin{abstract} % abstract
+%\parttitle{First part title} %if any
+The abundance  and diversity of processed transcripts in eukaryotic genomes poses a challenge 
 for the systemic classification of their biological functions. Sparse sequence conservation in 
 non-coding sequences and the unreliable nature of RNA structure prediction algorithms further 
 exacerbate this conundrum. Here, we present a unified computational approach for the 
@@ -106,16 +260,69 @@ threshold, this method identifies both known and novel RNA structure motifs from
 immuno-precipitation data for 44 proteins, further expanding the lexicon of functional transcriptomic motifs. 
 \end{abstract}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The keywords begin here                  %%
+%%                                          %%
+%% Put each keyword in separate \kwd{}.     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{keyword}
+\kwd{RNA structure clustering}
+\kwd{Functions of RNA structures}
+\kwd{RNA--protein binding}
+\kwd{Regulation by non-coding RNAs}
+\end{keyword}
+
+% MSC classifications codes, if any
+%\begin{keyword}[class=AMS]
+%\kwd[Primary ]{}
+%\kwd{}
+%\kwd[; secondary ]{}
+%\end{keyword}
+
+\end{abstractbox}
+%
+%\end{fmbox}% uncomment this for twcolumn layout
+
+\end{frontmatter}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Main Body begins here                %%
+%%                                          %%
+%% Please refer to the instructions for     %%
+%% authors on:                              %%
+%% http://www.biomedcentral.com/info/authors%%
+%% and include the section headings         %%
+%% accordingly for your article type.       %%
+%%                                          %%
+%% See the Results and Discussion section   %%
+%% for details on how to create sub-sections%%
+%%                                          %%
+%% use \cite{...} to cite references        %%
+%%  \cite{koon} and                         %%
+%%  \cite{oreg,khar,zvai,xjon,schn,pond}    %%
+%%  \nocite{smith,marg,hunn,advi,koha,mouse}%%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
+% <put your article body there>
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Introduction}
+\section*{Background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The human genome is pervasively transcribed into RNA with less than 2\%
 encoding protein sequences. As genomic technologies progress, an ever 
 increasing amount of non-protein coding RNAs (ncRNA) are being discovered.
-Once class of ncRNAs--long noncoding RNAs (lncRNAs)--are of particular 
+Once class of ncRNAs -- long noncoding RNAs (lncRNAs )-- are of particular 
 interest for functional genome annotation given the large expanses they encompass. 
 Understanding the molecular mechanisms underlying the biological functions of 
-lncRNAs--and how they are disrupted in disease--is required to improve 
+lncRNAs -- and how they are disrupted in disease -- is required to improve 
 the functional annotation of the human genome. \\
 
 So far, only a relatively small quantity of lncRNAs have been functionally characterised, 
@@ -167,12 +374,13 @@ in general,  faster evolutionary turnover.
 %from sequence conservation and freed from one single optimal RNA secondary
 %structure.\\
 
+{\color{red} Perhaps this paragraf should go to the discussion?}
 As the increasing accessibility of next generation sequencing coalesces with precision medicine, 
 in-depth transcriptome profiling will help elucidate the function and clinical impact of disease-associated,
 non-coding single nucleotide variants. 
 Indeed, 80\% of disease-associated single nucleotide polymorphisms occur in non-coding regions 
 \cite{hindorff2009potential,ritchie2014functional}. Thus, elucidating the structural features of RNAs associated to RNA-binding proteins and ribonucleoprotein (RNP) complexes, combined to the systematic classification of their genome-wide occurrence, 
-can identify novel ribonitches (functional RNA structures that are disrupted in disease) 
+can identify novel riboSNitches (functional RNA structures that are disrupted in disease) 
 and help pinpoint the molecular function of non-coding mutations. \\
 
 %
@@ -188,16 +396,19 @@ and help pinpoint the molecular function of non-coding mutations. \\
 %that avoid the examination of all possible alignment states.\\
 
 Identifying RNAs with similar functions involves comparing both their primary sequence 
-and higher-order structures simultaneously. The Sankoff algorithm resolves
+and higher-order structures simultaneously. If the
+sequence similarity falls below 60\% sequence com-
+parison will not find anymore domain similarities that
+are based on structure (Gardner et al., 2005). Hence, methods are needed that find structural similarity independent from sequence conservation and freed from one single optimal RNA secondary structure. The Sankoff algorithm resolves
 the optimal sequence-structure alignment of 2 RNAs \cite{sankoff85}, 
 but its computational complexity limits its practicality. Alternative strategies often 
 employ pre-calculated secondary structure ensembles for each sequence, e.g. basepair
 probabilities in thermodynamically equilibrated RNA structure ensembles
 \cite{McCaskill:1990}. The latter can substantially speed up the calculation
-of structure-based alignments \cite{Hofacker15073017}, of which there are many variants {\color{red} include a review of structural alignments }. 
-{\color{red}ProbAlign, StrAL as well}. \\
+of structure-based alignments \cite{Hofacker15073017}, of which there are many variants.
+The programs PMcomp (Hofacker et al., 2004), LocaRNA (Will et al., 2007), and ProbAlign (PMID:16954142) use the pre-computed base-pair probability matrices of both sequences and score the alignment based on the notion of a common secondary structure. The sequence-structure alignment problem is reduced to a two-dimensional problem by RNApaln (PMID:22115189) and StrAL (Dalli et al., 2006) which reduces base-pair probabilities to base specific probabilities (such as unpaired probability). All these methods do not explicitely consider suboptimal structures in the alignment. The pairwise alignment of basepair probability matrices (dot plots) has been first introduced by CARNA (Palù et al., 2010; Sorescu et al., 2012). CARNA finds iterativelly better alignments with an effective constraint programming technique using a branch and bound scheme. An alternative heuristic is pruning of the dynamical programming matrix without pre-folding constraints, which is implemented by FoldAlign (PMID:17937495,PMID:26704597). \\ 
 
-Will et al. first showed that a (dis)similarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with  the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \texttt{NoFold}, which clusters query sequences based on their relative similarity to reference structures {\color{red} NOFOLD REFERENCE}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}.\\
+Will et al. first showed that a (dis)similarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \texttt{NoFold}, which clusters query sequences based on their relative similarity to reference structures \cite{Middleton25234928}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}. \texttt{RNAscClust}, an extension of \graphclust{}, utilizes the evolutionary signatures of RNA structures as additional classification feature \cite{Miladi28334186}. \\
 
 %Despite of the usage of the basepair probability
 %matrices these methods extract the maximum-weight common secondary structure but
@@ -225,9 +436,9 @@ motifs from ENCODE eCLIP data. The resulting clusters of homolgous RNA structure
 be used to search for homologous structures across reference genomes and transcriptomes.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{ Results }
+\section*{Results and Discussion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{ Ensemble-guided pairwise RNA structure alignment} 
+\subsection*{Ensemble-guided pairwise RNA structure alignment} 
  
 \dotaligner{} leverages the diversity of  suboptimal solutions from a partition function of RNA secondary structure predictions to identify an optimal sequence-structure alignment of two RNAs. 
 The algorithm overcomes the limitations of comparing unique RNA 
@@ -235,22 +446,6 @@ secondary structures (such as minimum free energy predictions) to yield
 an optimal sequence alignment that considers mutual base pair probabilities.
 \textbf{Figure 1} illustrates a structural alignment performed with \dotaligner{}
 in contrast to an alignment that considers only sequence composition.\\
-
-%%%%%%%%         FIGURE 1       %%%%%%%%%
-\begin{figure}
- \includegraphics[width=\textwidth]{fig1}
-\caption { \textbf{Schematic of a pairwise alignment with DotAligner. }
-  A dynamic  programming matrix is first filled in based on sequence 
-  similarity (top left--color intensity indicates cumulative sequence similarity score). 
-  A partition function over all pairwise sequence alignments is then calculated and 
-  interrogated for structural compatibility by stochastic backtracking. 
-  Two ensemble of suboptimal secondary structures are considered for this purpose
-  (bottom left and top right dot plots; blue lines indicate cumulative basewise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
-  and associated consensus secondary structure is contrasted to that produced 
-  by DotAligner, exposing the common structural features hidden in the suboptimal 
-  base pairing ensemble of both sequences. 
- }
-\end{figure}
 
 A major criteria for the implementation was a fast running time to make 
 \dotaligner applicable for RNA structure clustering of large data sets.
@@ -273,16 +468,6 @@ state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{}
 \cite{havgaard2007fast,sundfeld2015foldalign} and \locarna{} \cite{Will17432929}
 (\textbf{Figure 2}).\\
 
-%%%%%%%%%       FIGURE 2       %%%%%%%%%% 
-\begin{figure}
- \includegraphics[width=\textwidth]{fig2}
- \caption {\textbf{Comparison of RNA structure alignment qualities.}  The
- Matthews Correlation Coefficient (\textbf{A}), Structural Conservation Index  
- (\textbf{B}), and \texttt{RNAdistance} calculated topological edit distance 
- (\textbf{C}) are compared between the \rnaalifold{} consensus of the computed 
- alignment and the and reference \bralibase{} alignment consensus.  }
-\end{figure}
-
 Interestingly, many of the pairwise structure alignments produced Structural 
 Conservation Index (SCI) scores above those from the \bralibase{} reference alignments 
 (\textbf{Figure 2B}). The SCI represents the alignment consensus energy normalized
@@ -295,7 +480,7 @@ algorithms tend to overestimate the amount of paired bases in consensus RNA stru
 However, another possibility is that \bralibase{} alignments do not correctly depict several RNA familes, 
 which may have been automatically generated in RFAM based on similarity to a covariance model.\\
 
-\subsection*{ Fast and accurate classification of RNA structures  } 
+\subsection*{Fast and accurate classification of RNA structures} 
 
 The intended application of \dotaligner{}  is the identification and
 classification of RNA structural motifs from a large and diverse set of sequences of interest. 
@@ -304,23 +489,8 @@ RNA species from a heterogeneous sample of known RNA structure families.
 We performed all versus all pairwise structure alignments of stochastically sampled RFAM sequences, 
 which were selected with constraints on their sequence composition (PID) to 
 control for and ascertain any sequence-dependent biases (see \textbf{Methods}). The alignment scores 
-of \dotaligner{} and other algorithms were then converted into a similarity matrices and 
+of \dotaligner{} and other algorithms were then converted into a similarity matrix and 
 compared to a binary classification matrix of sampled RFAM entries. \\
-
-%%%%%%%%%       FIGURE 3      %%%%%%%%%% 
-\begin{figure}
- \includegraphics[width=\textwidth]{fig3}
- \caption { \textbf{Classification of known RNA structures. }
- (\textbf{A}) Receiving Operator Characteristic (ROC) curves measuring the classification
- accuracy by contrasting the computed similarity matrices of each algorithm 
- to a binary classification matrix of RFAM  sequences (1 if same family; 
- 0 if different). High PID =  56-95\% pairwise sequence identity; Low PID  = 1-55\%.
- (\textbf{B}) Precision-recall curve, {\color{red} where precision =  TP/(TP+FN) and Recall = TP/(TP+TN)};  
- (\textbf{C}) Area Under the Curve (AUC) of the ROC values with 95\% confidence intervals; 
- (\textbf{D}) Distribution of computation time (N.B. a fixed upper limit of 120 s was 
- imposed for \carna{}). 
- }
-\end{figure}
 
 Despite the seemingly poor quality of pairwise alignments generated by \dotaligner{}, it 
 reproduces the known classification of RFAM structures more accurately than almost all 
@@ -338,7 +508,7 @@ sequence alignment algorithm that ignores secondary structure information--perfo
 faster than \dotaligner{} on average, most likely due to the presence of stretches of 
 homologous sequences within biologically related RNAs.  \\
 
-\subsection*{ Density-based clustering of homologous RNA structures }
+\subsection*{Density-based clustering of homologous RNA structures}
 
 Given \dotaligner{}'s accurate classification of known structured RNA, we subjected its
 output to cluster analysis to identify and extract input sequences which display common
@@ -377,50 +547,11 @@ to be subject to over-fitting in this example. We thus removed the CMs associate
 in our benchmarking dataset from the \texttt{NoFold} algorithm, which yielded lower sensitivity and less accurate qualitative cluster metrics than the \dotaligner{} and OPTICS combination. Interestingly, 
 the specificity of  \texttt{NoFold}  increased slightly despite removing 72 CMs from its classification set. 
 
-%%%%%%%%%       FIGURE 4      %%%%%%%%%% 
-  \begin{figure}
- \includegraphics[width=\textwidth]{fig4}
- \caption { \textbf{Comparative clustering benchmark of RFAM sequences and their shuffled controls}. Clustering performance metrics of 3 algorithms on 580 reference RFAM 
- structures and their dinucleotide-shuffled controls. (\textbf{A}) Sensitivity vs false positive rate; (\textbf{B}) Qualitative cluster statistics (horizontal dashed line indicate real amount of clusters from unique RFAM families). }
-\end{figure}
 
-
-\begin{table}
-\centering
-\caption{\textbf{Table 1.}  Comparative clustering performance }
-\begin{tabular}{ccccc}
-\hline
-Algorithm & \# Clusters & Sensitivity & Specificity & Accuracy \\
-\hline
-\dotaligner{}+\texttt{OPTICS} & 53 & 0.716 & 0.886& 0.802\\
-\texttt{GraphClust} & 201 & \textbf{0.990} & 0.110 & 0.635\\ % TN=78; FN=11
-\texttt{NoFold} (all CMs) & \textbf{62} & 0.866 & 0.965 & \textbf{0.916 }\\ % 
-\texttt{NoFold} (filtered) & 45 & 0.674 & \textbf{0.976} & 0.826\\ % TP=392;TN=575; FP=14;FN=190
-\hline
-\end{tabular}
-\end{table}
-
-
-\subsection*{ Identifying protein-binding RNA motifs from eCLIP data }
+\subsection*{Identifying protein-binding RNA motifs from eCLIP data}
 The optimised parameters for OPTICS clustering of \dotaligner{} output were incorporated into 
 a high-performance computing pipeline that extracts clusters of homologous RNA structural motifs from a set of input sequences (see \textbf{Methods}).  This pipeline was applied to enhanced cross-linked 
 RNA immunoprecipitation (eCLIP) sequencing data from 44 RNA binding proteins from the ENCODE consortium  \cite{van2016robust}. 
-
-%%%%%%%%%       FIGURE 5      %%%%%%%%%% 
-  \begin{figure}
- \includegraphics[width=\textwidth]{fig5}
- \caption { \textbf{ De novo homologous RNA motif identification}. 
- (\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colors represent 
- significant clusters. 
- (\textbf{B}) Reachability plot of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein 
- in each cluster is displayed next to significant clusters; those with an asterix and portrayed below.
- (\textbf{C}) Multiple structure alignment generated by \texttt{mLocaRNA} on the sequences from a 
- cluster containing both RFAM snoRNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
-An unannotated DKC1-bound sequence is marked with an asterix.
-(\textbf{E}) \texttt{RNAalifold} consensus of the alignment displayed in (\textbf{C}), 
-a cluster of impartially detected DKC1-bound snoRNAs (\textbf{E}), 
-and a novel UPF1-bound motif (\textbf{F}). }
-\end{figure}
 
 If a structural motif is targeted by a RBP, it is highly probably that the associated CLIPseq peaks 
 do not encompass the entire sequence that forms the structural motif, since 
@@ -437,7 +568,7 @@ compared to XXX random peaks. \\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Discussion}
+\section*{Conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Given its relative speed and accuracy, \dotaligner{} can be used to generate larger 
 (dis)similarity matrices for cluster analysis than other pairwise structure 
@@ -455,14 +586,17 @@ sequences from a large amount of noisy input; an ideal application
 for screening high-throughput sequencing data, such as RNA 
 immunoprecipitaion data, for common structural motifs. 
 
+{\color{red} weaknesses: boundaries, paramter-choice of algorithms. applications: riboswitches, \ldots}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{ Materials and Methods }
+\section*{Methods}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{ Benchmarking and parameter optimisation. }
+\subsection*{Benchmarking and parameter optimisation}
 The \dotaligner{} algorithm implements several theoretical parameters that first need to 
 be tuned before being applied to biological sequence analysis.\textbf{ All combinations} of 
 core parameters were tested on the 8,976 pairwise RNA structure alignments curated in the 
-\bralibase{} reference dataset \cite{Wilm2006enhanced}. For each set of parameter combinations, 
+\bralibase{} reference dataset \cite{wilm2006enhanced}. For each set of parameter combinations, 
 the amount of alignments producing identical structural topologies to the reference alignment
 was determined using \textit{RNAdistance}. The Structural Conservation Index (SCI), a robust 
 measure of RNA structural alignment integrity \cite{gruber2008strategies}, and the Matthews Correlation Coefficient (MCC) were also calculated (see below) for all resulting alignments. 
@@ -476,7 +610,7 @@ Structural Conservation Index (SCI) = $ MFE_{consensus}  / \overline{MFE}_{singl
 
 $\delta$SCI = $SCI_{observed} / SCI_{reference}$
 
-\subsection*{ Classification of RNA secondary structure families. }
+\subsection*{Classification of RNA secondary structure families}
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
 
 Further refinement of the optimal parameters was performed using a binary classifier two sets of 
@@ -495,7 +629,7 @@ on their sequence composition. Specifically, we extracted a high Pairwise sequen
 and a low PID set, where any two sequences from the same set present greater than or less than 
 55\% PSI. The 
 
-\subsection*{ Clustering RNA structures with randomised controls }
+\subsection*{Clustering RNA structures with randomised controls}
 OPTICS benchmarking was performed by stochastically sampling the collection of RFAM 12.0 
 seed alignments using the accompanying \texttt{JAVA} program \texttt{GenerateRFAMsubsets.java}
 (see \textbf{Supplementary Information}) with parameters {\color{red} GET PARAMETERS FROM SERVER, how many sequences minimum/maximum}, 
@@ -524,10 +658,10 @@ where there is no dominant RFAM family (i.e. equally represented families), or c
 \end{itemize}
 
 
-\subsection*{ Clustering of protein-bound evolutionarily-conserved RNAseq reads }
+\subsection*{Clustering of protein-bound evolutionarily-conserved RNAseq reads}
 
 The genomic coordinates of ENCODE eCLIP peaks were downloaded in .bed format from the April 2016 release via the ENCODE portal (\url{https://www.encodeproject.org/search}). The resulting 5,040,096 peaks 
-were filtered to keep only those with ≥8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50nt to avoid over-representing the same sequence (see \textbf{Supplementary Information }section 2). The remaining peaks were subsequently filtered by 
+were filtered to keep only those with $\ge$8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50nt to avoid over-representing the same sequence (see \textbf{Supplementary Information }section 2). The remaining peaks were subsequently filtered by 
 retaining only those that present same-strand overlap with any evolutionarily conserved structure (ECS) predictions from \cite{smith2013widespread}. Finally, the associated genomic sequences were extracted into a .fasta file, which was supplemented with 100 reference RNA structures from 11 RFAM families (see Supplementary Table 1). 
 Merging, overlap, and sequence extraction operations were performed with \texttt{bedtools} version v2.26.0. \\
 
@@ -539,19 +673,187 @@ The complete analytical pipeline is available at \url{https://github.com/noncodo
 which will identify and extract homologous RNA structural motifs from a set of 
 input sequences in fasta format. \\
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{ Acknowledgments }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Backmatter begins here                   %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{backmatter}
+
+\section*{Competing interests}
+  The authors declare that they have no competing interests.
+
+\section*{Author's contributions}
+  Text for this section \ldots
+
+\section*{Acknowledgements}
 MAS and JSM are partially supported  by a Cancer Council NSW project grant (RG 14-18). 
-SES was supported by a Carlsberg travel bursary. 
+SES was supported by a Carlsberg Foundation grant (2011\_01\_0884) and the Innovation Fund Denmark (0603-00320B). 
 Michael Hahsler for developing and disseminating a fast DBSCAN R package.
 
-\bibliographystyle{apalike} 
-\bibliography{dotaligner}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  Bmc_mathpys.bst  will be used to                       %%
+%%  create a .BBL file for submission.                     %%
+%%  After submission of the .TEX file,                     %%
+%%  you will be prompted to submit your .BBL file.         %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% if your bibliography is in bibtex format, use those commands:
+\bibliographystyle{bmc-mathphys} % Style BST file (bmc-mathphys, vancouver, spbasic).
+\bibliography{dotaligner}      % Bibliography file (usually '*.bib' )
+
+% for author-year bibliography (bmc-mathphys or spbasic)
+% a) write to bib file (bmc-mathphys only)
+% @settings{label, options="nameyear"}
+% b) uncomment next line
+%\nocite{label}
+
+% or include bibliography directly:
+% \begin{thebibliography}
+% \bibitem{b1}
+% \end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Figures                       %%
+%%                               %%
+%% NB: this is for captions and  %%
+%% Titles. All graphics must be  %%
+%% submitted separately and NOT  %%
+%% included in the Tex document  %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% Do not use \listoffigures as most will included as separate files
+
+\section*{Figures}
+
+%%%%%%%%         FIGURE 1       %%%%%%%%%
+\begin{figure}[h!]
+\includegraphics[width=\textwidth]{fig1}
+ \caption {\csentence{Schematic of a pairwise alignment with DotAligner.}
+  A dynamic  programming matrix is first filled in based on sequence 
+  similarity (top left--color intensity indicates cumulative sequence similarity score). 
+  A partition function over all pairwise sequence alignments is then calculated and 
+  interrogated for structural compatibility by stochastic backtracking. 
+  Two ensemble of suboptimal secondary structures are considered for this purpose
+  (bottom left and top right dot plots; blue lines indicate cumulative basewise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
+  and associated consensus secondary structure is contrasted to that produced 
+  by DotAligner, exposing the common structural features hidden in the suboptimal 
+  base pairing ensemble of both sequences. 
+ }
+\end{figure}
+
+
+%%%%%%%%%       FIGURE 2       %%%%%%%%%% 
+\begin{figure}[h!]
+ \includegraphics[width=\textwidth]{fig2}
+ \caption {\csentence{Comparison of RNA structure alignment qualities.}  The
+ Matthews Correlation Coefficient (\textbf{A}), Structural Conservation Index  
+ (\textbf{B}), and \texttt{RNAdistance} calculated topological edit distance 
+ (\textbf{C}) are compared between the \rnaalifold{} consensus of the computed 
+ alignment and the and reference \bralibase{} alignment consensus.  }
+\end{figure}
+
+
+%%%%%%%%%       FIGURE 3      %%%%%%%%%% 
+\begin{figure}[h!]
+ \includegraphics[width=\textwidth]{fig3}
+ \caption {\csentence{Classification of known RNA structures. }
+ (\textbf{A}) Receiving Operator Characteristic (ROC) curves measuring the classification
+ accuracy by contrasting the computed similarity matrices of each algorithm 
+ to a binary classification matrix of RFAM  sequences (1 if same family; 
+ 0 if different). High PID =  56-95\% pairwise sequence identity; Low PID  = 1-55\%.
+ (\textbf{B}) Precision-recall curve, {\color{red} where precision =  TP/(TP+FN) and Recall = TP/(TP+TN)};  
+ (\textbf{C}) Area Under the Curve (AUC) of the ROC values with 95\% confidence intervals; 
+ (\textbf{D}) Distribution of computation time (N.B. a fixed upper limit of 120 s was 
+ imposed for \carna{}). }
+\end{figure}
+
+
+%%%%%%%%%       FIGURE 4      %%%%%%%%%% 
+\begin{figure}[h!]
+ \includegraphics[width=\textwidth]{fig4}
+ \caption {\csentence{Comparative clustering benchmark of RFAM sequences and their shuffled controls}. Clustering performance metrics of 3 algorithms on 580 reference RFAM 
+ structures and their dinucleotide-shuffled controls. (\textbf{A}) Sensitivity vs false positive rate; (\textbf{B}) Qualitative cluster statistics (horizontal dashed line indicate real amount of clusters from unique RFAM families). }
+\end{figure}
+
+
+%%%%%%%%%       FIGURE 5      %%%%%%%%%% 
+\begin{figure}[h!]
+ \includegraphics[width=\textwidth]{fig5}
+ \caption {\csentence{ De novo homologous RNA motif identification}. 
+ (\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colors represent 
+ significant clusters. 
+ (\textbf{B}) Reachability plot of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein 
+ in each cluster is displayed next to significant clusters; those with an asterix and portrayed below.
+ (\textbf{C}) Multiple structure alignment generated by \texttt{mLocaRNA} on the sequences from a 
+ cluster containing both RFAM snoRNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
+An unannotated DKC1-bound sequence is marked with an asterix.
+(\textbf{E}) \texttt{RNAalifold} consensus of the alignment displayed in (\textbf{C}), 
+a cluster of impartially detected DKC1-bound snoRNAs (\textbf{E}), 
+and a novel UPF1-bound motif (\textbf{F}). }
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Tables                        %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use of \listoftables is discouraged.
+%%
+\section*{Tables}
+
+%%%%%%%%%     TABLE 1    %%%%%%%%% 
+\begin{table}[h!]
+\caption{ Comparative clustering performance. }
+ \begin{tabular}{ccccc}
+ \hline
+ Algorithm & \# Clusters & Sensitivity & Specificity & Accuracy \\
+ \hline
+ \dotaligner{}+\texttt{OPTICS} & 53 & 0.716 & 0.886& 0.802\\
+ \texttt{GraphClust} & 201 & \textbf{0.990} & 0.110 & 0.635\\ % TN=78; FN=11
+ \texttt{NoFold} (all CMs) & \textbf{62} & 0.866 & 0.965 & \textbf{0.916 }\\ % 
+ \texttt{NoFold} (filtered) & 45 & 0.674 & \textbf{0.976} & 0.826\\ % TP=392;TN=575; FP=14;FN=190
+ \hline
+ \end{tabular}
+\end{table}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Additional Files              %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Additional Files}
+  \subsection*{Additional file 1 --- Supplemental Material}
+    More detailed description of the \dotaligner{} implementation, RNA structure clustering and eCLIP data processing, and Supplemetal Tables and Figures summarizing study results.
+
+\end{backmatter}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage 
-\section*{ Supplementary Information }
+%\newpage 
+\clearpage
+
+\section*{Additional file 1 --- Supplemental Material}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection*{ 1. \dotaligner{} implementation }
@@ -932,7 +1234,6 @@ Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount
  structures and their dinucleotide-shuffled controls (horizontal dashed line indicates 
  expected amount of clusters, or unique RFAM families). }
 \end{figure}
-
 
 
 \end{document}
