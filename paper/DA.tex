@@ -248,17 +248,12 @@
 
 \begin{abstract} % abstract
 %\parttitle{First part title} %if any
-The abundance  and diversity of processed transcripts in eukaryotic genomes possesses a challenge 
-for the systemic classification of their biological functions. Sparse sequence conservation in 
-non-coding sequences and the unreliable nature of RNA structure prediction algorithms further 
-exacerbate this conundrum. Here, we present a unified computational approach for the 
+The diversity of processed transcripts in eukaryotic genomes poses a challenge 
+for the classification of their biological functions. Sparse sequence conservation in 
+non-coding sequences and the unreliable nature of RNA structure predictions further 
+exacerbate this conundrum. Here, we describe a computational method for the 
 unsupervised discovery and classification of homologous RNA structure motifs from a set of 
-sequences of interest.  At its core lies DotAligner, a heuristic pairwise RNA structure alignment 
-algorithm that considers both sequence similarity and the ensemble of sub-optimal RNA base-pairings.  
-Our approach outperforms other state of the art tools at classifying known RNA structure families, 
-both in time and accuracy. When combined to density-based clustering using an empirically measured 
-threshold, this method identifies both known and novel RNA structure motifs from ENCODE 
-immuno-precipitation data for 44 proteins, further expanding the lexicon of functional transcriptomic motifs. 
+sequences of interest.  Our approach outperforms other tools at classifying known RNA structure families, both in time and accuracy. It identifies known and novel structure motifs from ENCODE immuno-precipitation data of 44 RNA-binding proteins. 
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -269,10 +264,13 @@ immuno-precipitation data for 44 proteins, further expanding the lexicon of func
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \begin{keyword}
-\kwd{RNA structure clustering}
 \kwd{Functions of RNA structures}
-\kwd{RNA--protein binding}
+\kwd{RNA structure clustering}
+\kwd{Machine learning}
+\kwd{RNA--protein interactions}
+\kwd{Functional genome annotation}
 \kwd{Regulation by non-coding RNAs}
 \end{keyword}
 
@@ -318,29 +316,16 @@ immuno-precipitation data for 44 proteins, further expanding the lexicon of func
 \section*{Background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The human genome is pervasively transcribed into RNA with less than 2\%
 encoding protein sequences. As genomic technologies progress, an ever
-increasing amount of non-protein coding RNAs (ncRNA) are being discovered. Many
-ncRNAs lack sequence conservation or sequence motifs, in contrast to the open
-reading frame of protein-coding RNA. Instead, the higher-order structure of RNA
-molecules is an essential feature of ncRNAs that can be used for their
-classification and the inference of their biological function. \\
-
+increasing amount of non-protein coding RNAs (ncRNA) are being discovered. 
 Long noncoding RNAs (lncRNAs) are of particular interest for functional genome
-annotation given the large expanses they encompass.  Understanding the
+annotation given their abundance throughout the genome.  So far, few lncRNAs have been functionally characterised, and most that have seem to be involved in regulation of gene expression and epigenetic states 
+\cite{morris2014rise,engreitz2016long}. Understanding the
 molecular mechanisms underlying the biological functions of lncRNAs -- and how
 they are disrupted in disease -- is required to improve the functional
-annotation of the human genome. So far, only a relatively small quantity of
-lncRNAs have been functionally characterised, with regulation of gene
-expression and epigenetic states recurring as common biological functions
-\cite{morris2014rise,engreitz2016long}.  We, and others, hypothesise that
-lncRNAs act as scaffolds for the recruitment of proteins and assembly of
-ribonucleoproteins (RNPs), mediated by the presence of modular RNA structures,
-akin to the domain organisation of proteins
-\cite{zappulla2006rna,hogg2008structured,rinn2012genome,mercer2013structure,smith2013widespread,chujo2016architectural,blythe2016ins}.
-Protein-interacting regions of lncRNAs are likely to contain a combination of
-sequence and structure motifs that confer binding specificity.\\
+annotation of the human genome. \\
 
+Many ncRNAs lack sequence conservation or sequence motifs, in contrast to protein-coding genes.
 Most small ncRNAs have well characterised secondary and tertiary structures, as
 evidenced in RFAM, the largest collection of curated RNA families (2,588
 families as of version 12.2 \cite{rfam12}). In contrast, determining the
@@ -348,153 +333,93 @@ structural features of lncRNAs is a complex problem given their size and, in
 general, faster evolutionary turnover. These challenges have raised doubts
 concerning the prevalence of functional structural  motifs in lncRNAs
 \cite{eddy2014computational,rivas2016statistical}, despite evolutionary and
-biochemical support of conserved base-pairing interactions
-\cite{smith2013widespread,spitale2015structural,lu2016rna}.\\
-
-%The higher-order structural features of protein-binding RNAs are 
-%subjected to different evolutionary dynamics than sequence constrained 
-%regions, where selective pressures to preserve higher-order 
-%structures facilitate compensatory and covariating mutations 
-%\cite{pang2006rapid,smith2013widespread,johnsson2014evolutionary}.\\
-  
-%It has been shown that if sequence similarity falls below 60\%--the 
-%`twilight zone' of multiple sequence alignment--sequence-centric approaches 
-%for the identification of RNA structures perform poorly  \cite{Gardner15860779}.
-%For ncRNAs, sequence alignments often consider structural elements of
-%the molecules to accurately compare their biological features. A structural 
-%alignment of two RNAs with similar higher-order structures 
-%involves aligning both sequence similarities and homologous paired,
-%helical regions of the molecules. This often produces results that 
-%can differ significantly from the optimal sequence alignment, since 
-%the conservation of sequence may be under less selective pressure than 
-%conservation of structural features. However, the relative biological 
-%importance of sequence versus structure
-%varies across all ncRNAs; micro RNAs have strong sequence and structure constraints, 
-%whereas tRNAs are mostly constrained at the level of tertiary structure
-%(the anti-codon being the exception). It is therefore essential to 
-%accommodate a dynamic range of sequence-structure weight functions 
-%when comparing two RNA sequences impartially.
-%
-%competing structures and
-%suboptimal structures may support or even drive the functionality of an RNA
-%domain (e.g.  riboswitches). Hence, methods are needed that find structural similarity independent
-%from sequence conservation and freed from one single optimal RNA secondary
-%structure.\\
-
-%
-%For clustering of RNA domains a dissimilarity measurement of all pairs of query
-%structures is needed. The dissimilarity is described through a pairwise weighted
-%string alignment with arbitrary pairwise dependencies (for base pairings). The
-%Needleman-Wunsch algorithm solves the maximum weight string alignment
-%problem by dynamic programming in $O(N^2)$ by preserving the sequence order and
-%maximizing the similarity. The consideration of pairs of nucleotides in each
-%sequence that form intra-molecular interactions extends the problem to pairwise
-%dependencies among positions in each string. This problem variant is
-%MAX-SNP-hard. However, the problem can be attacked by intelligent heuristics
-%that avoid the examination of all possible alignment states.\\
+biochemical support of conserved base pairing interactions
+\cite{smith2013widespread,spitale2015structural,lu2016rna}.
+Nonetheless, the higher-order structure of RNA molecules is an essential feature of ncRNAs that can be used for their classification and the inference of their biological function. We, and others, hypothesise that
+lncRNAs act as scaffolds for the recruitment of proteins and assembly of
+ribonucleoproteins (RNPs), mediated by the presence of modular RNA structures,
+akin to the domain organisation of proteins
+\cite{zappulla2006rna,hogg2008structured,rinn2012genome,mercer2013structure,smith2013widespread,chujo2016architectural,blythe2016ins}.
+Protein-interacting regions of lncRNAs are likely to contain a combination of
+sequence and structure motifs that confer binding specificity, which may 
+be present in multiple target transcripts. For example, there is evidence that 
+sequence and structure components of transposable elements, 
+which are frequent in lncRNAs \cite{kapusta2013transposable,hezroni2015principles}, 
+have been co-opted into mammalian gene regulatory networks \cite{kunarso2010transposable,kelley2012transposable}. \\
 
 Identifying RNAs with similar functions involves comparing both their primary
-sequence and higher-order structures simultaneously. If the sequence similarity
-falls below 60\%, sequence comparison will not find anymore domain similarities
-that are based on structure \cite{Gardner15860779}. Hence, methods are needed
+sequence and higher-order structures simultaneously. However, sequence-based 
+methods to identify common structural features perform poorly when sequence 
+identity falls below 60\%  \cite{Gardner15860779}. Hence, methods are needed
 that find structural similarity independent from sequence conservation and
-freed from one single optimal RNA secondary structure. The Sankoff algorithm
+freed from single RNA secondary structure predictions. The Sankoff algorithm
 resolves the optimal sequence-structure alignment of two RNAs \cite{sankoff85},
 but its computational complexity limits its practicality. Alternative
 strategies often employ pre-calculated secondary structure ensembles for each
-sequence, e.g. basepair probabilities in thermodynamically equilibrated RNA
+sequence, e.g. base pair probabilities in thermodynamically equilibrated RNA
 structure ensembles \cite{McCaskill:1990}. The latter can substantially speed
 up the calculation of structure-based alignments \cite{Hofacker15073017}, of
-which there are many variants.  The programs PMcomp \cite{Hofacker15073017},
-LocaRNA \cite{Will17432929}, and ProbAlign \cite{Roshan16954142} use the pre-computed
-basepair probability matrices of both sequences and score the alignment based
+which there are many variants.  The programs \texttt{PMcomp} \cite{Hofacker15073017},
+\locarna{} \cite{Will17432929}, and \texttt{ProbAlign} \cite{Roshan16954142} use the pre-computed
+base pair probability matrices of both sequences and score the alignment based
 on the notion of a common secondary structure. The sequence-structure alignment
-problem is reduced to a two-dimensional problem by RNApaln \cite{Lorenz22115189} and
-StrAL \cite{Dalli16613908} which reduce basepair probabilities to base
-specific probabilities (such as unpaired probability). All these methods do not
-explicitely consider suboptimal structures in the alignment. The pairwise
-alignment of basepair probability matrices (dot plots) has been first
-introduced by CARNA \cite{Palu2010,Sorescu2012}. CARNA finds
-iterativelly better alignments with an effective constraint programming
-technique using a branch and bound scheme. Another heuristic is pruning
-of the dynamical programming matrix without pre-folding constraints, which is
-implemented by FoldAlign \cite{Havgaard17937495,Sundfeld26704597}. \\ 
+problem is reduced to a two-dimensional problem by \texttt{RNApaln} \cite{Lorenz22115189} and
+\texttt{StrAL} \cite{Dalli16613908}, which reduce base pair probabilities to base
+specific probabilities (such as a base-wise unpaired probability). All these methods fail 
+to explicitly consider suboptimal structures in the alignment. The pairwise
+alignment of base pairing probability matrices (RNA dot plots) was first introduced 
+by \carna{} \cite{Palu2010,Sorescu2012}, which iteratively improves alignments using a constraint programming technique implementing a branch and bound scheme. 
+Another heuristic is pruning of the dynamical programming matrix without pre-folding constraints, as implemented by \texttt{FoldAlign} \cite{Havgaard17937495,Sundfeld26704597}. \\ 
 
-Will \textit{et al.} \cite{Will17432929} first showed that a (dis)similarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \nofold, which clusters query sequences based on their relative similarity to reference structures \cite{Middleton25234928}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}. \texttt{RNAscClust}, an extension of \graphclust{}, utilizes the evolutionary signatures of RNA structures as additional classification feature \cite{Miladi28334186}. \\
-
-%Despite of the usage of the basepair probability
-%matrices these methods extract the maximum-weight common secondary structure but
-%do not explicitly consider suboptimal structures in the alignment. The pairwise
-%alignment of basepair probability matrices (dot plots) has been first introduced
-%by \carna{} \cite{Palu2010,Sorescu2012}. \carna{} finds iteratively better
-%alignments with an effective constraint programming technique using a branch and
-%bound scheme (propagator). Beside of \locarna{} and a method based on directed 
-%acyclic graph kernels \cite{Sato18647390}, the alignment-free approach \graphclust{}
-%\cite{Heyne22689765} has been used to cluster RNA structure in common domains.\\
-
-%%%{\color{red} Perhaps we should talk about alternative approaches less in this section, 
-%%%and instead mention them when being compared in the Results. We need to explain
-%%%how \dotaligner{} differs from related existing tools (namely ProbAlign and pmcomp/RNApaln
-%%%to highlight its innovation. We can expand on this in the discussion perhaps as well}
+Will \textit{et al.} \nocite{Will17432929} first showed that a (dis)similarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \texttt{NoFold}, which clusters query sequences based on their relative similarity to a panel of reference structure motif profiles \cite{Middleton25234928}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}. \texttt{RNAscClust}, an extension of \graphclust{}, utilizes the evolutionary signatures of RNA structures as additional classification feature \cite{Miladi28334186}. \\
 
 Here, we describe a computational pipeline for the identification and classification of
 homologous RNA structures from a large set of query sequences. At its core lies \dotaligner{}, a
-heuristic pairwise sequence alignment algorithm that considers suboptimal 
-base-pairing probabilities. We compare \dotaligner{} with other pairwise RNA structure 
-alignment algorithms to highlight its speed and accuracy at classifying know RNA families. 
+heuristic pairwise sequence alignment algorithm that considers an ensemble of suboptimal 
+base pairing probabilities for each queried sequence. We compare \dotaligner{} with other pairwise RNA structure alignment algorithms to highlight its speed and accuracy at classifying know RNA families. 
 We combine \dotaligner{} with density based clustering for the impartial identification of 
 RNA structural motifs, which can identify known RFAM families and novel RNA structural 
 motifs from ENCODE eCLIP data. The resulting clusters of homolgous RNA structures can then 
-be used to search for homologous structures across reference genomes and transcriptomes.  
+be used to search for homologous structures across reference genomes and transcriptomes 
+to generate a map of functionally related RNA structure motifs.  
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Results and Discussion}
+\section*{Results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Ensemble-guided pairwise RNA structure alignment} 
  
-\dotaligner{} leverages the diversity of  suboptimal solutions from a partition
-function of RNA secondary structure predictions to identify an (nearly) optimal
-sequence-structure alignment of two RNAs.  The algorithm overcomes the
-limitations of comparing unique RNA secondary structures (such as minimum free
-energy predictions) to yield a sequence alignment that considers
-mutual basepair probabilities. Fig. 1 illustrates a sequence-structure
-alignment performed with \dotaligner{} in contrast to an alignment that
-considers only sequence composition.\\
+\dotaligner{} leverages the diversity of  suboptimal solutions from a partition function of RNA secondary structure predictions to identify an optimal sequence-structure alignment of two RNAs. 
+The algorithm overcomes the limitations of comparing unique RNA 
+secondary structures (such as minimum free energy predictions) to yield 
+a (near) optimal sequence alignment that considers mutual base pair probabilities.
+\textbf{Figure 1} illustrates a structural alignment performed with \dotaligner{}
+in contrast to an alignment that considers only sequence composition.
+A major criteria for the implementation was a fast running time to make 
+\dotaligner{}  applicable for RNA structure clustering of large data sets.
+Consistently, the algorithm performs pairwise sequence-structure alignments from 
+pre-calculated RNA dot plots using an alignment-envelope heuristic, which 
+impose constraints on sub-optimal string alignments, and fold-envelope 
+heuristics, which impose constraints to pre-calculated base pairing probabilities.
+The alignment procedure thus consists of two steps, each considering base pairing  
+probabilities: (i) Computation of a partition function over all canonical pairwise 
+string alignments, and (ii) structure-weighted stochastic backtracking of 
+all sequence alignments. The detailed implementation and mathematical description 
+of \dotaligner{} can be found  in the \textbf{Supplementary Information}.\\
 
-A major criteria for the implementation was a fast running time to make
-\dotaligner{} applicable for RNA structure clustering of large data sets.
-Consistently, the algorithm performs pairwise sequence-structure alignments
-using both alignment-envelope heuristic, which impose constraints on
-sub-optimal string alignments, and fold-envelope heuristic, which impose
-constraints to pre-calculated base-pairing probabilities.  The alignment
-procedure thus consists of two steps, each considering base-pairing
-probabilities: (i) Computation of a partition function over all canonical
-pairwise string alignments, and (ii) structure-weighted stochastic backtracking
-of all string alignments. The detailed implementation and mathematical
-description of \dotaligner{} can be found in the Additional file 1.\\
-
-After initial parameter optimisation (see Methods), we applied 
-\dotaligner{} to \bralibase{} pairwise RNA structure alignments, a reference 
+We first tested \dotaligner on \bralibase{} pairwise RNA structure alignments, a reference 
 dataset specifically designed for algorithm benchmarking 
-\cite{Gardner15860779,wilm2006enhanced}. In this application, \dotaligner{} seldom 
-produces alignments of better quality than those generated by three other 
-state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{} 
-\cite{havgaard2007fast,sundfeld2015foldalign} and \locarna{} \cite{Will17432929}
-(Fig. 2).\\
-
-Interestingly, many of the pairwise structure alignments produced Structural
-Conservation Index (SCI) scores above those from the \bralibase{} reference
-alignments. The SCI represents the alignment consensus energy normalized by the
-average energy of the single sequences folded independently
-\cite{washietl2005fast}; it has been shown to be one of the most reliable
-metrics for conserved RNA structure detection \cite{gruber2008strategies}. With
-the exception of \dotaligner{}, all other surveyed algorithm produce a
-substantial amount of alignments with SCI values above that of the reference
-alignment (Fig. 2B), suggesting that many optimization algorithms tend to
-overestimate the amount of paired bases in consensus RNA structure predictions.
-However, another possibility is that \bralibase{} alignments do not correctly
-depict several RNA families, which may have been automatically generated in
-RFAM based on similarity to a covariance model.\\
+\cite{Gardner15860779,wilm2006enhanced} (see \textbf{Methods}). In this application, \dotaligner{} seemingly  
+performs worse than three other state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{} \cite{havgaard2007fast,sundfeld2015foldalign} and \locarna{} \cite{Will17432929}
+(\textbf{Figure 2}). Interestingly, many of the pairwise structure alignments produced Structural 
+Conservation Index (SCI) scores above those from the \bralibase{} reference alignments 
+(\textbf{Figure 2B}). The SCI represents the alignment consensus energy normalized
+ by the average energy of the single sequences folded independently \cite{washietl2005fast}; 
+it has been shown to be one of the most reliable metrics for conserved RNA structure 
+detection \cite{gruber2008strategies}. With the exception if \dotaligner{}, all other 
+surveyed algorithm produce a substantial amount of alignments with SCI values 
+above that of the reference  alignment \textbf{Figure 2B }, suggesting that many optimization 
+algorithms tend to overestimate the amount of paired bases in consensus RNA structure predictions. \\
 
 \subsection*{Fast and accurate classification of RNA structures} 
 
@@ -504,82 +429,98 @@ Therefore, we evaluated the ability of \dotaligner{} to distinguish between dist
 RNA species from a heterogeneous sample of known RNA structure families. 
 We performed all versus all pairwise structure alignments of stochastically sampled RFAM sequences, 
 which were selected with constraints on their sequence composition (PID) to 
-control for and ascertain any sequence-dependent biases (see Methods). The alignment scores 
-of \dotaligner{} and other algorithms were then converted into a similarity matrix and 
-compared to a binary classification matrix of sampled RFAM entries. \\
+control for and ascertain any sequence-dependent biases (see \textbf{Methods}). 
+\dotaligner{} alignment scores were then compared to a binary classification matrix 
+representing the distinct RFAM families ( \textbf{Supplementary Figure 1}).\\
 
-Despite the seemingly poor quality of pairwise alignments generated by
-\dotaligner{}, it reproduces the known classification of RFAM structures more
-accurately than almost all other pairwise RNA structure alignment tools (Fig.
-3A-C). Only \carna{}, another ensemble-based structural alignment algorithm,
-presents classification accuracies comparable to \dotaligner{}. However,
-\carna{} requires substantially more time to perform the comparisons (Fig. 3D)
-as it will indefinitely continue to compute the alignment until it converges on
-an optimal result, or a hard time constraint is enforced.  In this regard,
-\dotaligner{} performs better than all other RNA structure alignment tools,
-highlighting the efficacy of the implemented  heuristics it employs. In
-contrast, the heuristics implemented in \texttt{RNApaln} increased the speed of
-\texttt{PMcomp} by two orders of magnitude, but at a slight reduction in
-accuracy (Fig. 3C,D). Only a C++ implementation of the Needleman-Wunsch
-Algorithm (NWA) \cite{needleman1970general} -- a classical sequence alignment
-algorithm -- performed faster than \dotaligner{} on average. Surprisingly it
-also performed very well on the benchmark set despite of ignoring secondary
-structure information, which is most likely due to the presence of stretches of
-homologous sequences within biologically related RNAs.  \\
+Despite the seemingly poor quality of pairwise alignments generated by \dotaligner{}, it 
+reproduces the known classification of RFAM structures more accurately than all 
+other surveyed pairwise RNA structure alignment tools (\textbf{Figure 3A-C}). Only \carna{}, 
+another ensemble-based structural alignment algorithm, presents classification accuracies
+comparable to \dotaligner{}. However, \carna{} requires substantially more time to perform 
+the comparisons (\textbf{Figure 3D}) as it will indefinitely continue to compute the alignment
+until it converges on an optimal result, or a hard time constraint is enforced.  In this regard, \dotaligner{} performs better than all other RNA structure alignment tools, highlighting 
+the efficacy of the implemented heuristics it employs. In contrast, the heuristics implemented 
+in \texttt{RNApaln} increased the speed of \texttt{pmcomp} by 2 orders of magnitude, but
+at a slight reduction in accuracy (\textbf{Figure 3C,D}). Only a C++ implementation of the 
+Needleman-Wunsch Algorithm (NWA) \cite{needleman1970general}--a classical 
+sequence alignment algorithm that ignores secondary structure information--performs 
+faster than \dotaligner{} on average, most likely due to the presence of stretches of 
+homologous sequences within biologically related RNAs. \\
 
 \subsection*{Density-based clustering of homologous RNA structures}
 
 Given \dotaligner{}'s accurate classification of known structured RNA, we subjected its
 output to cluster analysis to identify and extract input sequences which display common
-sequence-structure motifs. The previous work by Will et al. applied hierarchical clustering 
-to the dissimilarity matrices produced by \locarna{} to organize sequences based on their
-structural homology \cite{Will17432929}, yet this does not apply a cut-off that can be used 
+sequence-structure motifs. The previous work by Will \textit{et al.} applied hierarchical clustering 
+to the dissimilarity matrices produced by \locarna{} to organise sequences based on their
+structural homology \cite{Will17432929}. However, this does not apply a cut-off that can be used 
 to extract meaningful clusters of structurally homologous sequences in an unsupervised 
 manner. We attempted to achieve this by applying a statistical threshold derived from 
 bootstrapping the underlying data using \texttt{pvclust} \cite{suzuki2006pvclust}, but this
 generated clusters of variable size that often spanned across many disjoint families 
 (data not shown).\\
 
+
 We therefore opted for a density-based clustering strategy that, in theory, can decipher 
 clusters of varying density (i.e. subsets of the data with greater sequence-structure homology). 
 The OPTICS (Ordering Points To Identify the Clustering Structure) algorithm \cite{ankerst99ordering}
-was chosen for this purpose, as it has very few parameters to optimize. 
+was chosen for this purpose, as it has very few parameters to optimise. 
 OPTICS is a derivative of the Density-BaSed Clustering for Application with Noise
  (\texttt{DBSCAN}) \cite{ester1996density} algorithm that, as its name states, is suitable 
  for noisy data, such as RNA immunoprecipitation followed by high-throughput sequencing 
- (RIPseq).\\
+ (RIPseq). We  benchmarked the two main OPTICS clustering parameters--Xi steepness threshold 
+and the minimum number of points in a cluster (\textbf{Supplementary Figure 2})--on 
+a pooled set of 580 stochastically sampled RFAM sequences encompassing various ranges of sequence similarity, 
+as well as a corresponding set of 580 dinucleotide shuffled controls (see \textbf{Methods}). 
+After performing all vs all pairwise alignments with \dotaligner{}, 
+we evaluated the effect of OPTICS parameters on clustering performance, 
+revealing that a minimum of 4 points (or sequences) and a steepness threshold of 0.006 
+gave the best results (\textbf{Supplementary Figure 1A}). \\
 
-We then benchmarked the two main OPTICS clustering parameters -- steepness
-threshold (Xi) and the minimum number of points in a cluster (Additional file 2:
-Figure S1) -- on a pooled set of 580 stochastically sampled RFAM sequences
-encompassing various ranges of sequence similarity, as well as a corresponding
-set of 580 dinucleotide shuffled controls (see Methods).  After performing all
-vs all pairwise alignments with \dotaligner{}, the alignment scores were
-normalised from 0 to 1 for the minimal and maximal values, respectively.  The
-resulting similarity matrix was then used to evaluate the effect of OPTICS
-parameters on clustering performance, revealing that a minimum of 4 points (or
-sequences) and a steepness threshold of 0.006 gave the best results (Additional
-file 2: Figure S1A).  {\color{red} Extracting only the minimum cluster when
-\ldots} \\
-
-When compared to other state of the art methods, namely \nofold{} and
-\texttt{GraphClust}, the combination of \dotaligner{} and OPTICS performs
-comparably well (Fig. 4, Table 1). The default version of \nofold{}
-nonetheless outshines \dotaligner{} in clustering known RFAM families. However,
-it intrinsically employs RFAM covariance models when comparing input sequences,
-therefore is likely to be subject to over-fitting in this example. We thus
-removed the CMs associated to the RFAM sequences in our benchmarking dataset
-from the \nofold{} algorithm, which yielded lower sensitivity and less
-accurate qualitative cluster metrics {\color{red} (accrurray in Table 1 still
-larger than DotAligner?!?)} than the \dotaligner{} and OPTICS combination.
-Interestingly, the specificity of \nofold{} increased slightly despite
-removing 72 CMs from its classification set. 
+\texttt{GraphClust}, 
+the combination of \dotaligner{} and OPTICS performs comparably well (\textbf{Figure 4, Table 1, Supplementary Table 1}). 
+The default version of \texttt{NoFold} nonetheless outshines \dotaligner{} at clustering known RFAM families. 
+However, it intrinsically employs RFAM covariance models (CMs) that are also present in the test data, 
+therefore this specific application is likely to be subject to over-fitting. 
+We thus removed the CMs associated to the RFAM sequences in our benchmarking 
+dataset from the \texttt{NoFold} algorithm, which yielded lower sensitivity and 
+less accurate qualitative cluster metrics than the \dotaligner{} and OPTICS combination, while 
+its specificity increased slightly despite removing 72 CMs from its classification set.
 
 
 \subsection*{Identifying protein-binding RNA motifs from eCLIP data}
 The optimised parameters for OPTICS clustering of \dotaligner{} output were incorporated into 
-a high-performance computing pipeline that extracts clusters of homologous RNA structural motifs from a set of input sequences (see Methods). This pipeline was applied to enhanced cross-linked 
-RNA immunoprecipitation (eCLIP) sequencing data from 44 RNA binding proteins from the ENCODE consortium  \cite{van2016robust}.  \\
+a high-performance computing pipeline that extracts clusters of homologous RNA structural
+ motifs from a set of input sequences (see \textbf{Methods}).  This pipeline was applied to enhanced cross-linked 
+RNA immunoprecipitation (eCLIP) sequencing data from 44 RNA binding proteins from the ENCODE consortium  \cite{van2016robust}, with 100 positive control sequences from RFAM (\textbf{Supplementary Table 2}).
+From 2,750 high-confidence ($>$8x fold-enrichment vs background, P-value $<10^{-4}$) eCLIP peaks 
+that overlap evolutionarily conserved secondary structure predictions, 
+25 significant clusters of homologous RNA were detected, including all 11 positive controls (\textbf{Figure 5}).\\
+
+Indeed, the 'spike in' RFAM sequences facilitate the identification of similar RNA structures, 
+such as the homologs to snoRNA72 depicted in \textbf{Figure 5C-D}. The 4 additional sequences that 
+co-cluster with the RFAM 72 controls are all associated to the DKC1 protein, which binds to H/ACA snoRNAs. 
+Furthermore, 3 of the DKC1-bound beaks are annotated as snoRNAs in the Gencode 24 reference, 
+while the 4th is not annotated as a snoRNA despite strong sequence and structure similarity, 
+highlighting how this method can successfully identify identify and classify new RNA structure motifs. 
+Another example is the Y RNA cluster, which contains 3 sequences homologous to this RFAM family 
+that are also associated to the TROVE2 protein, which binds to misfolded non-coding RNAs, 
+pre-5S rRNA, and Y RNAs.\\
+
+Our approach can also identify clusters of RNA structure families de novo, 
+as exemplified by several clusters of DKC1-associated sequences which present
+consensus secondary structures indicative of snoRNAs (\textbf{Figure 5E}). 
+Closer inspection of the corresponding eCLIP peaks revealed that these sequences
+are indeed annotated as snoRNAs in Gencode. There are also examples of de novo 
+structural motifs that are associated to RNA-binding proteins with no 
+previously known binding sites, such as an UPF1-dominated cluster 
+\textbf{Figure 5F} and \textbf{Supplementary Figure 3}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 If a structural motif is targeted by a RBP, it is highly probably that the associated CLIPseq peaks 
 do not encompass the entire sequence that forms the structural motif, since 
@@ -588,11 +529,6 @@ protein and the RNA. Consequently, large RNA structures bound by RBPs are
 difficult to model without additional structure probing data. This experimental 
 approach also introduces a 3' bias in the sequence-specificity of RBP binding sites 
 given the nature of 3' to 5' reverse transcription required for cDNA synthesis.\\
-
-To address these caveats, we surveyed the potential to form locally-stable
-RNA secondary structures in the regions directly flanking 36,161 filtered eCLIP 
-peaks (see Method). {\color{red} XXX\% overlap a predicted RNA secondary structure, 
-compared to XXX random peaks.} \\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -605,7 +541,7 @@ computational power. In addition to its speed, \dotaligner{}'s strength lies in
 it's capacity to accurately score structurally homoglous RNA sequences. The
 algorithm appears to generate pairwise alignments that differ somewhat to the
 reference structural alignments. Despite this, \dotaligner{} can harness the
-information content of basepair probability ensembles to output a reliable
+information content of base pair probability ensembles to output a reliable
 structural similarity score of two RNA sequences. Our results show that this
 can nonetheless be sufficient to extract structurally and functionally related
 sequences from a large amount of noisy input; an ideal application for
@@ -808,21 +744,15 @@ Michael Hahsler for developing and disseminating a fast DBSCAN R package.
 \begin{figure}[h!]
 \includegraphics[width=\textwidth]{fig1}
  \caption {\csentence{Schematic of a pairwise alignment with DotAligner.}
-	A dynamic programming matrix is first filled in based on a pairwise
-	probabilistic string alignment considering sequence and structure (e.g.
-	unpaired) similarity (top left; color intensity indicates cumulative
-	sequence-structure similarity score).  The partition function over all
-	pairwise sequence alignments is calculated and interrogated for
-	structural compatibility (e.g. basepairs) by stochastic backtracking.  Two ensemble of
-	suboptimal secondary structures are considered for this purpose (bottom
-	left and top right dot plots; blue lines indicate cumulative basewise
-	pairing probabilities). This effectively warps the optimal
-	string alignment path (top left, black outline) towards one
-	that includes structural (basepair) features (striped blue
-	cells). In the bottom right, the optimal sequence alignment and
-	associated consensus secondary structure is contrasted to that produced
-	by DotAligner, exposing the common structural features hidden in the
-	suboptimal base-pairing ensemble of both sequences. 
+  A dynamic  programming matrix is first filled in based on sequence 
+  similarity (top left--color intensity indicates cumulative sequence similarity score). 
+  A partition function over all pairwise sequence alignments is then calculated and 
+  interrogated for structural compatibility by stochastic backtracking. 
+  Two ensemble of suboptimal secondary structures are considered for this purpose
+  (bottom left and top right dot plots; blue lines indicate cumulative basewise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
+  and associated consensus secondary structure is contrasted to that produced 
+  by DotAligner, exposing the common structural features hidden in the suboptimal 
+  base pairing ensemble of both sequences. 
  }
 \end{figure}
 
@@ -834,7 +764,7 @@ Michael Hahsler for developing and disseminating a fast DBSCAN R package.
  Matthews Correlation Coefficient (\textbf{A}), Structural Conservation Index  
  (\textbf{B}), and \texttt{RNAdistance} calculated topological edit distance 
  (\textbf{C}) are compared between the \rnaalifold{} consensus of the computed 
- alignment and the reference \bralibase{} alignment consensus.  }
+ alignment and the and reference \bralibase{} alignment consensus.  }
 \end{figure}
 
 
@@ -865,16 +795,16 @@ Michael Hahsler for developing and disseminating a fast DBSCAN R package.
 \begin{figure}[h!]
  \includegraphics[width=\textwidth]{fig5}
  \caption {\csentence{ De novo homologous RNA motif identification}. 
-(\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colors represent 
+ (\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colors represent 
  significant clusters. 
  (\textbf{B}) Reachability plot of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein 
- in each cluster is displayed next to significant clusters; those with an asterix are portrayed below.
+ in each cluster is displayed next to significant clusters; those with an asterix and portrayed below.
  (\textbf{C}) Multiple structure alignment generated by \texttt{mLocaRNA} on the sequences from a 
  cluster containing both RFAM snoRNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
 An unannotated DKC1-bound sequence is marked with an asterix.
-(\textbf{D}) \texttt{RNAalifold} consensus of the alignment displayed in (\textbf{C}), 
-(\textbf{E}) a cluster of impartially detected DKC1-bound snoRNAs, 
-and (\textbf{F}) a novel UPF1-bound motif. }
+(\textbf{E}) \texttt{RNAalifold} consensus of the alignment displayed in (\textbf{C}), 
+a cluster of impartially detected DKC1-bound snoRNAs (\textbf{E}), 
+and a novel UPF1-bound motif (\textbf{F}). }
 \end{figure}
 
 
@@ -941,7 +871,7 @@ of two arc-annotated sequences $(S_a,P_a)$ and $(S_b,P_b)$ is defined by
 \end{aligned}
 \end{equation}
 
-\noindent where $S$ is a sequence and $P$ is a base-pairing probability matrix,
+\noindent where $S$ is a sequence and $P$ is a base pairing probability matrix,
 $\sigma(i,i^\prime)$ is the similarity of sequence positions $S_a[i]$ and
 $S_b[i^\prime]$, $\tau(i,j,i^\prime,j^\prime)$ is the similarity of arcs $(i,j)
 \in P_a$ and $(i^\prime,j^\prime) \in P_b$,
@@ -952,14 +882,14 @@ matched ($N = |S_a|+|S_b|-2|A|$). The alignment problem finds the maximal
 $W(A)$. As its solution is MAX-SNP-hard, in praxis heuristics are used to find
 near-optimal solutions.\\
 
-\dotaligner{} solves the related problem of aligning two basepair
+\dotaligner{} solves the related problem of aligning two base pair
 probability matrices (dot plots). A major criteria for the implementation was a fast
 running time enable all-vs-all pairwise structural alignments and the 
 associated distance (dissimilarity) matrix, which can be used for 
 cluster analysis of large data sets \cite{Will17432929}. Consequently, 
 it employs a heuristic alignment-envelope, 
 which imposes constraints to sub-optimal string alignments, 
-and a fold-envelope, which imposes constraints to pre-calculated base-pairing probabilities, 
+and a fold-envelope, which imposes constraints to pre-calculated base pairing probabilities, 
 to build pairwise sequence-structure alignments. 
 \dotaligner{} makes use of the observation that large samples from the ensemble 
 of stochastic sequence alignments contain the correct structure-based alignment
@@ -972,7 +902,7 @@ The alignment procedure consists of two steps:
 \begin{enumerate}
   \item Pairwise probabilistic string alignments; 
   \item Stochastic backtracking of string alignments and combining
-	  weights of base-pairing probability matrices.
+	  weights of base pairing probability matrices.
 \end{enumerate}
 
 \subsubsection*{1.1 Pairwise probabilistic string alignments}
@@ -1084,7 +1014,7 @@ sequence-based similarity $W_{\mbox{Step1}}(A_s)$ normalized by alignment
 length $|A_s|$ and dot plot similarity $\tau(A_s)$ normalized by the number of
 aligned bases $|\mbox{Match}_{A_s}|$ in alignment $A_s$. Similar to equation
 \ref{sigmam} the dot plot similarity $\tau$ sums the parameter $\theta$ weighted
-similarity of aligned basepairs $M_{paired}$ and the similarity in their
+similarity of aligned base pairs $M_{paired}$ and the similarity in their
 pairing probabilities $\Delta \psi$:
 
 \begin{equation}\label{eq8}
@@ -1093,7 +1023,7 @@ pairing probabilities $\Delta \psi$:
 \end{equation}
 
 \noindent where $M_{paired}^{(i,j,i^\prime,j^\prime)}$ is 1 if $S_a[i]$ and $S_a[j]$ as
-well as $S_b[i^\prime]$ and $S_b[j^\prime]$ form canonical basepairs (G-C, C-G,
+well as $S_b[i^\prime]$ and $S_b[j^\prime]$ form canonical base pairs (G-C, C-G,
 A-U, U-A, G-U or U-G) and else 0. The similarity in pairing probabilities
 $\Delta \psi$ is then calculate by
 
@@ -1105,9 +1035,9 @@ $\Delta \psi$ is then calculate by
 		\end{array}\right.
 \end{equation}
 
-\noindent Similar to $M_{Seq}$ in equation \ref{sigmam}, the basepair similarity matrix
+\noindent Similar to $M_{Seq}$ in equation \ref{sigmam}, the base pair similarity matrix
 $M_{paired}$ can be replaced by a statistical substitution model $R_{paired}$
-which describes the probability for observing a given basepair substitution
+which describes the probability for observing a given base pair substitution
 relative to background nucleotide frequencies:
 
 \begin{equation}\label{eq10}
@@ -1121,7 +1051,7 @@ are transformed to probabilities $R_{paired}$.
 \noindent For both sequences $S_a$ and $S_b$, the pairing probability matrices $P_a$ and
 $P_b$ are computed in advance using McCaskill's algorithm, implemented in
 RNAfold or RNAplfold. The robustness of the alignment is improved by applying
-log-odds scores $\psi$ of having a specific base-pairing against the null model
+log-odds scores $\psi$ of having a specific base pairing against the null model
 of a random pairing \cite{Will17432929}:
 
 \begin{equation}\label{eq11}
@@ -1132,7 +1062,7 @@ of a random pairing \cite{Will17432929}:
 term $log \frac{1}{p_0}$ is a normalization factor that transforms the scores to
 a maximum of 1. $P==1$ results in $\psi=1$, $P>p_0$ results in $\psi>0$, and $P\le
 p_0$ results in $\psi=0$.  This transformation gives weaker similarities if low
-basepair probabilities are compared, but stronger similarities for high basepair
+base pair probabilities are compared, but stronger similarities for high base pair
 probabilities. Unpaired probabilities are handled in a similar way by
 
 \begin{equation}\label{eq12}
@@ -1237,6 +1167,8 @@ cat All_ECS_merged_50nt_peaks_renamed.fasta spike-ins.fasta > All_ECS_merged_50n
 %\end{tabular}
 %\end{table}
 
+\section*{Additional file 2 --- Supplementary Tables and Figures}
+
 \begin{table}
 \centering
 \caption*{\textbf{Supplementary Table 1.}  List of RFAM families from benchmark that did not cluster}
@@ -1297,14 +1229,29 @@ Sequences & RNA family & RFAM ID \\
 \end{tabular}
 \end{table}
 
+
 \begin{figure}
  \includegraphics[width=\textwidth]{SF1}
- \caption*{ \textbf{ Figure S1. OPTICS clustering optimisation }\\
+ \caption*{ \textbf{ Figure S1. Binary classification of similarity matrices  }\\
+Stochastically sampled RFAM sequences are labelled as belonging to the same family in white, and in red when not (Left). Heatmaps of the similarity matrices produced by \dotaligner{}, \locarna{} and \carna{} are listed in columns 2, 3 and 4, respectively.  
+(top) Low mean pairwise identity samples, where each sequence within 
+a family shares between 0 and 55\% sequence identity; (bottom) Higher (56-95\%) mean pairwise identity samples. }
+\end{figure}
+
+\begin{figure}
+ \includegraphics[width=\textwidth]{SF2}
+ \caption*{ \textbf{ Figure S2. OPTICS clustering optimisation }\\
 Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount 
  of clusters (\textbf{B}) from a \dotaligner{} dissimilarity matrix of 580 reference RFAM 
  structures and their dinucleotide-shuffled controls (horizontal dashed line indicates 
  expected amount of clusters, or unique RFAM families). }
 \end{figure}
 
+\begin{figure}
+ \includegraphics[width=\textwidth]{SF3}
+ \caption*{ \textbf{ Figure S3. Genomic distribution of a UPF1-associated RNA structure motif }\\
+(\textbf{A}) Multiple sequence alignment of a significant cluster from \textbf{Figure 5F} as produced by \texttt{mLocaRNA} and \texttt{RNAalifold}, and its associated consensus secondary structure prediction  (\textbf{B}). (\textbf{C}) Karyogram illustrating the human genomic coordinates (Grch37) of structural motif homologs, to this motif that do not overlap RepeatMasker annotations \cite{smit2010repeatmodeler}, as identified with \texttt{cmsearch }from the Infernal software package \cite{nawrocki2013infernal}. (\textbf{D}) Distribution of homologs within repeat elements (only repeats classes where $>$ 10\% of the repeats overlap homologs are displayed). 
+}
+\end{figure}
 
 \end{document}
