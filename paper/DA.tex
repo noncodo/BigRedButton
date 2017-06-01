@@ -182,7 +182,7 @@
    addressref={aff1,aff2},
 ]{\inits{XQ}\fnm{XiuCheng} \snm{Queck}}
 \author[
-   addressref={aff2},
+   addressref={aff1,aff2},
 ]{\inits{JSM}\fnm{John S} \snm{Mattick}}
 
 
@@ -196,15 +196,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \address[id=aff1]{%                           % unique id
-  \orgname{Garvan Institute of Medical Research}, % university, etc
+  \orgname{RNA Biology and Plasticity Group, Garvan Institute of Medical Research}, % university, etc
   \street{384 Victoria Street},                     %
   \postcode{NSW 2010}                                % post or zip code
   \city{Sydney},                              % city
   \cny{Australia}                                    % country
 }
 \address[id=aff2]{%
-  \orgname{St Vincent's Clinical School, UNSW Australia},
-  \street{Victoria Street},
+  \orgname{St Vincent's Clinical School, Faculty of Medicine, UNSW Australia},
+  \street{},
   \postcode{NSW 2010}
   \city{Sydney},
   \cny{Australia}
@@ -253,7 +253,7 @@ for the classification of their biological functions. Sparse sequence conservati
 non-coding sequences and the unreliable nature of RNA structure predictions further 
 exacerbate this conundrum. Here, we describe a computational method for the 
 unsupervised discovery and classification of homologous RNA structure motifs from a set of 
-sequences of interest.  Our approach outperforms other tools at classifying known RNA structure families, both in time and accuracy. It identifies known and novel structure motifs from ENCODE immuno-precipitation data of 44 RNA-binding proteins. 
+sequences of interest.  Our approach outperforms other tools at classifying known RNA structure families, both in time and accuracy. It identifies clusters of known and novel structure motifs from ENCODE immuno-precipitation data of 44 RNA-binding proteins. 
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -316,10 +316,8 @@ sequences of interest.  Our approach outperforms other tools at classifying know
 \section*{Background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-encoding protein sequences. As genomic technologies progress, an ever
-increasing amount of non-protein coding RNAs (ncRNA) are being discovered. 
-Long noncoding RNAs (lncRNAs) are of particular interest for functional genome
-annotation given their abundance throughout the genome.  So far, few lncRNAs have been functionally characterised, and most that have seem to be involved in regulation of gene expression and epigenetic states 
+As genomic technologies progress, an ever increasing amount of non-protein coding RNAs (ncRNA) are being discovered. Long noncoding RNAs (lncRNAs) are of particular interest for functional genome
+annotation given their abundance throughout the genome. So far, few lncRNAs have been functionally characterised, and those that have seem to be involved in regulation of gene expression and epigenetic states 
 \cite{morris2014rise,engreitz2016long}. Understanding the
 molecular mechanisms underlying the biological functions of lncRNAs -- and how
 they are disrupted in disease -- is required to improve the functional
@@ -498,7 +496,7 @@ From 2,750 high-confidence ($>$8x fold-enrichment vs background, P-value $<10^{-
 that overlap evolutionarily conserved secondary structure predictions, 
 25 significant clusters of homologous RNA were detected, including all 11 positive controls (\textbf{Figure 5}).\\
 
-Indeed, the 'spike in' RFAM sequences facilitate the identification of similar RNA structures, 
+Indeed, the \textit{spike in} RFAM sequences facilitate the identification of similar RNA structures, 
 such as the homologs to snoRNA72 depicted in \textbf{Figure 5C-D}. The 4 additional sequences that 
 co-cluster with the RFAM 72 controls are all associated to the DKC1 protein, which binds to H/ACA snoRNAs. 
 Furthermore, 3 of the DKC1-bound beaks are annotated as snoRNAs in the Gencode 24 reference, 
@@ -508,45 +506,24 @@ Another example is the Y RNA cluster, which contains 3 sequences homologous to t
 that are also associated to the TROVE2 protein, which binds to misfolded non-coding RNAs, 
 pre-5S rRNA, and Y RNAs.\\
 
-Our approach can also identify clusters of RNA structure families de novo, 
+Our method also identifies RNA structure families impartially, 
 as exemplified by several clusters of DKC1-associated sequences which present
 consensus secondary structures indicative of snoRNAs (\textbf{Figure 5E}). 
 Closer inspection of the corresponding eCLIP peaks revealed that these sequences
 are indeed annotated as snoRNAs in Gencode. There are also examples of de novo 
 structural motifs that are associated to RNA-binding proteins with no 
 previously known binding sites, such as an UPF1-dominated cluster 
-\textbf{Figure 5F} and \textbf{Supplementary Figure 3}. 
+(Figure 5F), composed of a structure motif belonging to ALU repeats 
+(Supplementary Figure 3). When searching the human genome for 
+homology to the RNA structure motif derived from this cluster, 
+most ALU elements are detected, as well as a few other repeat-containing sequences. 
+Interestingly, 998 homologs to the motif did not localise to ALU elements (Supplementary Figure 3B), 
+58\% of which overlap miTranscriptome reference transcripts \cite{iyer2015landscape}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Discussion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-If a structural motif is targeted by a RBP, it is highly probably that the associated CLIPseq peaks 
-do not encompass the entire sequence that forms the structural motif, since 
-reverse transcription will terminate at the covalent bond formed between the 
-protein and the RNA. Consequently, large RNA structures bound by RBPs are 
-difficult to model without additional structure probing data. This experimental 
-approach also introduces a 3' bias in the sequence-specificity of RBP binding sites 
-given the nature of 3' to 5' reverse transcription required for cDNA synthesis.\\
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Conclusion}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given its relative speed and accuracy, \dotaligner{} can be used to generate
-larger (dis)similarity matrices for cluster analysis than other pairwise
-structure alignment algorithms, or at least produce them with reasonable
-computational power. In addition to its speed, \dotaligner{}'s strength lies in
-it's capacity to accurately score structurally homoglous RNA sequences. The
-algorithm appears to generate pairwise alignments that differ somewhat to the
-reference structural alignments. Despite this, \dotaligner{} can harness the
-information content of base pair probability ensembles to output a reliable
-structural similarity score of two RNA sequences. Our results show that this
-can nonetheless be sufficient to extract structurally and functionally related
-sequences from a large amount of noisy input; an ideal application for
-screening high-throughput sequencing data, such as RNA immunoprecipitation
-data, for common structural motifs. \\
 
 As the increasing accessibility of next generation sequencing coalesces with
 precision medicine, in-depth transcriptome profiling will help elucidate the
@@ -564,23 +541,73 @@ as temperature change) which may provide alternative binding sites for
 proteins. By considering the suboptimal structure potential of RNAs, \dotaligner{}
 is suitable for exploring RNA molecules of similar suboptimal features. \\
 
-A still unsolved problem is the detection of boundaries of functional RNA
-structures. Whereas global structures may stabilize the RNA molecule, local
-structure domains are often sufficient for recognition, such as by RNA binding
-proteins. Comparable to \locarna{}, \dotaligner{} calculates semi-local
-alignments by introducing penalty-free gaps at the sequence flankings. However,
-this approach optimizes only the pairwise local similarity score, but it does
+Given its relative speed and accuracy, \dotaligner{} can be used to generate
+larger (dis)similarity matrices for cluster analysis than other pairwise
+structure alignment algorithms, or at least produce them with reasonable
+computational power. In addition to its speed, the strength of \dotaligner{} lies in
+its capacity to accurately score structurally homoglous RNA sequences. The
+algorithm appears to generate pairwise alignments that differ qualitatively to the
+reference structural alignments. Despite this, \dotaligner{} can harness the
+information content of base pair probability ensembles to output a reliable
+structural similarity score of two RNA sequences, reducing several dimensions 
+of information content into a single discriminative numeric value.
+ Our results show that this
+can nonetheless be sufficient to extract structurally and functionally related
+sequences from a large amount of noisy input; an ideal application for
+screening high-throughput sequencing data--such as RNA immunoprecipitation
+data--for common structural motifs. \\
+
+High-throughput CLIPseq data poses a challenge for consensus motifs detection since
+several molecules that are in close physical proximity to the target molecule get 
+co-precipitated together. Consequently, other RNA sequences may be present 
+that do not directly bind to the target protein. We have shown that our 
+ method is nonetheless suitable for such noisy biological data. For example, 
+ the UPF1 cluster we describe may be an example of an indirect binding event, 
+ as UPF1 directly interacts with STAU1, a double stranded RNA-binding protein which has 
+been reported to target ALU sequences \cite{gong2011lncrnas}. There are
+also additional clusters identified in our eCLIP analysis where sequences from 
+more than one target protein cluster together, which raises the possibility 
+that a common RNA structure motif may be bound by to different proteins, either
+as part of a quaternary complex or as a common, competing binding target. 
+We privilege this hypothesis over one of spurious false-positive clustering 
+given our benchmark results and the observation that very few clusters
+were observed when analysing less stringently filtered eCLIP peaks (not shown). \\
+
+\dotaligner{} has several parameters that will influence the clustering results and 
+speed depending on the type of input data. The most influential variables are the weight between sequence and structure similarity, and the exploration depth of the suboptimal alignments in the stochastic
+backtracking. Here, we present the best trade-off between alignment
+accurracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. \\
+
+A greater challenge lies in the accurate depiction of RNA structure motif boundaries. 
+Whereas global structures may stabilize the RNA molecule, local
+structural domains are often sufficient for recognition by RNA binding
+proteins. When compared to \locarna{}, \dotaligner{} calculates semi-local
+alignments by introducing penalty-free gaps at the sequence extremities. 
+However, this approach optimizes only the pairwise local similarity score, but it does
 not explore suboptimal alignments for optimal cluster construction. This could
 be done in the \dotaligner{} framework but would dramatically increase search
-space and run-time. \\
+space and run-time. We circumvented this issue by overlapping eCLIP peaks to 
+evolutionarily conserved RNA secondary structure predictions with well-characterised
+flanking helices supported by base pair covariation \cite{smith2013widespread}.
+While preparing this manuscript, a complementary and comprehensive dataset 
+or evolutionarily conserved RNA secondary structures was published \cite{seemann2017identification}, which 
+could also increase the amount of eCLIP peaks with accurate structural motif boundaries. 
+Alternatively, RNA structure boundaries can be refined 
+using alternative strategies such as computational boundary refinement 
+with\texttt{ LocaRNA-P } \cite{will2012locarna}, or improving the biological 
+data with ezymatic probing with the double-stranded RNase T1 
+endoribonuclease, for example. \\
 
-Finally, \dotaligner{} has several parameters whose settings will automatically
-influence the clustering results and speed depending on the type od input data.
-The main confounders are the weight between sequence and structure similarity,
-and the exploration depth of the suboptimal alignments in the stochastic
-backtracking. Here, we present the best trade-off between alignment
-accurracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+An efficient pairwise RNA sequence alignment heuristic, which intrinsically considers
+suboptimal base pairings, accurately discriminates between distinct structured RNAs families.
+When combined to a noise tolerant density based clustering algorithm, this 
+approach identifies known and novel RNA structure motifs from a set of input sequences 
+without a priori knowledge. The resulting RNA structure motifs can subsequently 
+be used to identify homologs in reference genomes to improve the annotation of 
+long non-coding RNAs and increase the repertoire of functional genetic elements. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -603,8 +630,8 @@ MCC = $\frac{(TP * TN) - (FP * FN)}{ \sqrt{ (TP + FP)(TP + FN)(TN + FP)(TN + FN)
 
 $\Delta$SCI = $SCI_{predicted} / SCI_{reference}$, where SCI = $ MFE_{consensus}  / \overline{MFE}_{single}  $\\
 
-Baseline parameters were then selected via a product rank of these 2 metrics
-{\color{red} (Additional file 1). Here we should also add the chosen parameter settings or refer to supplement!!!}
+Baseline parameters were then selected via a product rank of these 2 metrics 
+and subjected to refinement using a binary classification approach, described in the next section. 
 
 \subsection*{Classification of RNA secondary structure families}
 %include a distribution of the pairwise sequence identities for bin classification in supplementary
@@ -616,7 +643,7 @@ where any two sequences from the same family share between 0-55\% and 56-95\% pa
 present a score of 1 if they belong to the same RFAM family, versus a score of 0 if they do not. 
 The similarity matrix resulting from all-vs-all pairwise comparisons with \dotaligner{} was tested for 
 accuracy using the Area Under the Curve AUC of the ROC, as calculated R package \texttt{pROC} \cite{robin2011proc}. 
-A more restricted range of parameter values were then tested on both datasets, {\color{red} namely t k e o, which had the highest impact on alignment accuracy in preliminary testing (Additional file 2: Figure SX)}. Finally, a ranked sum for both datasets of the AUC (first) and lowest average runtime (second) was performed to determine the default runtime parameters for \dotaligner{} {\color{red} (Additional file 2: Table SX)}.
+A more restricted range of parameter values were then tested on both datasets, {\color{red} namely t k e o, which had the highest impact on alignment accuracy in preliminary testing (Additional file 2: Figure SX)}. Finally, a ranked sum for both datasets of the AUC (first) and lowest average runtime (second) was performed to determine the default runtime parameters for \dotaligner{}, namely XXX (Supplementary Table 3).
 
 {\color{red} Should we add here how we ran the other methods in the benchmark?}
 
@@ -681,17 +708,29 @@ input sequences in fasta format. \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{backmatter}
+\section*{Availability of data and materials}
+Source code, pipelines and data can be obtained at \url{https://github.com/noncodo/BigRedButton}. 
 
 \section*{Competing interests}
-  The authors declare that they have no competing interests.
+ The authors declare that they have no competing interests.
 
-\section*{Author's contributions}
-  Text for this section \ldots
-
-\section*{Acknowledgements}
+\section*{Funding}
 MAS and JSM are partially supported  by a Cancer Council NSW project grant (RG 14-18). 
 SES was supported by a Carlsberg Foundation grant (2011\_01\_0884) and the Innovation Fund Denmark (0603-00320B). 
-Michael Hahsler for developing and disseminating a fast DBSCAN R package.
+
+\section*{Author's contributions}
+MAS, SES and JSM conceived the study. 
+SES and MAS wrote the manuscript and performed data analysis. 
+MAS performed benchmarking analyses and developed analytic pipelines. 
+SES created and implemented \dotaligner{} source code. 
+XQ assisted in \dotaligner{}  parameter optimisation and benchmarking. 
+
+\section*{Acknowledgements}
+We would like to thank DR Eva Maria Novoa Pardo for her scientific council, 
+R programming tricks, and critical manuscript reading. 
+Thanks to Prof Oliver M\"ulhemann for discussions relating to data interpretation.  
+Thanks to Luis Renato Arriola-Martinez for his advice concerning covariance models. 
+Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R package.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
