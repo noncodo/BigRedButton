@@ -505,14 +505,6 @@ under the Creative Commons Zero license.},
 	Year = {2004},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/bth229}}
 
-@article{Hofacker:Bernhart:Stadler:Align_RNA_base:2004,
-	Abstract = {MOTIVATION: Many classes of functional RNA molecules are characterized by highly conserved secondary structures but little detectable sequence similarity. Reliable multiple alignments can therefore be constructed only when the shared structural features are taken into account. Since multiple alignments are used as input for many subsequent methods of data analysis, structure based alignments are an indispensable necessity in RNA bioinformatics. RESULTS: We present here a method to compute pairwise and progressive multiple alignments from the direct comparison of basepairing probability matrices. Instead of attempting to solve the folding and the alignment problem simultaneously as in the classical Sankoff algorithm we use McCaskill's approach to compute base pairing probability matrices which effectively incorporate the information on the energetics of each sequences. A novel, simplified variant of Sankoff's algorithms can then be employed to extract the maximum weight common secondary structure and an associated alignment. AVAILABILITY: The programs pmcomp and pmmulti described in this contribution are implemented in Perl and can be downloaded together with the example data sets from http://www.tbi.univie.ac.at/RNA/PMcomp/. A web server is available at http://rna.tbi.univie.ac.at/cgi-bin/pmcgi.pl.},
-	Author = {Hofacker, I L and Bernhart, S H and Stadler, P F},
-	File = {:media/data/phd/literature/Hofacker15073017.pdf:pdf},
-	Journal = {Bioinformatics},
-	Title = {{Alignment of RNA base pairing probability matrices}},
-	Year = {2004}}
-
 @article{Knudsen:Hein:RNA_secon_struc:1999,
 	Abstract = {MOTIVATION: Many computerized methods for RNA secondary structure prediction have been developed. Few of these methods, however, employ an evolutionary model, thus relevant information is often left out from the structure determination. This paper introduces a method which incorporates evolutionary history into RNA secondary structure prediction. The method reported here is based on stochastic context-free grammars (SCFGs) to give a prior probability distribution of structures. RESULTS: The phylogenetic tree relating the sequences can be found by maximum likelihood (ML) estimation from the model introduced here. The tree is shown to reveal information about the structure, due to mutation patterns. The inclusion of a prior distribution of RNA structures ensures good structure predictions even for a small number of related sequences. Prediction is carried out using maximum a posteriori estimation (MAP) estimation in a Bayesian approach. For small sequence sets, the method performs very well compared to current automated methods.},
 	Author = {Knudsen, B and Hein, J},
@@ -768,6 +760,7 @@ apply NoFold to identify motifs enriched in dendritically localized
 transcripts and report 213 enriched motifs, including both known
 and novel structures.}
 }
+
 @article{Miladi28334186,
 	author = {Miladi, M. and Junge, A. and Costa, F. and Seemann, S.E. and Hull Havgaard, J. and Gorodkin, J. and Backofen, R.},
 	title = {{RNAscClust}: clustering {RNA} sequences using structure conservation and graph based motifs.},
@@ -798,4 +791,147 @@ RNAscClust is available at \verb+http://www.bioinf.uni+-freiburg.de/Software/RNA
 Contact: gorodkin@rth.dk or backofen@informatik.uni-freiburg.de.
 Supplementary information: Supplementary data are available at
 Bioinformatics online.}
+}
+
+@article{Roshan16954142,
+	author = {Roshan, U. and Livesay, D.R.},
+	title = {Probalign: multiple sequence alignment using partition function posterior probabilities.},
+	journal = {Bioinformatics},
+	volume = {22},
+	number = {22},
+	year = {2006},
+	month = {Nov},
+	pages = {2715-2721},
+	pmid = {16954142},
+	doi = {10.1093/bioinformatics/btl472},
+	abstract = {MOTIVATION: The maximum expected accuracy optimization criterion
+for multiple sequence alignment uses pairwise posterior probabilities
+of residues to align sequences. The partition function methodology
+is one way of estimating these probabilities. Here, we combine
+these two ideas for the first time to construct maximal expected
+accuracy sequence alignments. RESULTS: We bridge the two techniques
+within the program Probalign. Our results indicate that Probalign
+alignments are generally more accurate than other leading multiple
+sequence alignment methods (i.e. Probcons, MAFFT and MUSCLE) on
+the BAliBASE 3.0 protein alignment benchmark. Similarly, Probalign
+also outperforms these methods on the HOMSTRAD and OXBENCH benchmarks.
+Probalign ranks statistically highest (P-value < 0.005) on all
+three benchmarks. Deeper scrutiny of the technique indicates that
+the improvements are largest on datasets containing N/C-terminal
+extensions and on datasets containing long and heterogeneous length
+proteins. These points are demonstrated on both real and simulated
+data. Finally, our method also produces accurate alignments on
+long and heterogeneous length datasets containing protein  repeats.
+Here, alignment accuracy scores are at least 10\% and 15\% higher
+than the other three methods when standard deviation of length
+is >300 and 400, respectively. AVAILABILITY: Open source code
+implementing Probalign as well as for producing the simulated
+data, and all real and simulated data are freely available from
+\verb+http://www.cs.njit.edu/usman/probalign+}
+}
+
+@article{Lorenz22115189,
+	author = {Lorenz, R. and Bernhart, S.H. and Honer Zu Siederdissen, C. and Tafer, H. and Flamm, C. and Stadler, P.F. and Hofacker, I.L.},
+	title = {{ViennaRNA} Package 2.0.},
+	journal = {Algorithms Mol Biol},
+	volume = {6},
+	year = {2011},
+	month = {Nov},
+	pages = {26},
+	pmid = {22115189},
+	doi = {10.1186/1748-7188-6-26},
+	abstract = {BACKGROUND: Secondary structure forms an important intermediate
+level of description of nucleic acids that encapsulates the dominating
+part of the folding energy, is often well conserved in evolution,
+and is routinely used as a basis to explain experimental findings.
+Based on carefully measured thermodynamic parameters, exact dynamic
+programming algorithms can be used to compute ground states, base
+pairing probabilities, as well as thermodynamic properties. RESULTS:
+The ViennaRNA Package has been a widely used compilation of RNA
+secondary structure related computer programs for nearly two decades.
+Major changes in the  structure of the standard energy model,
+the Turner 2004 parameters, the pervasive use of multi-core CPUs,
+and an increasing number of algorithmic variants prompted a major
+technical overhaul of both the underlying RNAlib and the interactive
+user programs. New features include an expanded repertoire of
+tools to assess RNA-RNA  interactions and restricted ensembles
+of structures, additional output information such as centroid
+structures and maximum expected accuracy structures  derived from
+base pairing probabilities, or z-scores for locally stable secondary
+structures, and support for input in fasta format. Updates were
+implemented without compromising the computational efficiency
+of the core algorithms and ensuring compatibility with earlier
+versions. CONCLUSIONS: The ViennaRNA Package  2.0, supporting
+concurrent computations via OpenMP, can be downloaded from \verb+http://www.tbi.univie.ac.at/RNA.+}
+}
+
+@article{Havgaard17937495,
+	author = {Havgaard, J.H. and Torarinsson, E. and Gorodkin, J.},
+	title = {Fast pairwise structural {RNA} alignments by pruning of the dynamical programming matrix.},
+	journal = {PLoS Comput Biol},
+	volume = {3},
+	number = {10},
+	year = {2007},
+	month = {Oct},
+	pages = {1896-1908},
+	pmid = {17937495},
+	doi = {10.1371/journal.pcbi.0030193},
+	abstract = {It has become clear that noncoding RNAs (ncRNA) play important
+roles in cells, and emerging studies indicate that there might
+be a large number of unknown ncRNAs in mammalian genomes. There
+exist computational methods that can be used to search for ncRNAs
+by comparing sequences from different genomes. One main problem
+with these methods is their computational complexity, and heuristics
+are  therefore employed. Two heuristics are currently very popular:
+pre-folding and pre-aligning. However, these heuristics are not
+ideal, as pre-aligning is dependent on sequence similarity that
+may not be present and pre-folding ignores  the comparative information.
+Here, pruning of the dynamical programming matrix is presented
+as an alternative novel heuristic constraint. All subalignments
+that do not exceed a length-dependent minimum score are discarded
+as the matrix is filled out, thus giving the advantage of providing
+the constraints dynamically. This has been included in a new implementation
+of the FOLDALIGN algorithm for pairwise local or global structural
+alignment of RNA sequences. It is shown that time and  memory
+requirements are dramatically lowered while overall performance
+is maintained. Furthermore, a new divide and conquer method is
+introduced to limit the memory requirement during global alignment
+and backtrack of local alignment.  All branch points in the computed
+RNA structure are found and used to divide the  structure into
+smaller unbranched segments. Each segment is then realigned and
+backtracked in a normal fashion. Finally, the FOLDALIGN algorithm
+has also been updated with a better memory implementation and
+an improved energy model. With these improvements in the algorithm,
+the FOLDALIGN software package provides the  molecular biologist
+with an efficient and user-friendly tool for searching for new
+ncRNAs. The software package is available for download at \verb+http://foldalign.ku.dk+.}
+}
+
+@article{Sundfeld26704597,
+	author = {Sundfeld, D. and Havgaard, J.H. and de Melo, A.C. and Gorodkin, J.},
+	title = {Foldalign 2.5: multithreaded implementation for pairwise structural {RNA} alignment.},
+	journal = {Bioinformatics},
+	volume = {32},
+	number = {8},
+	year = {2016},
+	month = {Apr},
+	pages = {1238-1240},
+	pmid = {26704597},
+	doi = {10.1093/bioinformatics/btv748},
+	abstract = {MOTIVATION: Structured RNAs can be hard to search for as they
+often are not well  conserved in their primary structure and are
+local in their genomic or transcriptomic context. Thus, the need
+for tools which in particular can make local structural alignments
+of RNAs is only increasing. RESULTS: To meet the demand for both
+large-scale screens and hands on analysis through web servers,
+we present a new multithreaded version of Foldalign. We substantially
+improve execution time while maintaining all previous functionalities,
+including carrying out local structural alignments of sequences
+with low similarity. Furthermore, the improvements allow for comparing
+longer RNAs and increasing the sequence length. For example, lengths
+in the range 2000-6000 nucleotides improve execution up to a factor
+of five. AVAILABILITY AND IMPLEMENTATION: The Foldalign software
+and the web server are available at \verb+http://rth.dk/resources/foldalign+
+CONTACT: gorodkin@rth.dk SUPPLEMENTARY INFORMATION: Supplementary
+data are available at Bioinformatics online.}
 }
