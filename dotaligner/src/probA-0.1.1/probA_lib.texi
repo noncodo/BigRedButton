@@ -1,0 +1,610 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename probA_lib.info
+@settitle probA_lib
+@ifclear Version
+@set Version 0.1.0
+@end ifclear
+@iftex
+@afourpaper
+@end iftex
+@ifinfo
+@setchapternewpage odd
+@end ifinfo
+@c %**end of header
+
+@c Summary Description and Copyright
+@ifinfo
+This file documents ...
+     
+     Copyright YEAR COPYRIGHT-OWNER
+     
+     Permission is granted to ...
+@end ifinfo
+
+
+@c Title and Copyright
+@titlepage
+@sp 10
+@title{probA_lib}
+@sp 
+@subtitle{A Variation on Algorithms for Pairwise Global Alignments}
+@author Ulrike Mueckstein
+@c  start the copyright page.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} YEAR COPYRIGHT-OWNER
+     
+Published by ...
+     
+Permission is granted to ...
+
+@end titlepage     
+
+
+@c `Top' Node and Master Men
+@node Top, Introduction, (dir), (dir)
+@comment node-name, next,          previous, up
+@ifinfo
+This file documents probA_lib Version @value{Version}
+     
+@end ifinfo
+
+@menu
+* Introduction::
+* Routines::
+* Parsing of A::
+* References::
+* Function Index::
+* Variable Index::	
+@end menu
+
+@c Body
+@node    Introduction, Routines, top,      top
+@comment node-name,     next,           previous, up
+@chapter Introduction
+
+
+@noindent
+probA calculates the partition function over all alignments between two
+sequences. The partition function is used to determine the matching
+probabilities for all possible matches i,j of the two sequences.
+Furthermore the partition function can be used to make a stochastic
+backtracking.@*
+The program probA is build from different modules that perform various
+functions: calculation of a pairwise global alignment with affine gap
+penalties, calculation of matching probabilities and a stochastic
+backtracking, gernerating an ensemble of properly weighted optimal and
+suboptimal alignments. For those who wish to develop their own programs we
+provide a library which can be linked to your own code.@*
+This document only describes the library and will be primarily useful to
+programmers. The stand-alone program is described in a separate man page.  
+This manual documents version @value{Version}.
+
+
+@node Routines, Parsing of A, Introduction, Top
+@comment  node-name,  next,  previous,  up
+@chapter Routines
+
+@menu
+* gp Alignment::
+* Matching Probs::
+* Stoch Btr::
+* Global Variables::
+* Structures::
+@end menu
+
+
+@comment ==================================================================
+@node gp Alignment, Matching Probs, Routines, Routines
+@comment  node-name,  next,  previous,  up
+@section Global Pairwise Alignment
+
+The library provides a variation of a Needleman Wunsch dynamic programming
+algorithm to calculate a pairwise global alignment of two sequences.
+For the calculation of the alignment a affine gap penalty is used.@* 
+
+@deftypefun aligm align (sequ *@var{seq_array})
+The argument of function @code{align} is an array of two structures
+@strong{sequ} (@pxref{Structures}). Structure @strong{sequ} stores a sequence
+and the name of the sequence.
+Each input sequence has to be written in the @strong{sequ} structure
+array.@*  
+Function @code{align} calculates the global pairwise alignment of the two
+sequences contained in @var{seq_array} and returns a structure of the type
+@strong{aligm} (@pxref{Structures}) containing the score of the alignment
+and the alignment encoded as a string of digits
+(@pxref{Rep of A}).@*
+The library provides three different scoring matrix series for protein
+alignments (@pxref{Scoring Matrices}). The user can select the scoring
+matrix series (@pxref{Global Variables}). The library than calculates the
+pairwise identity of the input sequences and determines which matrix out of
+a series to use. It is also possible to select one  specific matrix out of a
+substitution matrix series (@pxref{Global Variables})@*
+Function @code{align} uses a variation of a dynamic programming algorithm
+to calculate an optimal alignment of the two sequences. Using
+@var{Egap_flag} the user can determine if endgaps are treated like gaps
+inside the alignment or differently (@pxref{Flags}).
+@end deftypefun 
+
+@deftypefun al decode_alig (aligm @var{track})
+converts the alignment encoded as a string of digits to the usual alignment
+representation (@pxref{Rep of A}), the alignment is written in a structure
+of type @strong{al} (@pxref{Structures}).
+@end deftypefun
+
+@deftypefun float observed_identity (aligm @var{track})
+calculats the observed identity (matches/(matches+mismatches)) between
+two sequences (@pxref{Pam dist}). 
+@end deftypefun
+
+@deftypefun float pam_distance (float @var{identity})
+the argument for function @code{pam_distance} is the observed identity
+returned by function @code{observed_identity}, the return value is the
+PAM distance of the two sequences (@pxref{Pam dist}).@*
+This function only approximates the PAM distance, it is not useful
+for applications which require exact evolutionary distances !
+@end deftypefun
+
+@deftypefun void free_align (aligm @var{track})
+frees everything allocated in @code{align}.
+@end deftypefun
+
+@deftypefun void free_al (al @var{a})
+frees everything allocated in @code{decode_alig}.
+@end deftypefun
+
+@comment @deftypefun void free_sequ (sequ @var{seq_array})
+@comment frees everything allocated for the @strong{sequ} structure array.
+@comment @end deftypefun
+
+
+
+@comment ==================================================================
+@node Matching Probs,  Stoch Btr, gp Alignment, Routines
+@comment  node-name,  next,  previous,  up
+@section Matching Probabilities
+
+Instead of calculating only one optimal alignment the partition function
+over all possible alignments of the two sequences can be calculated. From
+the partition function the matching probabilities for all possible matches
+between letters of the two sequences can be computed. The theory of
+probabilistic alignments derived from a thermodynamic partition function is
+described in @cite{Kschischo and Laessig (2000)}.
+
+@deftypefun real **partition_f (aligm @var{track})
+Before calling this function it is necessary to call function @code{align}
+(@pxref{gp Alignment}), the only argument for @code{partition_f} is the aligm
+structure returned by @code{align}.@*
+@code{partition_f} calculates the partition function over all alignments of
+the two input sequences, the partition function is then used to determine
+the matching probability for each possible match i,j between the two
+sequences. @code{partition_f} returns a two dimensional real array
+(@pxref{Structures}) containing the matching probability for each possible
+match i,j. The matching probability array can be represented as a dot plot
+using function @code{ps_plot}. 
+@end deftypefun
+
+@deftypefun void ps_plot (real **@var{matchprob}, char* @var{outfile})
+Function @code{ps_plot} represents the matching probabilities as a dot plot.
+The first argument of @code{ps_plot} is the matching probability array
+returned by @code{partition_f}, the second argument is the name of the
+output file for the dot plot.
+@end deftypefun
+ 
+@deftypefun void free_partition_f (real **@var{matchprob}, sequ* @var{seq_array})
+frees everything allocated in @code{partition_f}.   
+@end deftypefun
+
+
+
+@comment ==================================================================
+@node Stoch Btr, Global Variables, Matching Probs, Routines
+@comment  node-name,  next,  previous,  up
+@section Stochastic Backtracking
+
+The partition function over all possible alignments of two sequences can be
+used to calculate a stochastic backtracking. The stochastic backtracking
+generates alternative optimal and suboptimal alignments stochastically.
+ 
+@deftypefun aligm stoch_backtr (aligm @var{track})
+To call @code{stoch_backtr} you have to invoke function @code{partition_f}
+first. 
+@code{partition_f} sets some variables that are essential for the
+stochastic backtracking.@*
+@code{stoch_backtr} can be used to generate alternative optimal and
+suboptimal alignments by stochastic backtracking. The function returns
+an aligm-structure (@pxref{Structures}) containing one stochastic
+alignment.
+To create an ensemble of optimal and suboptimal alignments function
+@code{stoch_backtr} has to be invokes several times.
+@end deftypefun
+
+@deftypefun void free_stoch (aligm @var{stochalig})
+frees the alignment returned by @code{stoch_backtr}.
+@end deftypefun
+
+@comment ==================================================================
+@node Global Variables, Structures, Stoch Btr, Routines
+@comment  node-name,  next,  previous,  up
+@section Global Variables
+
+@menu
+* Global Var::
+* Flags::
+@end menu
+
+The following variables change the performance of the alignment algorithm.
+
+@node Global Var, Flags, Global Variables,  Global Variables
+@comment  node-name,  next,  previous,  up 
+@subsection Global Variables
+
+@deftypevar float BETA
+@var{BETA} is the ratio of a scoring matrix dependent partition module and
+a variable @var{T}. @var{T}  governs  the  relative weight of
+alignment-paths with different scores. The lower the  values  of @var{T}
+the higher is the weight given to paths with high scores. The value for
+@var{T} should be provided as a command line option. Assign the inverse of
+@var{T} to @var{BETA}. As a default value for @var{T} we used 1.
+@end deftypevar 
+
+@deftypevar float ENDGAP
+stores the score for terminal gaps. Terminal gaps are scored differently
+from gaps inside an alignment if @var{Egap_flag} is 1 (@pxref{Flags}). As a
+default value for @var{ENDGAP} we used 0.
+@end deftypevar
+
+@deftypevar char MAT_SER [20]
+determines which substitution matrix series is used. The library provides
+different scoring matrix series for proteins (@pxref{Scoring Matrices}).
+A shortcut for the selected substitution matrix series is stored in the
+global variable @var{MAT_SER}. As default substitution matrix series we used
+the gonnet_series [@kbd{gon}].   
+@end deftypevar
+
+@deftypevar float DISTANCE
+This variable allows the user to select one scoring matrix out of a series.
+The matrix series of choice has to be set by @var{MAT_SER}. To determine
+which matrix out of a series to use, set @var{DISTANCE} to the pam
+distance (Gonnet or PAM series) or the observed identity (for BLOSUM
+series) (@pxref{Pam dist}) of the selected matrix. (i.g. to select the
+commonly used PAM250 matrix set, @var{MAT_SER} to pam and @var{DISTANCE} to
+250)@* 
+default is -1, a score matrix out of a series specified by @var{MAT_SER}
+is selected automatically. If @var{DISTANCE} is positive the scoring matrix
+closest to the value of @var{DISTANCE} is selected. 
+@end deftypevar
+
+
+@comment ==================================================================
+@node Flags, , Global Var,  Global Variables
+@comment  node-name,  next,  previous,  up
+@subsection Flags
+
+The following flags should be set:
+
+@deftypevar int typ_flag
+This variable stores the type of the input polymer. For nucleic acids
+(DNA or RNA) it should be set to 1, for proteins it should be set to 0.
+For the default value of @var{typ_flag}, we used -1 (or FALSE). If
+@var{typ_flag} is set to -1, that is, if the user does not specify the kind
+of polymer, the function @code{check_polymer()} is called. Function
+@code{check_polymer()} decides whether the input polymer is DNA or
+protein. The decision is based on counting all A,C,G,T,U residues in the
+polymer of question. If at least 85% of all residues  of the sequence are
+either A, C, G, T or U the polymer is treated as DNA. The concept for this
+function is taken from ClustalW @cite{Thompson et al. (1994)}.    
+@end deftypevar
+
+
+@deftypevar int Egap_flag
+If terminal gaps are penalized with the same scores as all other gaps,
+alignments can be generated which have one or a few matched residues
+at the margin of the alignment followed by an extended gap. To prevent single
+residues from jumping to the edge of the alignment, terminal gaps get a
+lower gap penalty than gaps inside the alignment. If @var{Egap_flag} is 1
+terminal gaps are scored differently. The score for terminal gaps should be
+stored in the global variable @var{ENDGAP}
+(@pxref{Global Variables, ,Global Variables}).@*
+To treat terminal gaps like gaps inside the alignment set @var{Egap_flag}
+to 0.
+@end deftypevar
+
+
+@comment ==================================================================
+@node Structures,  , Global Variables, Routines
+@comment  node-name,  next,  previous,  up
+@subsection Structures and Definitions
+
+The following structures and definitions are used in the described functions:
+
+When compiling the library, @strong{real} can be set to @code{float} or
+@code{double}, depending on the memory available on your machine.
+@strong{real} is defined in @code{pfgoto.h}.
+ 
+@example
+#define real double
+@end example
+
+Structure @strong{sequ} stores the sequence name and the sequence : 
+@example
+typedef struct@{
+  char *name; /* name of the sequence */
+  char *seq;  /* sequence */
+@} sequ;
+@end example
+
+
+Structure @strong{aligm} stores both sequences (each in one @strong{sequ}
+structure), the alignment encoded as a string of digits
+(@pxref{Rep of A}), the score of the alignment and the probability of the
+alignment if the alignment was generated by stochastic backtracking.
+@example
+typedef struct@{
+  /* s0 and s1 store the sequences as they are used in the program */
+  sequ s0;
+  sequ s1; 
+  char *a;       /* alignment: encoded as a string of digits
+	            | match
+		    : mismatch
+	            . gaps in the shorter seq (s1)
+	            ^ gaps in the longer seq (s0) */ 
+  double score;  /* score of the alignment */
+  double prob;   /* probability of the alignment */
+@} aligm;
+@end example
+
+Structure @strong{al} stores an alignment in the classical sense:
+the name of the sequence and the gapped sequence. If the sequences
+have different lengths the longer sequence is stored in s0, the shorter in
+s1, otherwise they are stored as entered (@pxref{Rep of A}).
+
+@example
+typedef struct@{
+  sequ s0;
+  sequ s1;
+  double score;
+@} al;
+@end example
+
+
+
+
+@comment ==================================================================
+@node Parsing of A, References, Routines, Top 
+@comment  node-name,  next,  previous,  up
+@chapter Parsing of alignments
+
+@menu
+* Rep of A::
+* Scoring Matrices::
+* Pam dist::
+@end menu
+
+@node Rep of A, Scoring Matrices, Parsing of A, Parsing of A, 
+@comment  node-name,  next,  previous,  up
+@section Representation of Alignments
+
+In the usual representation of alignments, the first sequence is
+written above the second one. In regions of high similarity, similar or
+evolutionary related residues are written in one column, this is called a
+match or a mismatch, respectively. In areas where residues were deleted or
+inserted, the missing residues are substituted by the gap symbol ( - ).
+
+
+@example
+                     
+                          C P S G C T N F K - C A   
+                          C P T G - - N Y K K C A   
+                     
+                          | | : | . . | : | ^ | |
+@end example
+
+The alignment is explicitly described by four states: match (aligned residues
+are identical), mismatch (aligned residues are different), deletion (residues
+in the above sequence have been deleted in the lower sequence) and
+insertion (residues have been added to the lower sequence). For a
+non-ambiguous representation of an alignment it is mandatory to determine
+which of the sequences is the above one.@*
+The library assigns the longer of the two input sequences as the above
+sequence of the alignment. If both sequences have the same length 
+the first entered sequence is the above one.
+Throughout the program the above sequence is referred to as @var{s0}, the
+lower one as @var{s1}.@*
+The alignment is encoded as a string of symbols:
+'|' is assigned to a match, ':' to a mismatch, '.' to a deletion (missing
+residues in the lower sequence are replaced by gaps) and '^' to an insertion
+(missing residues in the above sequence are replaced by gaps).@*
+Function @code{aligne} (@pxref{gp Alignment}) returns structure
+@strong{aligm} containing the sequences as used in the program (@var{s0},
+above sequence; @var{s1}, lower sequence), the alignment encoded as a string
+of digits and the score of the alignment (@pxref{Structures}). 
+
+
+
+@comment ==================================================================
+@node Scoring Matrices, Pam dist, Rep of A, Parsing of A,
+@comment  node-name,  next,  previous,  up
+@section Scoring Matrices
+Methods for alignment of protein sequences typically measure similarity by
+using a substitution matrix with scores for all possible exchanges of one
+amino acid with another. Each substitution matrix is defined for a specific
+evolutionary distance (@pxref{Pam dist}). Depending on the distance between
+the two sequences, an appropriate matrix is selected. The program  contains
+different scoring matrix series for proteins, that can be selected by the
+option @var{MAT_SER} (@pxref{Global Variables}). For the alignment of
+nucleic acid the scoring matrix used by ClustalW is applied
+@cite{Thompson et al. (1994)}.
+
+Amino acid substitution matrices provided by the library include:
+
+Gonnet matrix series @cite{Benner et al. (1994)}:   
+from the gonnet_series, which is the default series, seven members are used:@*
+gonnet_series [@kbd{gon}]: gonnet_40, gonnet_80, gonnet_120, gonnet_160,
+gonnet_250, gonnet_300, gonnet_350;
+
+
+BLOSUM matrix series @cite{Henikoff and Henikoff (1992)}:
+from the BLOSUM series four members are provided:@*
+blosum_series [@kbd{blo}]: blosum_30, blosum_50, blosum_62, blosum_80;
+
+
+PAM matrix series @cite{Dayhoff et al. (1978)}:
+four of Dayhoff's PAM matrices are offered:@*
+pam_series [@kbd{pam}]: pam_20, pam_60, pam_120, pam_350;
+
+Shortcuts used for the matrix series are indicated in brackets (e.g.
+write @kbd{pam} to use the pam_series of substitution matrices. Write
+only @kbd{pam}, do not write the brackets).
+
+@comment ==================================================================
+@node Pam dist, ,Scoring Matrices , Parsing of A,
+@comment  node-name,  next,  previous,  up
+@section PAM Distance
+
+To compute an alignment between two sequences, you need to measure their
+evolutionary distance. The matrix series used in the library maximize the
+similarity between two sequences: Similarity of aligned residues is rewarded
+by a positive score, dissimilarity is penalized by a negative score.@*
+A commonly used set of substitution matrices are Dayhoff's PAM matrices
+@cite{Dayhoff et al. (1978)}. Dayhoff aligned a set of at least 85%
+identical sequences to count the accepted point mutations (how often
+different amino acids are replaced by each other in evolution) and the
+relative mutability of different amino acids. These data were combined to
+produce a mutation probability matrix. From the mutation probability matrix
+a log odds matrix was constructed by dividing each element of the mutation
+data matrix by its normalized frequency and then taking the log of each
+element. The elements of the log odds matrix give the probability that
+the amino acid in one column will be replaced by the amino acid in some
+row after a given evolutionary interval. One PAM (Percent Accepted
+Mutation) unit therefore represents one accepted point mutation between
+two sequences, per 100 residues.@*
+To determine the evolutionary distance for which a given substitution
+matrix is calculated, the PAM matrix series and the Gonnet matrix series
+use the PAM distance. The library provides the function @code{pam_distance}
+(@pxref{gp Alignment}) to calculate the PAM distance.@* 
+For the BLOSUM matrix series the evolutionary distance is determined by
+the observed identity. A BLOSUM 62 matrix is, for example, a substitution
+matrix calculated for comparisons of sequences with no less than 62%
+divergence (an identity of 62% and more)
+@cite{Henikoff and Henikoff (1992)}. To calculate the observed identity
+call function @code{observed_identity} (@pxref{gp Alignment}) and multiply
+the return value by 100.
+
+
+@subsection Calculation of the PAM Distance
+
+We used a simple formula to convert an observed distance to one that
+is corrected for multiple hits.  The observed distance is the mean
+number of differences per site in an alignment (ignoring sites
+with a gap) and is therefore always between 0.0 (for identical sequences)
+and 1.0 (no residues the same at any site).  These distances can be
+multiplied by 100 to give percent difference values.  100 minus percent
+difference gives percent identity.@*
+The formula we use to correct for multiple hits is from Motoo Kimura
+@cite{M. Kimura (1983)} where D is the observed distance and K is the   
+corrected distance:
+
+@example    
+
+                        K = -Ln(1 - D - (D.D)/5)
+                      
+@end example
+
+This formula gives the mean number of estimated substitutions per site and,
+in contrast to D (the observed number), can be greater than 1 (i.e. more
+than one substitution per site, on average).
+This can also be expressed in PAM units by multiplying by 100 (mean
+number of substitutions per 100 residues).@*
+Dayhoff et al constructed an elaborate model of protein evolution based
+on observed frequencies of substitution between very closely related
+proteins.  Using this model, they derived a table relating observed
+distances to predicted PAM distances.
+Kimura's formula, above, is just a "curve fitting" approximation to this
+table. It is very accurate in the range 0.75 > D > 0.0 but becomes
+increasingly inaccurate at high D (>0.75) and fails completely at around
+D = 0.85. For D > 0.75 the PAM distance is approximated using Dayhoff's
+table. The concept for the calculation of PAM distances is taken from
+ClustalW @cite{Thompson et al. (1994)}.
+  
+ 
+            
+@comment ==================================================================
+@node References, Function Index, Parsing of A, Top 
+@comment  node-name,  next,  previous,  up
+@chapter References
+
+@itemize -
+
+@item S.A. Benner, M.A. Cohen and G.H Gonnet (1994)@*
+   Amino acid substitution during functionally constrained divergent
+   evolution of protein sequences, Protein Eng. 7(11): 1323-32
+
+@item M.O. Dayhoff, R.M. Schwartz and B.C. Orcutt (1978)@*
+   A model for evolutionary change in proteins. In M.O. Dayhoff (ed),
+   Atlas of Protein Sequence and Structure 5: 345-352
+
+@item G.H. Gonnet , M.A. Cohen and S.A. Benner (1992)@*
+   Exhaustive matching of the entire protein sequence database.
+   Science 256(5062): 1443-5
+
+@item S. Henikoff and J.G. Henikoff (1992)@*
+   Amino acid substitution matrices from protein blocks,
+   Proc Natl Acad Sci U S A. 89(22): 10915-9
+
+@item M. Kimura (1983)@*
+   The neutral Theory of Molecular Evolution,
+   Camb Univ Press. : 75
+
+ 
+@item M. Kschischo and  M. Lassig (2000)@*
+   Finite-temperature sequence alignment.
+   Pac Symp Biocomput. : 624-35.
+
+   
+@item J.D. Thompson, D.G. Higgins and T.J. Gibson (1994)@*
+   CLUSTAL W: improving the sensitivity of progressive multiple sequence
+   alignment through sequence weighting, position-specific gap penalties
+   and weight matrix choice, Nucleic Acids Res. 22(22): 4673-80
+
+
+       
+@end itemize
+
+@node Function Index, Variable Index, References, Top
+@comment  node-name,  next,  previous,  up
+
+@unnumbered Function Index
+@printindex fn
+
+@node Variable Index,  , Function Index, Top
+
+@unnumbered Variable Index
+@printindex vr
+     
+@contents
+@bye
+
+
+
+@c End
+@bye
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

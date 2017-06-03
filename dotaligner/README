@@ -1,0 +1,2 @@
+src/DotAligner -d example/test1.pp -d example/test2.pp -s 999 -k 0.5 -t 0.5 -o 0.2 -e 0.1 --mutation-rates -z 0.5 --verbose -T 2
+src/DotAligner -d example/snornal140_0001.pp -d example/snornal140_0002.pp -s 999 -k 0 -t 0.5 -o 0.2 -e 0.01 --mutation-rates -z 0.5 -T 0.5
