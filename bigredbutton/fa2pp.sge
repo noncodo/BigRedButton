@@ -1,0 +1,40 @@
+#!/bin/bash
+#$ -cwd                       	# Change to current working directory 
+#$ -V                         	# Export environment variables into script 
+#$ -S /bin/bash					# Enforce bash 
+
+###########################################################################
+#####		         Fold using the partition function                #####
+###########################################################################
+# TO DO : 
+# Speed up using node local storage and tar/gzip  
+
+echo -e "[ START ]\t"$JOB_ID"\t"${SGE_TASK_ID}"\t"${HOSTNAME}"\t"`date`"\t" >  ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID}
+echo -e "Working from folder: "${BASEDIR} >>  ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID}
+
+RNAFOLDBIN=$( which RNAfold ) 
+DOTALNBIN=$( which DotAligner )
+
+FILE=$( ls split | head -n ${SGE_TASK_ID} | tail -n 1 )
+if [[ ! -d ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID} ]] ; then 
+	mkdir -p ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID}
+fi 
+cd ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID}
+
+echo "${RNAFOLDBIN} -p --noPS --noLP < ${BASEDIR}/split/${FILE}" >> ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID} 
+${RNAFOLDBIN} -p --noPS --noLP < ${BASEDIR}/split/${FILE} >> ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID}
+sleep 5 
+
+CMD="java -Xmx256m -Xms128m -classpath ${DOTALNBIN%/*} ps2pp ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID}"
+echo $CMD >> ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID} && $CMD >> ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID}
+sleep 5
+
+mv ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID}/*ps ${BASEDIR}/ps/
+mv ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID}/*pp ${BASEDIR}/pp/
+sleep 5
+
+cd ${BASEDIR}
+#rm -rf ${BASEDIR}/temp/${JOB_ID}_${SGE_TASK_ID}
+
+echo -e "[ STOP ] Completed job "$JOB_ID":"${SGE_TASK_ID}" "`date` >>  ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID}
+echo -e "[ USAGE ] "$(qstat -j ${JOB_ID} | grep usage | grep ${SGE_TASK_ID}: ) >>  ${BASEDIR}/logs/fa2pp.${SGE_TASK_ID}

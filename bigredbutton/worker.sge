@@ -1,0 +1,37 @@
+#!/bin/bash
+#$ -cwd                         # Change to current working directory 
+#$ -V                           # Export environment variables into script 
+#$ -S /bin/bash                 # Enforce bash 
+
+###########################################################################
+#####        DotAligner launcher for SGE queue management             #####
+###########################################################################
+
+# stuff to help troubleshooting
+echo -ne "[ START ]\t"$JOB_ID"\t"${SGE_TASK_ID}"\t"${HOSTNAME}"\t"`date`"\t" > logs/dotclust.${SGE_TASK_ID}
+DOTALNBIN=$( which DotAligner ) 
+SUBSET=$(ls temp/pairwise_groups/x* | sed ${SGE_TASK_ID}'q;d' )
+echo -e "file: "`pwd`"$SUBSET"  >> logs/hpc.${SGE_TASK_ID}
+
+# remove files form previous runs (enables re-launching individual tasks)
+if [[ -e hpc/${SUBSET##*/}.out || -e hpc/${SUBSET##*/}.score ]]; then 
+    rm hpc/${SUBSET##*/}.* 
+fi
+
+# sh1t just got real
+cat $SUBSET | while read line ; do
+    echo ${line} | awk 'OFS="\t"{ printf $1"\t"$2"\t"}' >> hpc/${SUBSET##*/}.score
+    F1=$( echo ${line} | awk '{ print $3}' ) 
+    F2=$( echo ${line} | awk '{ print $4}' ) 
+    OUT=$( $DOTALNBIN -d pp/${F1} -d pp/${F2} -o 1 -e 0.05 -t 0.5 -k 0.3 -s 1 -T 10 |\
+                    tee -a hpc/${SUBSET##*/}.out |\
+                    awk 'OFS="\t" { print $1,$2,$5 }'  ) 
+    # no try/catch in bash. This returns "-0" for failed jobs. 
+    # N.B. DotAligner NEVER fails....
+    if [[ ! -z "$OUT" ]] 
+        then echo $OUT  >> hpc/${SUBSET##*/}.score  
+        else echo "-0"  >> hpc/${SUBSET##*/}.score
+    fi 
+done
+echo -e "[ STOP ] Completed job "$JOB_ID":"${SGE_TASK_ID}" "`date` >> logs/hpc.${SGE_TASK_ID}
+echo -e "[ USAGE ] "$(qstat -j ${JOB_ID} | grep usage | grep ${SGE_TASK_ID}: ) >> logs/hpc.${SGE_TASK_ID}
