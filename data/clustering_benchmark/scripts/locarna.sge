@@ -1,0 +1,41 @@
+#!/bin/bash
+#$ -cwd                       	# Change to current working directory 
+#$ -V                         	# Export environment variables into script 
+#$ -S /bin/bash					# Enforce bash (don't touch!!!!)
+#$ -o $1/locarna/qsub.$JOB_ID.out
+#$ -o $1/locarna/qsub.$JOB_ID.err
+
+##################################################################################
+#####
+#####		LocaRNA launcher for SGE queue management
+#####
+################################# SGE submission options  
+. /etc/profile.d/modules.sh
+TIMEFORMAT="%R"
+
+echo -ne "[DEBUG]\t"$JOB_ID"\t"${SGE_TASK_ID}"\t"${HOSTNAME}"\t"`date`"\t" >> $1/logs/locarnaLog.${SGE_TASK_ID}
+SUBSET=$(ls ${1}/pairwise_groups/x* | sed ${SGE_TASK_ID}'q;d' ) 
+echo -e "file: "`pwd`"$SUBSET" >> $1/logs/locarnaLog.${SGE_TASK_ID}
+
+if [[ -e $1/locarna/${SUBSET##*/}.locarna ||\
+	  -e $1/locarna/${SUBSET##*/}.locarna.score ||\
+	  -e $1/locarna/${SUBSET##*/}.locarna.time ]]; then rm $1/locarna/${SUBSET##*/}.* ; fi
+
+cat $SUBSET | while read line ; do
+    echo "----------" >> $1/locarna/${SUBSET##*/}.locarna
+    echo "ALIGNING	"$line >> $1/locarna/${SUBSET##*/}.locarna
+    echo -en $line"\t" >> $1/locarna/${SUBSET##*/}.locarna.score
+    # { time locarna --free-endgaps=L1,L2,R1,R2 --sequ-local=true --noLP `echo ${line} \
+    #	| cut -d " " -f 1-2`; }  &>> $SUBSET.locarna_local
+    OUT=$( { time ( locarna --noLP `echo ${line} | awk 'OFS="\t"{ print $3,$4}' ` ) } \
+                2>> $1/locarna/${SUBSET##*/}.locarna.time |\
+                tee -a $1/locarna/${SUBSET##*/}.locarna | grep Score | awk '{print $2}'  )
+    
+    if [[ ! -z "$OUT" ]] 
+    	then echo $OUT  >> $1/locarna/${SUBSET##*/}.locarna.score 	
+    	else echo "-0"  >> $1/locarna/${SUBSET##*/}.locarna.score
+    fi 
+done
+
+echo -e "[DEBUG] Completed job "$JOB_ID":"${SGE_TASK_ID}"\t"`date` >> $1/logs/locarnaLog.${SGE_TASK_ID}
+echo -e "[DEBUG] "$(qstat -j ${JOB_ID} | grep usage | grep ${SGE_TASK_ID}: ) >> $1/logs/locarnaLog.${SGE_TASK_ID}

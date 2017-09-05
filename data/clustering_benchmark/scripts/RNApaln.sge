@@ -1,0 +1,31 @@
+#!/bin/bash
+#$ -cwd                       	# Change to current working directory
+#$ -V                         	# Export environment variables into script
+#$ -S /bin/bash					# Enforce bash (don't touch!!!!)
+
+
+. /etc/profile.d/modules.sh
+TIMEFORMAT="%R"
+
+echo -ne "[DEBUG]\t"$JOB_ID"\t"${HOSTNAME}"\t"`date`"\t" > $1/logs/RNApalnLog.1
+
+if [[ -e $1/RNApaln/RNApaln ||\
+	  -e $1/RNApaln/RNApaln.score ||\
+	  -e $1/RNApaln/RNApaln.time ]]; then rm $1/RNApaln/* ; fi
+
+cat $1/pairwise_list.txt | while read line ; do
+    line=${line//ps/fasta}
+    line=${line//_dp/}
+    echo -ne $line"\t" | sed 's/ /	/g'>> $1/RNApaln/RNApaln.score
+    files=$( echo $line | awk 'OFS"\t"{print $3,$4}' )
+    OUT=$( { time ( cat $files | RNApaln -B --gapo=1 --gape=0.05 --seqw=0.5 ) } \
+                2>> $1/RNApaln/RNApaln.time |\
+                tee -a $1/RNApaln/RNApaln | sed 3'q;d' )
+    if [[ ! -z "$OUT" ]] 
+        then echo $OUT  >> $1/RNApaln/RNApaln.score  
+        else echo "-0"  >> $1/RNApaln/RNApaln.score  
+    fi 
+done
+
+echo -e "[DEBUG] Completed job "$JOB_ID"\t"`date` >> $1/logs/RNApalnLog.1
+echo -e "[DEBUG] "$(qstat -j ${JOB_ID} | grep usage  ) >> $1/logs/RNApalnLog.1
