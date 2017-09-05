@@ -10,19 +10,20 @@ import java.util.*; import java.io.*; import java.math.*;
 
 public class GenerateRFAMsubsets {
 
-	static String	OUT_PATH = 			"./rfam_subset/", 
-					DB_PATH = 			"./input/";
+	static String	OUT_PATH = 	"./rfam_subset/", 
+					DB_PATH = 	"./input/";
 
-	static boolean 	VERBOSE = 			false ,
-					STRIP = 			false; 
+	static boolean 	VERBOSE = 	false,
+					STRIP = 	false,
+					ALIGN = 	true; 
 	
-	static int	MIN_PER_FAM = 			2,
-				MAX_PER_FAM = 			20,
-				TOTAL_SEQS = 			250,
-				MAX_WIN = 				175,
-				MIN_WIN = 				125,
-				MIN_PI = 				10,
-				MAX_PI = 				50;
+	static int	MIN_PER_FAM = 	2,
+				MAX_PER_FAM = 	20,
+				TOTAL_SEQS = 	250,
+				MAX_WIN = 		175,
+				MIN_WIN = 		125,
+				MIN_PI = 		10,
+				MAX_PI = 		50;
 //				LEN_DIFF =				10;     
 
 /*******************************************************************************
@@ -44,15 +45,17 @@ public class GenerateRFAMsubsets {
    				"  -v\tVerbose output\n"+
 			    "  -min_win (int)\tminimum sequence/window length (default 125)\n"+
 			    "  -max_win (int)\tmaximum sequence/window length (default 175)\n"+
-				"  -min_pi (int)\tMinimum pairwise identity percentage (default 10)\n"+
-				"  -max_pi (int)\tMaximum pairwise identity percentage (default 80)\n"+
-				"  -max_f (int)\tMaximum sequences per RFAM family/input file (default 20)\n"+
-				"  -min_f (int)\tMinimum sequences per RFAM family/input file (default 2)\n"+
-				"  -t (int)\tMaximum total sequences to include (default 250)\n"+
-				"          \t**N.B.** There is no minimum value at the moment\n"+
-				"  -strip \tStrip gaps in output\n"+
+				"  -min_pi (int) \tMinimum pairwise identity percentage (default 10)\n"+
+				"  -max_pi (int) \tMaximum pairwise identity percentage (default 80)\n"+
+				"  -max_f (int)  \tMaximum sequences per RFAM family/input file (default 20)\n"+
+				"  -min_f (int)  \tMinimum sequences per RFAM family/input file (default 2)\n"+
+				"  -t (int)      \tMaximum total sequences to include (default 250)\n"+
+				"                \t**N.B.** There is no minimum value at the moment\n"+
+				"  -l            \tUse Needleman-Wunsch with free end gaps to calculate pairwise identity.\n"+
+				"          		 \tBy default, this is calculated from the intrinsic RFAM alignment.\n"+
+				"  -strip        \tStrip gaps in output\n"+
 //				"  -len   (int)\tMaximum percentage of length difference (default 10) \n"+
-			    "  -o\t/path/to/output/dir\n");
+			    "  -o            \t/path/to/output/dir\n");
  			System.exit(0); 
 		}
 		// parse arguments
@@ -93,6 +96,14 @@ public class GenerateRFAMsubsets {
 			}
 			else if ( Args[ i ].equals("-t") ) {  
 				TOTAL_SEQS = Integer.parseInt( Args[ i+1 ] ) ;
+				i++ ; 
+				continue flags; 
+			}
+			else if ( Args[ i ].equals("-l") ) {  
+				ALIGN = true ; 
+				// check to see if the NW binary was compiled and is present 
+				// might not be necessary if bundled in a .jar 
+
 				i++ ; 
 				continue flags; 
 			}
@@ -338,13 +349,32 @@ public class GenerateRFAMsubsets {
 			System.err.println(" Sequences have uneven length! Exiting..."); 
 			System.exit(0); 
 		}
-		for (int col = 0 ; col != Seq1.length() ; col ++ ) {
-			if ( Seq1.substring(col, col+1).matches("[ACTGU]") ) 
-				seq1_len++ ; 
-			if ( Seq2.substring(col, col+1).matches("[ACTGU]") ) 
-				seq2_len++ ; 
-			if ( Seq1.charAt( col ) == Seq2.charAt( col ) && Seq1.substring(col, col+1).matches("[ACTGU]") ) 
-				matches++ ; 
+		if ( ALIGN ) {
+			// Remove all indel characters. Default should be '.' in RFAM
+			String StripSeq1 = Seq1.replaceAll(".","");
+			String StripSeq2 = Seq2.replaceAll(".","");
+			// assumes "align" binary is in appropriate relative path 
+			String Command = "../nw/src/align "+ StripSeq1 + " " + StripSeq2 +" -l"; 
+
+			Process NW ; 
+			try {
+				NW = Runtime.getRuntime().exec( Command );
+				NW.waitFor();
+			} catch (Exception OhNo) {
+				System.err.println( "[ ERROR ] Cannot execute pairwise alignment command:\n"+Command);
+				OhNo.printStackTrace();
+			}
+		}
+
+		}
+		else
+			for (int col = 0 ; col != Seq1.length() ; col ++ ) {
+				if ( Seq1.substring(col, col+1).matches("[ACTGU]") ) 
+					seq1_len++ ; 
+				if ( Seq2.substring(col, col+1).matches("[ACTGU]") ) 
+					seq2_len++ ; 
+				if ( Seq1.charAt( col ) == Seq2.charAt( col ) && Seq1.substring(col, col+1).matches("[ACTGU]") ) 
+					matches++ ; 
 		}
 		return (double) matches / Math.min( seq1_len, seq2_len ); 
 	}

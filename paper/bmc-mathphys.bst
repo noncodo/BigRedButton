@@ -874,28 +874,30 @@ FUNCTION {upercase.first.letters}{
 
 
 FUNCTION {format.title}
-{ title empty$
-    { "" }
-    { title  
-      "article" type$ =
-      type$ "techreport" =
-      type$ "inbook" =
-      type$ "inproceedings" =
-      type$ "incollection" =
-      type$ "phdthesis" =
-      type$ "mastersthesis" =
-      or or or or or or
-         {"t" change.case$}
-         {	type$ "unpublished" =
-           type$ "misc" =
-           or
-             'skip$
-            'upercase.first.letters
-          if$
-        }
-      if$
-    }
-  if$
+{ 
+%title empty$
+%    { "" }
+%    { title  
+%      "article" type$ =
+%      type$ "techreport" =
+%      type$ "inbook" =
+%      type$ "inproceedings" =
+%      type$ "incollection" =
+%      type$ "phdthesis" =
+%      type$ "mastersthesis" =
+%      or or or or or or
+%         {"t" change.case$}
+%         {	type$ "unpublished" =
+%           type$ "misc" =
+%           or
+%             'skip$
+%            'upercase.first.letters
+%          if$
+%        }
+%      if$
+%   }
+%  if$
+ title
 }
 
 
