@@ -254,7 +254,7 @@ for the classification of their biological functions. Sparse sequence conservati
 non-coding sequences and the unreliable nature of RNA structure predictions further 
 exacerbate this conundrum. Here, we describe a computational method for the 
 unsupervised discovery and classification of homologous RNA structure motifs from a set of 
-sequences of interest.  Our approach outperforms other tools at classifying known RNA structure families, both in time and accuracy. It identifies clusters of known and novel structure motifs from ENCODE immuno-precipitation data of 44 RNA-binding proteins. 
+sequences of interest.  Our approach outperforms other tools at classifying known RNA structure families, both in time and accuracy. It identifies clusters of known and novel structure motifs from ENCODE immunoprecipitation data of 44 RNA-binding proteins. 
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,7 +317,7 @@ sequences of interest.  Our approach outperforms other tools at classifying know
 \section*{Background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As genomic technologies progress, an ever increasing amount of non-protein coding RNAs (ncRNA) are being discovered. Long noncoding RNAs (lncRNAs) are of particular interest for functional genome
+As genomic technologies progress, an ever increasing amount of non-protein coding RNAs (ncRNA) are being discovered. Long non-coding RNAs (lncRNAs) are of particular interest for functional genome
 annotation given their abundance throughout the genome. So far, few lncRNAs have been functionally characterised, and those that have seem to be involved in regulation of gene expression and epigenetic states 
 \cite{morris2014rise,engreitz2016long}. Understanding the
 molecular mechanisms underlying the biological functions of lncRNAs -- and how
@@ -334,8 +334,9 @@ concerning the prevalence of functional structural  motifs in lncRNAs
 \cite{eddy2014computational,rivas2016statistical}, despite evolutionary and
 biochemical support of conserved base pairing interactions
 \cite{smith2013widespread,spitale2015structural,lu2016rna}.
-Nonetheless, the higher-order structure of RNA molecules is an essential feature of ncRNAs that can be used for their classification and the inference of their biological function. We, and others, hypothesise that
-lncRNAs act as scaffolds for the recruitment of proteins and assembly of
+Nonetheless, the higher-order structure of RNA molecules is an essential feature 
+of ncRNAs that can be used for their classification and the inference of their biological function. 
+We, and others, hypothesise that lncRNAs act as scaffolds for the recruitment of proteins and assembly of
 ribonucleoproteins (RNPs), mediated by the presence of modular RNA structures,
 akin to the domain organisation of proteins
 \cite{zappulla2006rna,hogg2008structured,rinn2012genome,mercer2013structure,smith2013widespread,chujo2016architectural,blythe2016ins}.
@@ -378,7 +379,7 @@ heuristic pairwise sequence alignment algorithm that considers an ensemble of su
 base pairing probabilities for each queried sequence. We compare \dotaligner{} with other pairwise RNA structure alignment algorithms to highlight its speed and accuracy at classifying know RNA families. 
 We combine \dotaligner{} with density based clustering for the impartial identification of 
 RNA structural motifs, which can identify known RFAM families and novel RNA structural 
-motifs from ENCODE eCLIP data. The resulting clusters of homolgous RNA structures can then 
+motifs from ENCODE eCLIP data. The resulting clusters of homologous RNA structures can then 
 be used to search for homologous structures across reference genomes and transcriptomes 
 to generate a map of functionally related RNA structure motifs.  
 
@@ -472,7 +473,7 @@ OPTICS is a derivative of the Density-BaSed Clustering for Application with Nois
 and the minimum number of points in a cluster (Supplementary Fig. 2)--on 
 a pooled set of 580 stochastically sampled RFAM sequences encompassing various ranges of sequence similarity, 
 as well as a corresponding set of 580 dinucleotide shuffled controls (see Methods). 
-After performing all vs all pairwise alignments with \dotaligner{}, 
+After performing all versus all pairwise alignments with \dotaligner{}, 
 we evaluated the effect of OPTICS parameters on clustering performance, 
 revealing that a minimum of 4 points (or sequences) and a steepness threshold of 0.006 
 gave the best results (Supplementary  Fig. 1A). \\
@@ -493,12 +494,12 @@ The optimised parameters for OPTICS clustering of \dotaligner{} output were inco
 a high-performance computing pipeline that extracts clusters of homologous RNA structural
  motifs from a set of input sequences (see Methods).  This pipeline was applied to enhanced cross-linked 
 RNA immunoprecipitation (eCLIP) sequencing data from 44 RNA binding proteins from the ENCODE consortium  \cite{van2016robust}, with 100 positive control sequences from RFAM (Supplementary Table 2).
-From 2,750 high-confidence ($>$8x fold-enrichment vs background, P-value $<10^{-4}$) eCLIP peaks 
+From 2,750 high-confidence ($>$8-fold  fold-enrichment versus background, P-value $<10^{-4}$) eCLIP peaks 
 that overlap evolutionarily conserved secondary structure predictions, 
 25 significant clusters of homologous RNA were detected, including all 11 positive controls (Fig. 5).\\
 
 Indeed, the \textit{spike in} RFAM sequences facilitate the identification of similar RNA structures, 
-such as the homologs to snoRNA72 depicted in (Fig. 5C-D). The 4 additional sequences that 
+such as the homologs to SNORNA72 depicted in (Fig. 5C-D). The 4 additional sequences that 
 co-cluster with the RFAM 72 controls are all associated to the DKC1 protein, which binds to H/ACA snoRNAs. 
 Furthermore, 3 of the DKC1-bound beaks are annotated as snoRNAs in the Gencode 24 reference, 
 while the 4th is not annotated as a snoRNA despite strong sequence and structure similarity, 
@@ -511,7 +512,7 @@ Our method also identifies RNA structure families impartially,
 as exemplified by several clusters of DKC1-associated sequences which present
 consensus secondary structures indicative of snoRNAs (Fig. 5E). 
 Closer inspection of the corresponding eCLIP peaks revealed that these sequences
-are indeed annotated as snoRNAs in Gencode. There are also examples of de novo 
+are indeed annotated as snoRNAs in Gencode. There are also examples of de Novo 
 structural motifs that are associated to RNA-binding proteins with no 
 previously known binding sites, such as an UPF1-dominated cluster 
 (Fig. 5F), composed of a structure motif belonging to ALU repeats 
@@ -534,7 +535,7 @@ polymorphisms occur in non-coding regions
 \cite{hindorff2009potential,ritchie2014functional}. Thus, elucidating the
 structural features of RNAs associated to RNA-binding proteins and
 ribonucleoprotein (RNP) complexes, combined to the systematic classification of
-their genome-wide occurrence, can identify novel riboSNitches (functional RNA
+their genome-wide occurrence, can identify novel ribosnitches (functional RNA
 structures that are disrupted in disease) and help pinpoint the molecular
 function of non-coding mutations. The structural diversity of some RNAs,
 especially of riboswitches, allows them to respond to their environment (such
@@ -546,7 +547,7 @@ Given its relative speed and accuracy, \dotaligner{} can be used to generate
 larger (dis)similarity matrices for cluster analysis than other pairwise
 structure alignment algorithms, or at least produce them with reasonable
 computational power. In addition to its speed, the strength of \dotaligner{} lies in
-its capacity to accurately score structurally homoglous RNA sequences. The
+its capacity to accurately score structurally homologous RNA sequences. The
 algorithm appears to generate pairwise alignments that differ qualitatively to the
 reference structural alignments. Despite this, \dotaligner{} can harness the
 information content of base pair probability ensembles to output a reliable
@@ -577,7 +578,7 @@ were observed when analysing less stringently filtered eCLIP peaks (not shown). 
 \dotaligner{} has several parameters that will influence the clustering results and 
 speed depending on the type of input data. The most influential variables are the weight between sequence and structure similarity, and the exploration depth of the suboptimal alignments in the stochastic
 backtracking. Here, we present the best trade-off between alignment
-accurracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. \\
+accuracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. \\
 
 A greater challenge lies in the accurate depiction of RNA structure motif boundaries. 
 Whereas global structures may stabilize the RNA molecule, local
@@ -596,7 +597,7 @@ could also increase the amount of eCLIP peaks with accurate structural motif bou
 Alternatively, RNA structure boundaries can be refined 
 using alternative strategies such as computational boundary refinement 
 with\texttt{ LocaRNA-P } \cite{will2012locarna}, or improving the biological 
-data with ezymatic probing with the double-stranded RNase T1 
+data with enzymatic probing with the double-stranded RNase T1 
 endoribonuclease, for example. \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -677,7 +678,7 @@ where there is no dominant RFAM family (i.e. equally represented families), or c
 \subsection*{Clustering of protein-bound evolutionarily-conserved RNAseq reads}
 
 The genomic coordinates of ENCODE eCLIP peaks were downloaded in .bed format from the April 2016 release via the ENCODE portal (\url{https://www.encodeproject.org/search}). The resulting 5,040,096 peaks 
-were filtered to keep only those with $\ge$8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50nt to avoid over-representing the same sequence (Additional file 1). The remaining peaks were subsequently filtered by 
+were filtered to keep only those with $\ge$8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50 nt to avoid over-representing the same sequence (Additional file 1). The remaining peaks were subsequently filtered by 
 retaining only those that present same-strand overlap with any evolutionarily conserved structure (ECS) predictions from \cite{smith2013widespread}. Finally, the associated genomic sequences were extracted into a .fasta file, which was supplemented with 100 reference RNA structures from 11 RFAM families (see Supplementary Table 1). 
 Merging, overlap, and sequence extraction operations were performed with \texttt{bedtools} version v2.26.0. \\
 
@@ -766,14 +767,14 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%         FIGURE 1       %%%%%%%%%
 \begin{figure}[h!]
-%\includegraphics[width=\textwidth]{fig1}
+\includegraphics[width=\textwidth]{fig1}
  \caption {\csentence{Schematic of a pairwise alignment with DotAligner.}
   A dynamic  programming matrix is first filled in based on sequence 
   similarity (top left--colour intensity indicates cumulative sequence similarity score). 
   A partition function over all pairwise sequence alignments is then calculated and 
   interrogated for structural compatibility by stochastic backtracking. 
   Two ensemble of suboptimal secondary structures are considered for this purpose
-  (bottom left and top right dot plots; blue lines indicate cumulative basewise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
+  (bottom left and top right dot plots; blue lines indicate cumulative base-wise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
   and associated consensus secondary structure is contrasted to that produced 
   by DotAligner, exposing the common structural features hidden in the suboptimal 
   base pairing ensemble of both sequences. 
@@ -783,7 +784,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%%       FIGURE 2       %%%%%%%%%% 
 \begin{figure}[h!]
-% \includegraphics[width=\textwidth]{fig2}
+ \includegraphics[width=\textwidth]{fig2}
  \caption {\csentence{Comparison of RNA structure alignment qualities.}  The
  Matthews Correlation Coefficient (\textbf{A}), Structural Conservation Index  
  (\textbf{B}), and \texttt{RNAdistance} calculated topological edit distance 
@@ -794,7 +795,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%%       FIGURE 3      %%%%%%%%%% 
 \begin{figure}[h!]
-% \includegraphics[width=\textwidth]{fig3}
+ \includegraphics[width=\textwidth]{fig3}
  \caption {\csentence{Classification of known RNA structures. }
  (\textbf{A}) Receiving Operator Characteristic (ROC) curves measuring the classification
  accuracy by contrasting the computed similarity matrices of each algorithm 
@@ -809,7 +810,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%%       FIGURE 4      %%%%%%%%%% 
 \begin{figure}[h!]
-% \includegraphics[width=\textwidth]{fig4}
+ \includegraphics[width=\textwidth]{fig4}
  \caption {\csentence{Comparative clustering benchmark of RFAM sequences and their shuffled controls}. Clustering performance metrics of 3 algorithms on 580 reference RFAM 
  structures and their dinucleotide-shuffled controls. (\textbf{A}) Sensitivity vs false positive rate; (\textbf{B}) Qualitative cluster statistics (horizontal dashed line indicate real amount of clusters from unique RFAM families). }
 \end{figure}
@@ -817,15 +818,15 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%%       FIGURE 5      %%%%%%%%%% 
 \begin{figure}[h!]
-% \includegraphics[width=\textwidth]{fig5}
+ \includegraphics[width=\textwidth]{fig5}
  \caption {\csentence{ De novo homologous RNA motif identification}. 
  (\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colours represent 
  significant clusters. 
  (\textbf{B}) Reachability plot of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein 
- in each cluster is displayed next to significant clusters; those with an asterix and portrayed below.
+ in each cluster is displayed next to significant clusters; those with an asterisk and portrayed below.
  (\textbf{C}) Multiple structure alignment generated by \texttt{mLocaRNA} on the sequences from a 
- cluster containing both RFAM snoRNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
-An unannotated DKC1-bound sequence is marked with an asterix.
+ cluster containing both RFAM SNORNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
+An unannotated DKC1-bound sequence is marked with an a=sterix.
 (\textbf{E}) \texttt{RNAalifold} consensus of the alignment displayed in (\textbf{C}), 
 a cluster of impartially detected DKC1-bound snoRNAs (\textbf{E}), 
 and a novel UPF1-bound motif (\textbf{F}). }
@@ -870,7 +871,7 @@ and a novel UPF1-bound motif (\textbf{F}). }
 
   \subsection*{Additional file 1 --- Supplementary methods}
 
-    Link to GitHub reposiroty, more detailed description of the \dotaligner{} implementation, RNA structure clustering, and eCLIP data processing. 
+    Link to GitHub repository, more detailed description of the \dotaligner{} implementation, RNA structure clustering, and eCLIP data processing. 
 
   \subsection*{Additional file 2 --- Supplementary tables and figures}
 
@@ -1292,7 +1293,7 @@ T=10 s=1 k=0.4 t=0.6 o=1 e=0.05 & 14 & 101 & 1414 & 0.983273039 & 0.996343919 & 
 \begin{figure}
  \includegraphics[width=\textwidth]{SF1}
  \caption*{ \textbf{ Figure S1. Binary classification of similarity matrices  }\\
-Stochastically sampled RFAM sequences are labelled as belonging to the same family in white, and in red when not (Left). Heatmaps of the similarity matrices produced by \dotaligner{}, \locarna{} and \carna{} are listed in columns 2, 3 and 4, respectively.  
+Stochastically sampled RFAM sequences are labelled as belonging to the same family in white, and in red when not (Left). Heat maps of the similarity matrices produced by \dotaligner{}, \locarna{} and \carna{} are listed in columns 2, 3 and 4, respectively.  
 (top) Low mean pairwise identity samples, where each sequence within 
 a family shares between 0 and 55\% sequence identity; (bottom) Higher (56-95\%) mean pairwise identity samples. }
 \end{figure}
