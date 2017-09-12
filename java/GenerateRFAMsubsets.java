@@ -1,4 +1,4 @@
-//  Created by Martin A. Smith in Dec 2013.
+//  Created by Martin A. Smith on Dec 2013.
 // 	Distributed under GPL
 //	martinalexandersmith[at]gmail[dot]com
 
@@ -10,20 +10,20 @@ import java.util.*; import java.io.*; import java.math.*;
 
 public class GenerateRFAMsubsets {
 
-	static String	OUT_PATH = 	"./rfam_subset/", 
-					DB_PATH = 	"./input/";
+	static String	OUT_PATH = 			"./rfam_subset/", 
+					DB_PATH = 			"./input/";
 
-	static boolean 	VERBOSE = 	false,
-					STRIP = 	false,
-					ALIGN = 	true; 
-	
-	static int	MIN_PER_FAM = 	2,
-				MAX_PER_FAM = 	20,
-				TOTAL_SEQS = 	250,
-				MAX_WIN = 		175,
-				MIN_WIN = 		125,
-				MIN_PI = 		10,
-				MAX_PI = 		50;
+	static boolean 	VERBOSE = 			false ,
+					STRIP = 			false,
+					ALIGN = 			true; 
+
+	static int	MIN_PER_FAM = 			2,
+				MAX_PER_FAM = 			20,
+				TOTAL_SEQS = 			200,
+				MAX_WIN = 				175,
+				MIN_WIN = 				125,
+				MIN_PI = 				0,
+				MAX_PI = 				50;
 //				LEN_DIFF =				10;     
 
 /*******************************************************************************
@@ -37,12 +37,11 @@ public class GenerateRFAMsubsets {
 			System.out.println(
 				"\n***************************************************************************************\n" +
 				"***   GenerateRFAMsubsets\n"+
-				"***   Selects random (sub)sequences from a reference database \n"+
-			    "**************************************************************************************\n"+
+				"***   Selects random (sub)sequences from a reference database \n\n"+
 			    "Usage:  java GenerateRFAMsubsets [options] -i [path to .fasta database folder]\n"+
 			    "\t*** INPUT folder must contain only fasta files***\n"+
 			    "Options:\n"+
-   				"  -v\tVerbose output\n"+
+   				"  -v            \tVerbose output\n"+
 			    "  -min_win (int)\tminimum sequence/window length (default 125)\n"+
 			    "  -max_win (int)\tmaximum sequence/window length (default 175)\n"+
 				"  -min_pi (int) \tMinimum pairwise identity percentage (default 10)\n"+
@@ -52,7 +51,7 @@ public class GenerateRFAMsubsets {
 				"  -t (int)      \tMaximum total sequences to include (default 250)\n"+
 				"                \t**N.B.** There is no minimum value at the moment\n"+
 				"  -l            \tUse Needleman-Wunsch with free end gaps to calculate pairwise identity.\n"+
-				"          		 \tBy default, this is calculated from the intrinsic RFAM alignment.\n"+
+				"                \tBy default, this is calculated from the intrinsic RFAM alignment.\n"+
 				"  -strip        \tStrip gaps in output\n"+
 //				"  -len   (int)\tMaximum percentage of length difference (default 10) \n"+
 			    "  -o            \t/path/to/output/dir\n");
@@ -103,8 +102,6 @@ public class GenerateRFAMsubsets {
 				ALIGN = true ; 
 				// check to see if the NW binary was compiled and is present 
 				// might not be necessary if bundled in a .jar 
-
-				i++ ; 
 				continue flags; 
 			}
 			else if ( Args[ i ].equals("-o") ) {  // out dir
@@ -183,10 +180,23 @@ public class GenerateRFAMsubsets {
 			SeqChars [ i ] = new String [ Names.length ] ; 	 							// Array of sequences (as char[]) 
 
 			//concatenate files into meta-arrays
+			int ss = -1 ;
 			for ( int j = 0 ; j != Names.length ; j++ ) {
 				SeqNames[ i ][ j ] = Names[ j ].toString() ; 							// converts object to string
+				if (SeqNames[ i ][ j ].matches(".*SS_cons.*") )
+					ss = j ; 
 				SeqChars[ i ][ j ] = Sequences[ j ].toString() ; 						// " 
-			}			
+		//		System.err.println("j="+j+" "+SeqNames[ i ][ j ]);
+			}
+			String Temp = SeqNames[ i ][ ss ];
+			SeqNames[ i ][ ss ] = SeqNames[ i ][ 0 ] ;
+			SeqNames[ i ][ 0 ] = Temp; 
+			Temp = SeqChars[ i ][ ss ];
+			SeqChars[ i ][ ss ] = SeqChars[ i ][ 0 ] ;
+			SeqChars[ i ][ 0 ] = Temp;
+		//	System.err.println( "2D: "+ SeqChars[ i ][0] ) ;
+
+
 			beenSampled[ i ] = new boolean [ Names.length ] ; 	
 			isWrongSize[ i ]  = new boolean [ Names.length ] ; 					// implements 2nd dimension array
 			RfamAln.clear() ; 	
@@ -205,92 +215,126 @@ public class GenerateRFAMsubsets {
 			Map SampledSeqs = new HashMap() ; 
 			SampledSeqs = new TreeMap() ; 
 			//RFAM family name
-			String RFAM_ID = FileNames[ fam ].substring( FileNames[ fam ].indexOf( "RF0" ), FileNames[ fam ].indexOf("."));
+			String RFAM_ID = FileNames[ fam ].substring( FileNames[ fam ].indexOf( "RF0" ), 
+														 FileNames[ fam ].indexOf("."));
 			if (VERBOSE) // print out some basic information
-				System.err.println(	"[ Checkpoint ] Processing entry: "+ RFAM_ID  ); 
+				System.err.println(	"[ Checkpoint ] Loaded entry: "+ RFAM_ID  ); 
 
 			//get a random sequence to initialise the sampling
-			int random =  (int) (Math.random() * ((double) SeqNames[ fam ].length -2 )) + 2   ; 
-			int query_len = SeqChars[ fam ][ random ].replaceAll("[\\.]","").length();
+			int random =  (int) (Math.random() * ((double) SeqNames[ fam ].length -1 ) + 1)    ; 
+			int query_len = SeqChars[ fam ][ random ].replaceAll("-","").length();
 			if ( query_len <= MIN_WIN || query_len >= MAX_WIN ) {
 				int counter = 0 ; 
 				while ( counter < 250 ) {
-					random =  (int) (Math.random() * ((double) SeqNames[ fam ].length -2 )) + 2  ; 
-					query_len = SeqChars[ fam ][ random ].replaceAll("[\\.]","").length();
+					random =  (int) (Math.random() * ((double) SeqNames[ fam ].length -1))   ; 
+					query_len = SeqChars[ fam ][ random ].replaceAll("-","").length();
 					if (  query_len >= MIN_WIN && query_len <= MAX_WIN )
 						break; 
 					counter++ ; 
 				}
-				
 				System.err.println("[ WARNING ] Random selections out of size range after 250 tries");
 						continue families; 
 			}
-			// Add to hash before printing out whole family; ensures >1 seq in output. 
-			// [ NOTE ] The index can be swapped to the sequence, thus ensuring only unique sequences are output. 
-			SampledSeqs.put( ">"+RFAM_ID+"_"+SeqNames[ fam ] [ random ].substring(1, SeqNames[ fam ] [ random ].indexOf(".") )+"_"+(fam_seqs+1), 
-								SeqChars[ fam ][ random ]);
-			if (VERBOSE) 												// print out some basic information
-				System.err.println(	"[ NOTE ] added : \n\t"+SeqNames[ fam ] [ random ]);
-
-			beenSampled [ fam ][ random ] = 	true ; 
+			if (VERBOSE)
+				System.err.println(	"[ Checkpoint ] Found size compatible random entry: "+ RFAM_ID +" "+SeqNames[ fam ][ random ] ); 
+			// mark it as sampled
+			beenSampled [ fam ][ random ] = true ; 
 			fam_seqs++ ; 
-			
-			scan : for ( int query = 2 ; query != SeqNames[ fam ].length ; query++ ) {
+
+			///////////////////////////////////////////////	
+			// 	
+			// 	Pseudo-random sampling 
+			//	If a random choice has already been selected, 
+			//  increments index until an unsampled sequence is found. 
+			//
+			//scan : for ( int selected = 1 ; selected != SeqNames[ fam ].length  ; selected++ ) {
+			int num_sampled = 1 ; 
+			scan : while ( 	num_sampled < SeqNames[ fam ].length && num_sampled <= MAX_PER_FAM  ) { 
+				// get a random sample index
+				int sample = (int) (Math.random() * ((double) SeqNames[ fam ].length -1));
+				//make sure it's not the 'anchor' 
+				if ( sample == random ) 
+					continue scan; 
+				//increment until an unsampled sequence is found
+				while ( beenSampled [ fam ][ sample ] ) {
+					if ( sample + 1 >= SeqNames[ fam ].length )
+						sample = 0 ; 
+					else 
+						sample++ ; 
+				}
+				beenSampled [ fam ][ sample ] = true ;
+				num_sampled++; 
 				//length of sequence without gaps
- 				if ( !isWrongSize[ fam ][ query ] && query_len <= MAX_WIN && query_len >= MIN_WIN ) {
-					
-					// all other sequences in a family
-					double pid = 0; 
-			
+				query_len = SeqChars[ fam ][ sample ].replaceAll("-","").length();
+
+ 				if ( query_len >= MIN_WIN && query_len <= MAX_WIN ) {
+					double pid = 0; 			
+					pid = GetPID( SeqChars[ fam ][ random ], SeqChars[ fam ][ sample ]) * 100 ;
 					// Ensure already sampled sequences don't clash (PIDs >> or << )
-					for (int sampled = 2 ; sampled != query ; sampled++ ) {
-						// compare a query to all previously included sequences  
-						if ( beenSampled[ fam ][ sampled ] ) {   
-							pid = GetPID( SeqChars[ fam ][ sampled ], SeqChars[ fam ][ query ]) * 100 ;
-							if ( (int) pid > MAX_PI || (int) pid < MIN_PI )
-								continue scan ; 
-						}
-					}
-					
-					pid = GetPID( SeqChars[ fam ][ random ], SeqChars[ fam ][ query ]) * 100 ;
 					if ( (int) pid > MAX_PI || (int) pid < MIN_PI )
 						continue scan ; 
-					else {
-						if (VERBOSE) 												// print out some basic information
-								System.err.println(	"[ NOTE ] added :\n\t"+ RFAM_ID +"\t"+ SeqNames[ fam ] [ query ] 
-														+"\t"+ (int) pid +"\t"+ query_len +"\t"+ fam_seqs ); 
-						// Looks good, add it to output hashmap
-						SampledSeqs.put( ">"+RFAM_ID+"_"+	SeqNames[ fam ] [ query ].substring(1, SeqNames[ fam ] [ query ].indexOf(".") )
-												+"_"+(fam_seqs+1) +"_"+ (int) pid , SeqChars[ fam ][ query ]) 	;	
-						// mark it as sampled
-						beenSampled [ fam ][ query ] = 	true ; 
-						fam_seqs++ ; 
-					}
-					if ( fam_seqs == MAX_PER_FAM) {
-						if (VERBOSE)
-							System.err.println( "[ NOTE ] Reached maximum seqs per family: "+fam_seqs);
-							break ; 
-					}
-				}
+					// compare a query to all previously included sequences  
+					// for (int selected = 0 ; selected != selected ; selected++ ) {
+					// 	if ( beenSampled[ fam ][ selected ] ) {   
+					// 		pid = GetPID( SeqChars[ fam ][ selected ], SeqChars[ fam ][ selected ]) * 100 ;
+					// 		if ( (int) pid > MAX_PI || (int) pid < MIN_PI )
+					// 			continue scan ; 
+					// 	}
+					// }
+					
+					if ( fam_seqs > 1 ) {
+						if (VERBOSE) System.err.println(	" -cross-checking sample #"+fam_seqs+" "+SeqNames[ fam ] [ sample ]);
 
-				// query is outside sequence length restrictions, let's ignore it in the future
-				 else isWrongSize[ fam ][ query ] = true ; 
-			}	 
-			
+				    	Collection C = SampledSeqs.values();  
+    					Iterator<String> ITR = C.iterator();
+    					while(ITR.hasNext()) {
+      					 	pid = GetPID( SeqChars[ fam ][ sample ], ITR.next() ) * 100 ;
+      					 	if ( (int) pid > MAX_PI || (int) pid < MIN_PI )
+								continue scan ; 
+						}
+    				}
+					if (VERBOSE)	 												
+						// print out some basic information
+						System.err.println(	"[ NOTE ] adding :\n\t"+ RFAM_ID +"\t"+ SeqNames[ fam ] [ sample ] 
+								+"\t"+ (int) pid +"\t"+ query_len +"\t"+ fam_seqs ); 
+					// Looks good, add it to output hashmap
+					SampledSeqs.put( ">"+RFAM_ID+"_"
+										+SeqNames[ fam ] [ sample ].substring(1, SeqNames[ fam ] [ sample ].indexOf(".") )
+										+"_"+(fam_seqs+1) +"_"+ (int) pid , SeqChars[ fam ][ sample ]) 	;	
+					fam_seqs++ ; 
+				}
+				if ( fam_seqs == MAX_PER_FAM) {
+					if (VERBOSE)
+						System.err.println( "[ NOTE ] Reached maximum seqs per family: "+fam_seqs);
+					break ; 
+				}
+			}
+			if ( fam_seqs >1 ){
+				SampledSeqs.put( ">"+RFAM_ID+"_"
+								+SeqNames[ fam ] [ random ].substring(1, SeqNames[ fam ] [ random ].indexOf(".") )
+								+"_1", SeqChars[ fam ][ random ]);
+				if (VERBOSE) 												// print out some basic information
+					System.err.println(	"[ NOTE ] added Random Initial selection : \n\t"+SeqNames[ fam ] [ random ]);
+			}
+
+
 			// write it out
-			if ( fam_seqs  >= MIN_PER_FAM || fam_seqs == MAX_PER_FAM ) {
-				seqs = seqs+ fam_seqs ; 
+			if ( (fam_seqs >= MIN_PER_FAM || fam_seqs == MAX_PER_FAM) && seqs <= TOTAL_SEQS - 2 ) {
 				Object [] Names = SampledSeqs.keySet().toArray();								// returns an array of keys
 				Object [] Sequences = SampledSeqs.values().toArray();							// returns an array of values
+
 				if ( fam_seqs != Names.length )
 					System.err.println( "[ ERROR ] Shit... something's broken (fam_seqs: "+ fam_seqs +" Hash.length: "+ Names.length);
 				// print out all sampled names and sequences 
 				for ( int x = 0 ; x != Names.length ; x++ ) {
-					if ( seqs + x > TOTAL_SEQS && x >= 2 ) {
-						System.err.println("[ NOTE ] Enough sequences have been sampled. ");
+					if ( seqs == TOTAL_SEQS  ) {
+						System.err.println("[ NOTE ] Enough sequences have been sampled (hit MAX_SEQS threshold) . ");
 						System.err.println(	"[ NOTE ] Sampled " + (seqs + x -1)  + " to file "+OUT_PATH+"output.fasta"    ); 
+						SampleOutput.close(); 
 						System.exit(0) ;		
 					}
+					else 
+						seqs++;
 					// Write name out
 					if (VERBOSE) 												// print out some basic information
 								System.err.println(	"[ NOTE ] writing to file.... ");
@@ -299,26 +343,23 @@ public class GenerateRFAMsubsets {
 					
 					// Strip gaps form consensus structure
 					if (STRIP) {  // take it off
-						if ( Aligned.length() != SeqChars[ fam ][ 0 ].length() )
-							System.err.println("[ WARNING ] Sequence size inconsistency! " +RFAM_ID+" "+Aligned.length()+" "+SeqChars[ fam ][ 0 ].length());
+						//if ( Aligned.length() != SeqChars[ fam ][ 0 ].length() )
+							//System.err.println("[ WARNING ] Sequence size inconsistency! " +RFAM_ID+" "
+							//					+Aligned.length()+" "+SeqChars[ fam ][ 0 ].length());
 						String SeqStripped = new String() ;
 						String StructureStrip = new String() ; 
 						for ( int y = 0 ; y != Aligned.length() ; y ++ ) {
-							 if ( Aligned.charAt( y ) != '.') {
+							 if ( Aligned.charAt( y ) != '-') {
 							 	SeqStripped = SeqStripped + Aligned.charAt( y ); 
-							 	StructureStrip = ( SeqNames[ fam ][ 1 ].equals(">#=GC SS_cons") )? 
-							 						StructureStrip + SeqChars[ fam ][ 1 ].charAt( y ) :
-							 						StructureStrip + SeqChars[ fam ][ 0 ].charAt( y ) ;			 						 
+							 	StructureStrip = StructureStrip + SeqChars[ fam ][ 0 ].charAt( y ) ;			 						 
 							 }
 						}
-						SampleOutput.write( SeqStripped +"\n" + StructureStrip.replaceAll("<","(").replaceAll(">",")").replaceAll("[A-Z0-9]","\\.") + "\n"  ); 
+						SampleOutput.write( SeqStripped +"\n" + 
+							StructureStrip.replaceAll("<","(").replaceAll(">",")").replaceAll("[^<>()]","\\.") + "\n"  ); 
 					}
 					else {
-						String Consensus = ( SeqNames[ fam ][ 1 ].equals(">#=GC SS_cons") )? 
-														SeqChars[fam][ 1 ].toString() : 
-														SeqChars[fam][ 0 ].toString() ; 
+						String Consensus = SeqChars[ fam ][ 0 ].toString().replaceAll("<","(").replaceAll(">",")").replaceAll("[^<>()]","\\.") ; 
 						SampleOutput.write( Aligned +"\n" + Consensus  + "\n"  ); 
-						SampleOutput.flush();
 					}
 				}
 				System.err.println(	"[ NOTE ] Added " + Names.length + " sequences from "+ RFAM_ID  ); 
@@ -328,16 +369,17 @@ public class GenerateRFAMsubsets {
 				System.err.println( "[ WARNING ] Insufficient sequences (<"+fam_seqs+") sampled for "+ RFAM_ID );
 			if ( seqs >= TOTAL_SEQS ) {
 				System.err.println("[ NOTE ] Enough sequences have been sampled. ");
-				System.err.println(	"[ NOTE ] Sampled " + seqs + " to file "+OUT_PATH+"output.fasta"    ); 
-				
+				System.err.println(	"[ NOTE ] Sampled " + seqs + " to file "+ OUT_PATH + "output.fasta"    ); 
 				SampleOutput.close(); 
 				break;
 			}
 			SampledSeqs.clear(); 
+
 		}
 		System.err.println(	"[ NOTE ] Sampled " + seqs + " to file "+OUT_PATH+"output.fasta"    );
 		SampleOutput.close(); 
 	} 
+
 	//####################################################################################################
 	//     method to calculate pairwise indentity of 2 aligned sequences
 	//####################################################################################################
@@ -354,29 +396,42 @@ public class GenerateRFAMsubsets {
 			String StripSeq1 = Seq1.replaceAll(".","");
 			String StripSeq2 = Seq2.replaceAll(".","");
 			// assumes "align" binary is in appropriate relative path 
-			String Command = "../nw/src/align "+ StripSeq1 + " " + StripSeq2 +" -l"; 
-
+			String Command = "align "+ StripSeq1 + " " + StripSeq2 +" -l"; 
+				/**** Typical output ******
+				 ./align -l GCTTTTT CGTTTTT
+				 Score = 10
+				 Length = 8
+				 Match = 6
+				 SI = 75
+				 GC-TTTTT
+				 -CGTTTTT 
+				**************************/	
+			String Output = "" ; 
 			Process NW ; 
 			try {
 				NW = Runtime.getRuntime().exec( Command );
-				NW.waitFor();
+				BufferedReader In = new BufferedReader(new InputStreamReader(NW.getInputStream()));
+				int lineNo = 1 ; 
+				while ( ( Output = In.readLine() ) != null ) {
+					if ( lineNo == 3 ) {
+				  		matches = Integer.parseInt( Output.split("\\s")[2] ) ;  
+				  		break; 
+				  	}
+				}
 			} catch (Exception OhNo) {
 				System.err.println( "[ ERROR ] Cannot execute pairwise alignment command:\n"+Command);
 				OhNo.printStackTrace();
 			}
 		}
-
+		for (int col = 0 ; col != Seq1.length() ; col ++ ) {
+			if ( Seq1.substring(col, col+1).matches("[ACTGU]") ) 
+				seq1_len++ ; 
+			if ( Seq2.substring(col, col+1).matches("[ACTGU]") ) 
+				seq2_len++ ; 
+			if ( Seq1.charAt( col ) == Seq2.charAt( col ) && Seq1.substring(col, col+1).matches("[ACTGU]") ) 
+				matches++ ; 
 		}
-		else
-			for (int col = 0 ; col != Seq1.length() ; col ++ ) {
-				if ( Seq1.substring(col, col+1).matches("[ACTGU]") ) 
-					seq1_len++ ; 
-				if ( Seq2.substring(col, col+1).matches("[ACTGU]") ) 
-					seq2_len++ ; 
-				if ( Seq1.charAt( col ) == Seq2.charAt( col ) && Seq1.substring(col, col+1).matches("[ACTGU]") ) 
-					matches++ ; 
-		}
-		return (double) matches / Math.min( seq1_len, seq2_len ); 
+		return (double) matches  / Math.min( seq1_len, seq2_len ); 
 	}
 			
 }

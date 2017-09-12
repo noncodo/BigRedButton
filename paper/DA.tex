@@ -101,6 +101,8 @@
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{red}{rgb}{1,0,0}
+
 
 \lstset{frame=tb,
   language=bash,
@@ -377,7 +379,7 @@ Here, we describe a computational pipeline for the identification and classifica
 homologous RNA structures from a large set of query sequences. At its core lies \dotaligner{}, a
 heuristic pairwise sequence alignment algorithm that considers an ensemble of suboptimal 
 base pairing probabilities for each queried sequence. We compare \dotaligner{} with other pairwise RNA structure alignment algorithms to highlight its speed and accuracy at classifying know RNA families. 
-We combine \dotaligner{} with density based clustering for the impartial identification of 
+We combine \dotaligner{} with density based clustering for the unsupervised identification of 
 RNA structural motifs, which can identify known RFAM families and novel RNA structural 
 motifs from ENCODE eCLIP data. The resulting clusters of homologous RNA structures can then 
 be used to search for homologous structures across reference genomes and transcriptomes 
@@ -439,14 +441,26 @@ other surveyed pairwise RNA structure alignment tools (Fig. 3A-C). Only \carna{}
 another ensemble-based structural alignment algorithm, presents classification accuracies
 comparable to \dotaligner{}. However, \carna{} requires substantially more time to perform 
 the comparisons (Fig. 3D) as it will indefinitely continue to compute the alignment
-until it converges on an optimal result, or a hard time constraint is enforced.  In this regard, \dotaligner{} performs better than all other RNA structure alignment tools, highlighting 
-the efficacy of the implemented heuristics it employs. In contrast, the heuristics implemented 
-in \texttt{RNApaln} increased the speed of \texttt{pmcomp} by 2 orders of magnitude, but
-at a slight reduction in accuracy (Fig. 3C,D). Only a C++ implementation of the 
-Needleman-Wunsch Algorithm (NWA) \cite{needleman1970general}--a classical 
-sequence alignment algorithm that ignores secondary structure information--performs 
-faster than \dotaligner{} on average, most likely due to the presence of stretches of 
-homologous sequences within biologically related RNAs. \\
+until it converges on an optimal result, or a hard time constraint is enforced.  
+In this regard, \dotaligner{} performs better than all other RNA structure alignment tools, 
+highlighting the efficacy of the implemented heuristics it employs. 
+In contrast, the heuristics implemented in \texttt{RNApaln} increased the speed of 
+\texttt{pmcomp} by two orders of magnitude, but at a slight reduction in accuracy (Fig. 3C,D). 
+
+\textcolor{red} {The only algorithm to perform faster than \dotaligner{} in our benchmark is the global pairwise 
+sequence alignment algorithm described by Needleman-Wunsch (NW) \cite{needleman1970general}. 
+Although this algorithm ignores secondary structure information, it generates surprisingly strong
+AUC values, inferior only to \dotaligner{} and \carna{} using the default parameters we tested.  
+To test whether this is due to local stretches of sequence similarity, we re-aligned RFAM 
+sequences with a variant of the NW algorithm permitting free end gaps. 
+Unsurprisingly, this increased the overall average pairwise sequence similarity of alignments 
+from 59\% to 72\%, with a notable drop in alignments displaying less than 50\% pairwise 
+sequence  identity from >21\% to <0.4\% (from . 
+This suggests that most representatives of  the RFAM seed alignments present local stretches 
+of sequence similarity, which substantiates the observed performance of the NW algorithm.\\
+}
+
+\textbf{[comment on sequence identity]}
 
 \subsection*{Density-based clustering of homologous RNA structures}
 
@@ -478,15 +492,14 @@ we evaluated the effect of OPTICS parameters on clustering performance,
 revealing that a minimum of 4 points (or sequences) and a steepness threshold of 0.006 
 gave the best results (Supplementary  Fig. 1A). \\
 
-\texttt{GraphClust}, 
-the combination of \dotaligner{} and OPTICS performs comparably well (Fig. 4, Table 1, Supplementary Table 1). 
+In comparison to \texttt{GraphClust},  the combination of \dotaligner{} and OPTICS performs comparably well (Fig. 4, Table 1, Supplementary Table 1). 
 The default version of \texttt{NoFold} nonetheless outshines \dotaligner{} at clustering known RFAM families. 
 However, it intrinsically employs RFAM covariance models (CMs) that are also present in the test data, 
 therefore this specific application is likely to be subject to over-fitting. 
-We thus removed the CMs associated to the RFAM sequences in our benchmarking 
+We thus removed 72 CMs associated to the RFAM sequences in our benchmarking 
 dataset from the \texttt{NoFold} algorithm, which yielded lower sensitivity and 
 less accurate qualitative cluster metrics than the \dotaligner{} and OPTICS combination, while 
-its specificity increased slightly despite removing 72 CMs from its classification set.
+its specificity increased slightly despite removing CMs from its classification set. 
 
 
 \subsection*{Identifying protein-binding RNA motifs from eCLIP data}
@@ -494,16 +507,16 @@ The optimised parameters for OPTICS clustering of \dotaligner{} output were inco
 a high-performance computing pipeline that extracts clusters of homologous RNA structural
  motifs from a set of input sequences (see Methods).  This pipeline was applied to enhanced cross-linked 
 RNA immunoprecipitation (eCLIP) sequencing data from 44 RNA binding proteins from the ENCODE consortium  \cite{van2016robust}, with 100 positive control sequences from RFAM (Supplementary Table 2).
-From 2,750 high-confidence ($>$8-fold  fold-enrichment versus background, P-value $<10^{-4}$) eCLIP peaks 
+From 2,650 high-confidence ($>$8-fold  fold-enrichment versus background, P-value $<10^{-4}$) eCLIP peaks 
 that overlap evolutionarily conserved secondary structure predictions, 
 25 significant clusters of homologous RNA were detected, including all 11 positive controls (Fig. 5).\\
 
 Indeed, the \textit{spike in} RFAM sequences facilitate the identification of similar RNA structures, 
 such as the homologs to SNORNA72 depicted in (Fig. 5C-D). The 4 additional sequences that 
 co-cluster with the RFAM 72 controls are all associated to the DKC1 protein, which binds to H/ACA snoRNAs. 
-Furthermore, 3 of the DKC1-bound beaks are annotated as snoRNAs in the Gencode 24 reference, 
+Furthermore, 3 of the DKC1-bound peaks are annotated as snoRNAs in the Gencode 24 reference, 
 while the 4th is not annotated as a snoRNA despite strong sequence and structure similarity, 
-highlighting how this method can successfully identify identify and classify new RNA structure motifs. 
+highlighting how this method can successfully identify and classify new RNA structure motifs. 
 Another example is the Y RNA cluster, which contains 3 sequences homologous to this RFAM family 
 that are also associated to the TROVE2 protein, which binds to misfolded non-coding RNAs, 
 pre-5S rRNA, and Y RNAs.\\
@@ -550,9 +563,9 @@ computational power. In addition to its speed, the strength of \dotaligner{} lie
 its capacity to accurately score structurally homologous RNA sequences. The
 algorithm appears to generate pairwise alignments that differ qualitatively to the
 reference structural alignments. Despite this, \dotaligner{} can harness the
-information content of base pair probability ensembles to output a reliable
+information within base pair probability ensembles to output a reliable
 structural similarity score of two RNA sequences, reducing several dimensions 
-of information content into a single discriminative numeric value.
+of information  into a single discriminative numeric value.
  Our results show that this
 can nonetheless be sufficient to extract structurally and functionally related
 sequences from a large amount of noisy input; an ideal application for
@@ -583,8 +596,8 @@ accuracy and speed based on a collection of RFAM seed alignments, and show that 
 A greater challenge lies in the accurate depiction of RNA structure motif boundaries. 
 Whereas global structures may stabilize the RNA molecule, local
 structural domains are often sufficient for recognition by RNA binding
-proteins. When compared to \locarna{}, \dotaligner{} calculates semi-local
-alignments by introducing penalty-free gaps at the sequence extremities. 
+proteins. \textcolor{red}{When compared to  \locarna{} with default parameters,}
+ \dotaligner{} calculates semi-local alignments by introducing penalty-free gaps at the sequence extremities. 
 However, this approach optimises only the pairwise local similarity score, but it does
 not explore suboptimal alignments for optimal cluster construction. This could
 be done in the \dotaligner{} framework but would dramatically increase search
@@ -822,8 +835,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
  \caption {\csentence{ De novo homologous RNA motif identification}. 
  (\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colours represent 
  significant clusters. 
- (\textbf{B}) Reachability plot of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein 
- in each cluster is displayed next to significant clusters; those with an asterisk and portrayed below.
+ (\textbf{B}) Reachability plot displaying the OPTICS-derived ordering of points (x axis) and their distance to the nearest neighbour (y axis) of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein  in each cluster is displayed next to significant clusters; those with an asterisk and portrayed below.
  (\textbf{C}) Multiple structure alignment generated by \texttt{mLocaRNA} on the sequences from a 
  cluster containing both RFAM SNORNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
 An unannotated DKC1-bound sequence is marked with an a=sterix.
