@@ -409,7 +409,7 @@ string alignments, and (ii) structure-weighted stochastic backtracking of
 all sequence alignments. The detailed implementation and mathematical description 
 of \dotaligner{} can be found  in the Supplementary Methods.\\
 
-We first tested \dotaligner on \bralibase{} pairwise RNA structure alignments, a reference 
+We first tested \dotaligner{} on \bralibase{} pairwise RNA structure alignments, a reference 
 dataset specifically designed for algorithm benchmarking 
 \cite{Gardner15860779,wilm2006enhanced} (see Methods). In this application, \dotaligner{} seemingly  
 performs worse than three other state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{} \cite{havgaard2007fast,sundfeld2015foldalign} and \locarna{} \cite{Will17432929}
@@ -444,8 +444,8 @@ the comparisons (Fig. 3D) as it will indefinitely continue to compute the alignm
 until it converges on an optimal result, or a hard time constraint is enforced.  
 In this regard, \dotaligner{} performs better than all other RNA structure alignment tools, 
 highlighting the efficacy of the implemented heuristics it employs. 
-In contrast, the heuristics implemented in \texttt{RNApaln} increased the speed of 
-\texttt{pmcomp} by two orders of magnitude, but at a slight reduction in accuracy (Fig. 3C,D). \\
+\textcolor{blue} {[NEEDED?: In contrast, the heuristics implemented in \texttt{RNApaln} increased the speed of 
+\texttt{pmcomp} by two orders of magnitude, but at a slight reduction in accuracy]} (Fig. 3C,D). \\
 
 \textcolor{red} {The only algorithm to perform faster than \dotaligner{} in our benchmark is the global pairwise 
 sequence alignment algorithm described by Needleman-Wunsch (NW) \cite{needleman1970general}. 
@@ -455,10 +455,10 @@ To evaluate whether this is due to local stretches of sequence similarity, we re
 sequences with a variant of the NW algorithm permitting free end gaps (Supplementary Table 4 
 and Supplementary Figure \textbf{A}).  
 Unsurprisingly, this increased the overall average pairwise sequence similarity of 1,189,675 sampled 
-alignments from 59\% to 72\%, with 90x fewer alignments displaying low (<50\%) pairwise 
+alignments from 59\% to 72\%, with 90$\times$ fewer alignments displaying low ($<$50\%) pairwise 
 sequence identity (from 237,047 to 2,365). This suggests that most representatives of  the RFAM 
 seed alignments present local stretches of sequence similarity, which substantiates 
-the observed performance of the NW algorithm.\\ }
+the observed performance of the NW algorithm.} \textcolor{blue} {[COMMENT: What are we doing about this in our benchmark?]} \\
 
 \textbf{[comment on sequence identity]}
 
@@ -513,7 +513,7 @@ that overlap evolutionarily conserved secondary structure predictions,
 
 Indeed, the \textit{spike in} RFAM sequences facilitate the identification of similar RNA structures, 
 such as the homologs to SNORNA72 depicted in (Fig. 5C-D). The 4 additional sequences that 
-co-cluster with the RFAM 72 controls are all associated to the DKC1 protein, which binds to H/ACA snoRNAs. 
+co-cluster with the RFAM 72 \textcolor{blue} {[COMMENT: shouldn't this be 'SNORNA72'?]} controls are all associated to the DKC1 protein, which binds to H/ACA snoRNAs. 
 Furthermore, 3 of the DKC1-bound peaks are annotated as snoRNAs in the Gencode 24 reference, 
 while the 4th is not annotated as a snoRNA despite strong sequence and structure similarity, 
 highlighting how this method can successfully identify and classify new RNA structure motifs. 
@@ -533,13 +533,14 @@ previously known binding sites, such as an UPF1-dominated cluster
 homology to the RNA structure motif derived from this cluster, 
 most ALU elements are detected, as well as a few other repeat-containing sequences. 
 Interestingly, 998 homologs to the motif did not localise to ALU elements (Supplementary Figure 3B), 
-58\% of which overlap miTranscriptome reference transcripts \cite{iyer2015landscape}. 
+58\% of which overlap miTranscriptome reference transcripts \cite{iyer2015landscape}. \textcolor{blue} {[COMMENT: reference is missing!]} 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Discussion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\textcolor{blue} {[COMMENT: This 1st paragraf reads too general and not specific enough for the application of RNA structure or CLIPseq peak clustering. I think we should remove the SNP/mutation and precision medicin part, and instead discuss the usability of identifying  recurrent structure motifs as regulatory triggers in molecular networks/interactomes and as drug targets.]} 
 As the increasing accessibility of next generation sequencing coalesces with
 precision medicine, in-depth transcriptome profiling will help elucidate the
 function and clinical impact of disease-associated, non-coding single
@@ -579,19 +580,18 @@ that do not directly bind to the target protein. We have shown that our
  method is nonetheless suitable for such noisy biological data. For example, 
  the UPF1 cluster we describe may be an example of an indirect binding event, 
  as UPF1 directly interacts with STAU1, a double stranded RNA-binding protein which has 
-been reported to target ALU sequences \cite{gong2011lncrnas}. There are
-also additional clusters identified in our eCLIP analysis where sequences from 
-more than one target protein cluster together, which raises the possibility 
+been reported to target ALU sequences \cite{gong2011lncrnas} \textcolor{blue}{[COMMENT: missing reference]}. \textcolor{blue} {Other clusters identified in our eCLIP analysis cluster together sequences from 
+more than one target protein}, which raises the possibility 
 that a common RNA structure motif may be bound by to different proteins, either
 as part of a quaternary complex or as a common, competing binding target. 
 We privilege this hypothesis over one of spurious false-positive clustering 
 given our benchmark results and the observation that very few clusters
-were observed when analysing less stringently filtered eCLIP peaks (not shown). \\
+were observed when analysing less stringently filtered eCLIP peaks (data not shown). \\
 
-\dotaligner{} has several parameters that will influence the clustering results and 
+\dotaligner{} has several variables that will influence the clustering results and 
 speed depending on the type of input data. The most influential variables are the weight between sequence and structure similarity, and the exploration depth of the suboptimal alignments in the stochastic
 backtracking. Here, we present the best trade-off between alignment
-accuracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. \\
+accuracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. \textcolor{blue} {[COMMENT: Would it have been possible to add a ROC curve to this statement? Do we have the data easily available?]} \\
 
 A greater challenge lies in the accurate depiction of RNA structure motif boundaries. 
 Whereas global structures may stabilize the RNA molecule, local
@@ -605,13 +605,13 @@ space and run-time. We circumvented this issue by overlapping eCLIP peaks to
 evolutionarily conserved RNA secondary structure predictions with well-characterised
 flanking helices supported by base pair covariation \cite{smith2013widespread}.
 While preparing this manuscript, a complementary and comprehensive dataset 
-or evolutionarily conserved RNA secondary structures was published \cite{seemann2017identification}, which 
-could also increase the amount of eCLIP peaks with accurate structural motif boundaries. 
-Alternatively, RNA structure boundaries can be refined 
+of evolutionarily conserved RNA secondary structures was published \cite{seemann2017identification}. Its application can further increase the amount of eCLIP peaks with accurate structural motif boundaries. 
+Alternatively, RNA structure boundaries can be refined by, for example, 
 using alternative strategies such as computational boundary refinement 
 with\texttt{ LocaRNA-P } \cite{will2012locarna}, or improving the biological 
 data with enzymatic probing with the double-stranded RNase T1 
-endoribonuclease, for example. \\
+endoribonuclease. \\
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Conclusion}
@@ -626,7 +626,7 @@ long non-coding RNAs and increase the repertoire of functional genetic elements.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Methods}
+\section*{Methods} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Benchmarking and parameter optimisation}
 
@@ -657,7 +657,7 @@ A binary classification matrix was then constructed, where sequences \texttt{x} 
 present a score of 1 if they belong to the same RFAM family, versus a score of 0 if they do not. 
 The similarity matrix resulting from all-vs-all pairwise comparisons with \dotaligner{} was tested for 
 accuracy using the Area Under the Curve AUC of the ROC, as calculated R package \texttt{pROC} \cite{robin2011proc}. 
-A more restricted range of parameter values were then tested on both datasets, where a ranked sum for both datasets of the AUC was performed to determine the default runtime parameters for \dotaligner{}, namely T=10 s=1 k=0.3 t=0.5 o=1 e=0.05 (Supplementary Table 3). \carna{} version 1.2.5 was run with parameters ``--write-structure --noLP --time-limit=120000'' ;  \locarna{} version 1.7.13 was run with parameter ``--noLP''; \foldalign{} version 2.1.1 was run with and without parameter ``-global''. Default parameters were used for \texttt{pmcomp}, downloaded from \url{https://www.tbi.univie.ac.at/RNA/PMcomp/} and \texttt{RNApaln} version 2.3.5. The custom implementation of Needleman-Wunsch can be found in the GitHub repository associated to this work as well as the benchmark implementation scripts. 
+A more restricted range of parameter values were then tested on both datasets, where a ranked sum for both datasets of the AUC was performed to determine the default runtime parameters for \dotaligner{}, namely T=10 s=1 k=0.3 t=0.5 o=1 e=0.05 (Supplementary Table 3). \textcolor{blue}{[COMMENT: parameter 's' is the number of examined suboptimal alignments and 'T' is measure of our interest in suboptimal alignments. Hence, s=1 means that just 1 suboptimal alignment (sample) has been examined. This relates to the minor comment of reviewer 2: 'at least make sure to report, how many samples DotAligner generates for computing its alignments.' So, the sampling of Dotaligner is not used at all :/ Second problem: In Suppl Table 3 for example the 1st and 3rd entry have eactly the same numbers in low\_PI AUC and high\_PI AUC -- which makes actually totally sense because the only difference in the parameters is T which is probably totally unused because we are doing ONLY one sample. I'm not sure how to address this BUT this has to be somehow resolved. ANY idea?]} \carna{} version 1.2.5 was run with parameters ``--write-structure --noLP --time-limit=120000'' ;  \locarna{} version 1.7.13 was run with parameter ``--noLP''; \foldalign{} version 2.1.1 was run with and without parameter ``-global''. Default parameters were used for \texttt{pmcomp}, downloaded from \url{https://www.tbi.univie.ac.at/RNA/PMcomp/} and \texttt{RNApaln} version 2.3.5. The custom implementation of Needleman-Wunsch can be found in the GitHub repository associated to this work as well as the benchmark implementation scripts. 
 
 \subsection*{Clustering RNA structures with randomised controls}
 OPTICS benchmarking was performed by stochastically sampling the collection of RFAM 12.0 
@@ -673,7 +673,7 @@ in the `dbscan' CRAN repository with a range of parameters (see Fig. 4A,B).\\
 
 Other tested RNA clustering approaches were \graphclust{} and \nofold. We ran \graphclust{} version 0.7.6 inside the docker image provided with \texttt{RNAscClust} with default parameters. \nofold{} version 1.0.1 uses 1,973 RFAM covariance models by default as empirical feature space. In the \nofold{} (all CMs) variant we ran the program with default parameters, whereas in the \nofold{} (filtered) variant we reduced the feature space to 1,902 covariance models by removing RFAM families from our benchmark set. \\ 
 
-The following clustering performance metrics was used: 
+The following clustering performance metrics was used:  \textcolor{blue}{[COMMENT: Can we put this just in colon seperated text instead of bullets--to save space and focus.]}
 \begin{itemize}
 \item True Positives (TP) = Number of representatives from the dominant RFAM family in a cluster;
 \item False Positives (FP) = Number of non-dominant RFAM family representatives in cluster, or clusters
@@ -691,13 +691,12 @@ where there is no dominant RFAM family (i.e. equally represented families), or c
 \subsection*{Clustering of protein-bound evolutionarily-conserved RNAseq reads}
 
 The genomic coordinates of ENCODE eCLIP peaks were downloaded in .bed format from the April 2016 release via the ENCODE portal (\url{https://www.encodeproject.org/search}). The resulting 5,040,096 peaks 
-were filtered to keep only those with $\ge$8x fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50 nt to avoid over-representing the same sequence (Additional file 1). The remaining peaks were subsequently filtered by 
+were filtered to keep only those with $\ge$8$\times$ fold enrichment over the total input background and an associated P-value  $\leq10^{-4}$. Furthermore, peaks were merged if they overlapped by more than 50 nt to avoid over-representing the same sequence (Additional file 1). The remaining peaks were subsequently filtered by 
 retaining only those that present same-strand overlap with any evolutionarily conserved structure (ECS) predictions from \cite{smith2013widespread}. Finally, the associated genomic sequences were extracted into a .fasta file, which was supplemented with 100 reference RNA structures from 11 RFAM families (see Supplementary Table 1). 
 Merging, overlap, and sequence extraction operations were performed with \texttt{bedtools} version v2.26.0. \\
 
 The normalised similarity matrix resulting from all vs all pairwise comparisons with \dotaligner{} was then 
-subjected to clustering with the \texttt{dbscan} 1.1-1 R package from Michael Hahsler
- \url{https://github.com/mhahsler/dbscan} using the command `\texttt{opticsXi( optics(D, eps=1, minPts=4, search="dist"), xi = 0.006, minimum=T)}'. The sequences for each cluster were then extracted and submitted to multiple structure alignment with \texttt{mLocaRNA} version 1.9.1 using parameters  `\texttt{--probabilistic --iterations=10  --consistency-transformation --noLP}'.\\
+subjected to clustering with the \texttt{dbscan} 1.1-1 R package from Michael Hahsler (\url{https://github.com/mhahsler/dbscan}) using the command `\texttt{opticsXi( optics(D, eps=1, minPts=4, search="dist"), xi = 0.006, minimum=T)}'. The sequences for each cluster were then extracted and submitted to multiple structure alignment with \texttt{mLocaRNA} version 1.9.1 using parameters  `\texttt{--probabilistic --iterations=10  --consistency-transformation --noLP}'.\\
  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -787,7 +786,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
   A partition function over all pairwise sequence alignments is then calculated and 
   interrogated for structural compatibility by stochastic backtracking. 
   Two ensemble of suboptimal secondary structures are considered for this purpose
-  (bottom left and top right dot plots; blue lines indicate cumulative base-wise pairing probabilities)      This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment 
+  (bottom left and top right dot plots; blue lines indicate cumulative base-wise pairing probabilities). This effectively warps the optimal  sequence alignment path (top left, black outline) towards one that includes structural features (striped blue cells).  In the bottom right, the optimal sequence alignment
   and associated consensus secondary structure is contrasted to that produced 
   by DotAligner, exposing the common structural features hidden in the suboptimal 
   base pairing ensemble of both sequences. 
@@ -833,15 +832,16 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 \begin{figure}[h!]
  \includegraphics[width=\textwidth]{fig5}
  \caption {\csentence{ De novo homologous RNA motif identification}. 
- (\textbf{A}) Reachability plot of OPTICS clustering on RFAM benchmarking data indicating the distance to the nearest neighbour. Colours represent 
- significant clusters. 
- (\textbf{B}) Reachability plot displaying the OPTICS-derived ordering of points (x axis) and their distance to the nearest neighbour (y axis) of 2,650 ENCODE eCLIP peaks + 100 RFAM controls overlapping evolutionarily conserved secondary structure predictions. The dominant RNA binding protein  in each cluster is displayed next to significant clusters; those with an asterisk and portrayed below.
+ \textcolor{red} {
+ (\textbf{A,B}) Reachability plots of OPTICS clustering display the OPTICS-derived ordering of points (x axis) and their distance to the nearest neighbour (y axis). Colours represent significant clusters: (\textbf{A}) Clustering of RFAM benchmarking data indicating the distance to the nearest neighbour,
+ (\textbf{B}) Clustering of 2,650 ENCODE eCLIP peaks + 100 RFAM controls that overlap evolutionarily conserved secondary structure predictions. The dominant RNA binding protein in each cluster is displayed next to significant clusters; those with an asterisk are portrayed below.
  (\textbf{C}) Multiple structure alignment generated by \texttt{mLocaRNA} on the sequences from a 
  cluster containing both RFAM SNORNA72 sequences, and DKC1 (a snoRNA-binding protein) eCLIP peaks. 
-An unannotated DKC1-bound sequence is marked with an a=sterix.
-(\textbf{E}) \texttt{RNAalifold} consensus of the alignment displayed in (\textbf{C}), 
-a cluster of impartially detected DKC1-bound snoRNAs (\textbf{E}), 
-and a novel UPF1-bound motif (\textbf{F}). }
+An unannotated DKC1-bound sequence is marked with an asterix.
+ (\textbf{D-F}) \texttt{RNAalifold} predicted consensus RNA secondary structures: 
+ (\textbf{D}) Structure of the alignment displayed in (\textbf{C}), 
+ (\textbf{E}) Structure of a cluster of impartially detected DKC1-bound snoRNAs, and
+ (\textbf{F}) Structure of a novel UPF1-bound motif. }}
 \end{figure}
 
 
@@ -948,22 +948,26 @@ The alignment procedure consists of two steps:
 \end{enumerate}
 
 \subsubsection*{1.1 Pairwise probabilistic string alignments}
-In step 1 the computation of the partition function over all canonical pairwise
-string alignments is adapted from probA \cite{Muckstein12385998}. The
-probability of an alignment $A$ in the ensemble of all alignments $Z(T)$ is
+In step 1 the computation of the partition function $Z(T)$ over all canonical pairwise
+string alignments $A$ is adapted from probA \cite{Muckstein12385998}:
 
-\begin{equation}\label{probA}
-	Pr(A;T) = \frac{1}{Z(T)} exp(\beta W(A)),
+\begin{equation}\label{probA_Z}
+	Z(T) = \sum_A exp( \beta W(A) ),
 \end{equation}
 
-\noindent where $\beta = 1 / T$. The parameter $T$ is analogous to the temperature in the
+\noindent where $\beta = 1/T$. Then the probability of a specific alignment $A$ is defined as:
+
+\begin{equation}\label{probA}
+	Pr(A;T) = \frac{1}{Z(T)} exp( \frac{W(A)}{T} ),
+\end{equation}
+
+\noindent The parameter $T$ is analogous to the temperature in the
 thermodynamic interpretation of the alignment problem and determines the
 relative importance of the optimal string alignment. If $T=1$ then we recover the
 'true` probability, if $T\to0$ then $Pr(A;0)=0$ for all alignments with a score
 $W(A)$ less then the score of the optimal string alignment, and if $T\to\infty$ then
 all alignments have the same $Pr(A,\infty)=1/Z(\infty)$.  Hence, $T$ controls
-the search space of suboptimal alignments for step 2. The algorithm runs in
-$O(N^3)$ for calculating the partition function. 
+the search space of suboptimal alignments for step 2. \textcolor{blue}{The algorithm uses the dynamic programming algorithm of Gotoh \cite{Gotoh7166760} which has running time of $O(N^2)$.} 
 The weight function $W(A)$ of
 the probA implementation is changed to explore the ensemble of dot plot
 alignments. We reduce the sequence-structure alignment problem to a
@@ -991,43 +995,16 @@ $S_b[i^\prime]$ match and else 0. The similarity of unpaired probabilities is
 defined as
 
 \begin{equation}\label{eq3}
-	\Delta \omega(i,i^\prime) = \left\{ \begin{array}{cl}
+	\Delta \omega(i,i^\prime) \in \left\{ \begin{array}{cl}
 			0 & \textrm{if } \omega(i) == 0 \\
 			  & \textrm{and } \omega(i^\prime ) == 0 \\
 			1 - | \omega(i) - \omega(i^\prime) | & \textrm{else}
 		\end{array}\right.
 \end{equation}
 
-\noindent so that $\Delta \omega = (0,1)$. Alternatively a statistical substitution model
-$R_{Seq}$ replaces the sequence similarity and is multiplied with the $\zeta$
-weighted sum of $\Delta \omega$ and the similarity in ratios of upstream
-pairing probability $\Delta \omega^{up}$:
+\noindent so that $\Delta \omega = (0,1)$. \\
 
-\begin{equation}\label{sigmar}
-\begin{aligned}
-	\sigma(i,i^\prime) ={} & R_{Seq}^{(i,i^\prime)} \times \zeta \times \Delta \omega(i,i^\prime) +  \\
-			       & R_{Seq}^{(i,i^\prime)} \times (1-\zeta) \times
-	\Delta \omega^{up}(i,i^\prime)
-\end{aligned}
-\end{equation}
-
-\noindent  $R_{Seq}$ is a $4\times4$ matrix of probabilities for observing
-a given substitution relative to background nucleotide frequencies. We use the
-log-odd scores $L$ from the RIBOSUM85-60 matrix introduced in
-\cite{Klein14499004} which are transformed to probabilities $R_{Seq}$ by
-$2^{L(i,i^\prime)} / (1 + 2^{L(i,i^\prime)})$. The ratio of upstream pairing probability
-$\omega^{up}$ is defined as
-
-\begin{equation}\label{eq5}
-	\omega^{up}(i) = \sum_{k=1}^{i-1} \psi(k,i) /
-	\sum_{k=1}^{|S|} \psi(k,i)
-\end{equation}
-
-\noindent where $i \in S$, $|S|$ is the length of sequence $S$, and $\psi(k,i)$ is the
-pairing probability of sequence positions $S[k]$ and $S[i]$. The downstream
-pairing probability is implicitly considered in the weight function through the
-usage of unpaired probability and upstream pairing probability. The gap term
-in equation \ref{eq1} is replaced with affine gap costs:
+The gap term in equation \ref{eq1} is replaced with affine gap costs:
 
 \begin{equation}\label{eq6}
 	\gamma(A) = l \times g_o + (N-l) \times g_{ext}
@@ -1035,7 +1012,7 @@ in equation \ref{eq1} is replaced with affine gap costs:
 	
 \noindent where $l$ is the number of initiation gaps, $N$ is the number of all gaps,
 $g_o$ is the penalty for opening a gap and $g_{ext}$ is the penalty for gap
-extensions. Start and end gaps are considered as free.\\
+extensions. Start and end gaps can be considered as free (set parameter \texttt{--free-endgaps}). \\
 
 \subsubsection*{1.2 Stochastic backtracking and combined weight of dot plot alignments}
 
@@ -1067,28 +1044,15 @@ pairing probabilities $\Delta \psi$:
 \noindent where $M_{paired}^{(i,j,i^\prime,j^\prime)}$ is 1 if $S_a[i]$ and $S_a[j]$ as
 well as $S_b[i^\prime]$ and $S_b[j^\prime]$ form canonical base pairs (G-C, C-G,
 A-U, U-A, G-U or U-G) and else 0. The similarity in pairing probabilities
-$\Delta \psi$ is then calculate by
+$\Delta \psi$ is then calculated by
 
 \begin{equation}\label{eq9}
-	\Delta \psi(i,j,i^\prime,j^\prime) = \left\{ \begin{array}{l}
+	\Delta \psi(i,j,i^\prime,j^\prime) \in \left\{ \begin{array}{l}
 			0 \textrm{ if }\psi(i,j) == 0 
 			  \textrm{ and }\psi(i^\prime,j^\prime) == 0 \\
 		1 - | \psi(i,j) - \psi(i^\prime,j^\prime) | \textrm{ else}
 		\end{array}\right.
 \end{equation}
-
-\noindent Similar to $M_{Seq}$ in equation \ref{sigmam}, the base pair similarity matrix
-$M_{paired}$ can be replaced by a statistical substitution model $R_{paired}$
-which describes the probability for observing a given base pair substitution
-relative to background nucleotide frequencies:
-
-\begin{equation}\label{eq10}
-	\tau(i,j,i^\prime,j^\prime) = R_{paired}^{(i,j,i^\prime,j^\prime)}
-\times \Delta \psi(i,j,i^\prime,j^\prime)
-\end{equation}
-
-\noindent Again, the log-odd scores $L$ from the RIBOSUM85-60 matrix \cite{Klein14499004}
-are transformed to probabilities $R_{paired}$.
 
 \noindent For both sequences $S_a$ and $S_b$, the pairing probability matrices $P_a$ and
 $P_b$ are computed in advance using McCaskill's algorithm, implemented in
@@ -1113,6 +1077,55 @@ probabilities. Unpaired probabilities are handled in a similar way by
 
 \noindent  where $p_0$ is the expected probability for an unpaired base to occur at
 random.
+
+\textcolor{blue}{
+\subsubsection*{1.3 Alternative model using substitution rates}
+}
+
+Alternatively, the sequence and base pair similarities $M_{Seq}$ and $M_{paired}$ in equations \ref{sigmam} and \ref{eq8} can be replaced by the statistical substitution models $R_{Seq}$ and $R_{paired}$, respectively. In this (non-default) model of \dotaligner{} $R_{Seq}$ is multiplied with the $\zeta$
+weighted sum of the similarity of unpaired probabilities $\Delta \omega$ and the similarity of upstream
+pairing probabilities $\Delta \omega^{up}$ (set parameter \texttt{--mutation-rates}):
+
+\begin{equation}\label{sigmar}
+\begin{aligned}
+	\sigma(i,i^\prime) ={} & R_{Seq}^{(i,i^\prime)} \times \zeta \times \Delta \omega(i,i^\prime) +  \\
+			       & R_{Seq}^{(i,i^\prime)} \times (1-\zeta) \times
+	\Delta \omega^{up}(i,i^\prime)
+\end{aligned}
+\end{equation}
+
+\noindent  $R_{Seq}$ is a $4\times4$ matrix of probabilities for observing
+a given substitution relative to background nucleotide frequencies. We use the
+log-odd scores $L$ from the RIBOSUM85-60 matrix introduced in
+\cite{Klein14499004} which are transformed to probabilities $R_{Seq}$ by
+$2^{L(i,i^\prime)} / (1 + 2^{L(i,i^\prime)})$. The ratio of upstream pairing probability
+$\omega^{up}$ is defined as
+
+\begin{equation}\label{eq5}
+	\omega^{up}(i) = \sum_{k=1}^{i-1} \psi(k,i) /
+	\sum_{k=1}^{|S|} \psi(k,i)
+\end{equation}
+
+\noindent where $i \in S$, $|S|$ is the length of sequence $S$, and $\psi(k,i)$ is the
+pairing probability of sequence positions $S[k]$ and $S[i]$. The downstream
+pairing probability is implicitly considered in the weight function through the
+usage of unpaired probability and upstream pairing probability.
+
+\noindent The base pair similarity matrix
+$M_{paired}$ can be replaced by a statistical substitution model $R_{paired}$
+which describes the probability for observing a given base pair substitution
+relative to background nucleotide frequencies:
+
+\begin{equation}\label{eq10}
+	\tau(i,j,i^\prime,j^\prime) = R_{paired}^{(i,j,i^\prime,j^\prime)}
+\times \Delta \psi(i,j,i^\prime,j^\prime)
+\end{equation}
+
+\noindent The log-odd scores $L$ from the RIBOSUM85-60 matrix \cite{Klein14499004}
+	are transformed to probabilities $R_{paired}$ by $2^{L(i,j,i^\prime,j^\prime)} / (1 + 2^{L(i,j,i^\prime,j^\prime)})$.
+
+
+
 
 \subsection*{ 2. Clustering RNA structures with randomised controls }
 
