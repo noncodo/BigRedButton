@@ -160,7 +160,7 @@ typedef struct{
   sequ s1; /* stores the sequences as they are used in the programm */
   char *a; /* alignment: encoded as a string of digits
 	                1 | match
-			2 : mismatch
+					2 : mismatch
 	                3 _ gaps in the shorter seq(s1,E)
 	                4 ^ gaps in the longer seq(s0,F) */
   double score;        /* score of the alignment */

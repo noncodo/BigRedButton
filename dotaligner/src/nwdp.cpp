@@ -1673,7 +1673,7 @@ aligm stoch_btr_da( matrix pz, aligm a, vector<double> & probSgl_long, vector<do
 	int l0,l1,l,Eg;
 	int *s0, *s1;
 	double s,opt,sk;
-	double rand, score;
+	double vrand, score;
 	double x,y,z,Zx,bla;
 	real pZ;
 	real **M;
@@ -1735,14 +1735,16 @@ aligm stoch_btr_da( matrix pz, aligm a, vector<double> & probSgl_long, vector<do
 
 	if(!sran)
 	{
-		sgenrand((unsigned long) time(NULL));
+		//sgenrand((unsigned long) time(NULL));
+		srand((unsigned long) time(NULL));
 	    sran=1;
 	}
 
 	tr=(char*) calloc((l0+l1+1),sizeof(char));
 
 	/* Backtracking */
-	rand=genrand();
+	//rand=genrand();
+	vrand=(double) rand() / RAND_MAX;
 
 	Zx=M[l1][l0]+E[l1][l0]+F[l1][l0];
 
@@ -1761,7 +1763,8 @@ aligm stoch_btr_da( matrix pz, aligm a, vector<double> & probSgl_long, vector<do
 
 	while((i>0 && j>=0) || (i>=0 && j>0))
     {
-		if(rand < x  )
+		//cout << vrand << "\t" << x << "\t" << y << "\t" << z << endl;
+		if(vrand < x  )
 		{
 			/* M => match = 1 */
 			if(s0[j-1] == s1[i-1])
@@ -1784,7 +1787,7 @@ aligm stoch_btr_da( matrix pz, aligm a, vector<double> & probSgl_long, vector<do
 		    y=E[i][j]/Zx;
 		    z=F[i][j]/Zx;
 		}
-		else if(rand <  x+y )
+		else if(vrand <  x+y )
 		{
 			/* E => gap in s1(shorter seq) = 3 */
 			/* m.mat[l-1][s0[k]];  Extend in s0 (3) */
@@ -1852,7 +1855,8 @@ aligm stoch_btr_da( matrix pz, aligm a, vector<double> & probSgl_long, vector<do
 	    		}
 	    	}
 		}
-	    rand=genrand();
+	    //rand=genrand();
+		vrand=(double) rand() / RAND_MAX;
     }
 
 	i=0;

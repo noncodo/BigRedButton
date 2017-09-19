@@ -246,6 +246,8 @@ int main( int argc, char ** argv )
         else
         	sta = stoch_backtr_da( aligg, probSgl_2, probDblUp_2, probSgl_1, probDblUp_1 );
         maxa.prob = sta.prob;
+		aligm opta = copy_aligm(maxa);
+
 
         double si;
         if( verbose_flag )
@@ -297,7 +299,10 @@ int main( int argc, char ** argv )
             subopt--;
         }
 
-        /********************************************/
+		/* Does the optimal alignment after step 2 differs from optimal alignment after step 1? */
+		int optsample = ( maxa.prob == opta.prob ) ? 0 : 1;
+
+		/********************************************/
         /* STEP 3: return optimal dotplot alignment */
         /********************************************/
 
@@ -308,16 +313,17 @@ int main( int argc, char ** argv )
 			printf("probability = %.2e\n", maxa.prob);
 			printf("combined_score = %.8f\n", maxsim);
 			printf("length = %i\n", (int) strlen(maxa.a));
+			printf("suboptimal = %s\n",  (optsample)?"Yes":"No");
 		}
 		else
 		{
-			printf("%s\t%s\t%.4f\t%.2e\t%.8f\t%i\t%4.2f", filename1.c_str(), filename2.c_str(), maxa.score,  maxa.prob, maxsim, (int) strlen(maxa.a), seqidentity(maxa.a));
+			printf("%s\t%s\t%.4f\t%.2e\t%.8f\t%i\t%4.2f\t%i\t", filename1.c_str(), filename2.c_str(), maxa.score,  maxa.prob, maxsim, (int) strlen(maxa.a), seqidentity(maxa.a), optsample);
 		}
 		decode_alig_da(maxa);
-        free_aligm(maxa);
-
 
         /* free memory */
+		free_aligm(maxa);
+		free_aligm(opta);
         free_partition_f_da(Mpr, seq_ar);
         free_align_da(aligg);
         for (int i=0; i<2; i++) {
