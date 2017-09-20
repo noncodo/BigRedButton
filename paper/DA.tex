@@ -548,7 +548,7 @@ nucleotide variants. Indeed, 80\% of disease-associated single nucleotide
 polymorphisms occur in non-coding regions
 \cite{hindorff2009potential,ritchie2014functional}. Thus, elucidating the
 structural features of RNAs associated to RNA-binding proteins and
-ribonucleoprotein (RNP) complexes, combined to the systematic classification of
+ribonucleoprotein (RNP) complexes, combined with the systematic classification of
 their genome-wide occurrence, can identify novel ribosnitches (functional RNA
 structures that are disrupted in disease) and help pinpoint the molecular
 function of non-coding mutations. The structural diversity of some RNAs,
@@ -567,8 +567,7 @@ reference structural alignments. Despite this, \dotaligner{} can harness the
 information within base pair probability ensembles to output a reliable
 structural similarity score of two RNA sequences, reducing several dimensions 
 of information  into a single discriminative numeric value.
- Our results show that this
-can nonetheless be sufficient to extract structurally and functionally related
+ Our results show that this can nonetheless be sufficient to extract structurally and functionally related
 sequences from a large amount of noisy input; an ideal application for
 screening high-throughput sequencing data--such as RNA immunoprecipitation
 data--for common structural motifs. \\
@@ -589,19 +588,26 @@ given our benchmark results and the observation that very few clusters
 were observed when analysing less stringently filtered eCLIP peaks (data not shown). \\
 
 \dotaligner{} has several variables that will influence the clustering results and 
-speed depending on the type of input data. The most influential variables are the weight between sequence and structure similarity, and the exploration depth of the suboptimal alignments in the stochastic
+speed depending on the type of input data. The most influential variables are 
+the weight between sequence and structure similarity, 
+and the exploration depth of the suboptimal alignments in the stochastic
 backtracking. Here, we present the best trade-off between alignment
-accuracy and speed based on a collection of RFAM seed alignments, and show that these default settings are applicable on de-novo data from an eCLIP experiment. \textcolor{blue} {[COMMENT: Would it have been possible to add a ROC curve to this statement? Do we have the data easily available?]} \\
+accuracy and speed based on a collection of RFAM seed alignments, 
+and show that these default settings are applicable on de-novo data from an eCLIP 
+experiment. \textcolor{blue} {[COMMENT: Would it have been possible to add a ROC curve to this statement? Do we have the data easily available?]} \\
 
 A greater challenge lies in the accurate depiction of RNA structure motif boundaries. 
 Whereas global structures may stabilize the RNA molecule, local
 structural domains are often sufficient for recognition by RNA binding
-proteins. \textcolor{red}{When compared to  \locarna{} with default parameters,}
- \dotaligner{} calculates semi-local alignments by introducing penalty-free gaps at the sequence extremities. 
-However, this approach optimises only the pairwise local similarity score, but it does
-not explore suboptimal alignments for optimal cluster construction. This could
-be done in the \dotaligner{} framework but would dramatically increase search
-space and run-time. We circumvented this issue by overlapping eCLIP peaks to 
+proteins.
+\textcolor{red}{ 
+ \dotaligner{} calculates semi-local alignments by introducing penalty-free gaps 
+at the sequence extremities (N.B.,  \locarna{} also supports this functionality with a 
+command line parameter, untested here), which optimises the pairwise local 
+similarity score, but does not explore suboptimal alignments for optimal cluster construction.
+ This could be done in the \dotaligner{} framework but would dramatically increase search
+space and run-time. [\textbf{COMMENT} can this be clarified? even I don't understand what the intention is. }
+	We circumvented this issue by overlapping eCLIP peaks to 
 evolutionarily conserved RNA secondary structure predictions with well-characterised
 flanking helices supported by base pair covariation \cite{smith2013widespread}.
 While preparing this manuscript, a complementary and comprehensive dataset 
@@ -618,7 +624,7 @@ endoribonuclease. \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 An efficient pairwise RNA sequence alignment heuristic, which intrinsically considers
 suboptimal base pairings, accurately discriminates between distinct structured RNAs families.
-When combined to a noise tolerant density based clustering algorithm, this 
+When combined with a noise tolerant density based clustering algorithm, this 
 approach identifies known and novel RNA structure motifs from a set of input sequences 
 without a priori knowledge. The resulting RNA structure motifs can subsequently 
 be used to identify homologs in reference genomes to improve the annotation of 
@@ -630,7 +636,7 @@ long non-coding RNAs and increase the repertoire of functional genetic elements.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Benchmarking and parameter optimisation}
 
-The \dotaligner{} algorithm implements several theoretical parameters that
+The \dotaligner{} algorithm implements several parameters that
 first need to be tuned before being applied to biological sequence
 analysis. All combinations of core parameters were tested on the 8,976
 pairwise RNA structure alignments curated in the \bralibase{} reference dataset
@@ -929,7 +935,7 @@ $S_b[i^\prime]$, $\tau(i,j,i^\prime,j^\prime)$ is the similarity of arcs $(i,j)
 %P_a(i,j)-P_b(i^\prime,j^\prime) |$)
 and $\gamma$ is the gap cost associated with each sequence position that is not
 matched ($N = |S_a|+|S_b|-2|A|$). The alignment problem finds the maximal
-$W(A)$. As its solution is MAX-SNP-hard, in praxis heuristics are used to find
+$W(A)$. As its solution is MAX-SNP-hard, in practise heuristics are used to find
 near-optimal solutions.\\
 
 \dotaligner{} solves the related problem of aligning two base pair
@@ -1131,9 +1137,7 @@ relative to background nucleotide frequencies:
 \end{equation}
 
 \noindent The log-odd scores $L$ from the RIBOSUM85-60 matrix \cite{Klein14499004}
-	are transformed to probabilities $R_{paired}$ by $2^{L(i,j,i^\prime,j^\prime)} / (1 + 2^{L(i,j,i^\prime,j^\prime)})$.
-
-
+	are transformed to probabilities $R_{paired}$ by $2^{L(i,j,i^\prime,j^\prime)} / (1 + 2^{L(i,j,i^\prime,j^\prime)})$.\\
 
 
 \subsection*{ 2. Clustering RNA structures with randomised controls }
@@ -1141,6 +1145,7 @@ relative to background nucleotide frequencies:
 Below is the code used to calculate the accuracy and other performance metrics of 
 the clustering benchmark of stochastically sampled RFAM entries. All files can be found on the 
 associated \texttt{GitHub} repository \url{https://github.com/noncodo/BigRedButton}.
+
 \lstinputlisting{../data/clustering_benchmark/eval_acc.R}
 
 
@@ -1149,6 +1154,8 @@ Data in .bigBed format was acquired from the ENCODE data hub from the following 
 \url{https://www.encodeproject.org/search/?type=Experiment&assay_term_name=eCLIP&files.file_type=bigBed+narrowPeak&month_released=April\%2C+2016}
 
 \begin{lstlisting}
+#!/bin/bash
+
 # Convert accessions to protein IDs
 cut -f 1,16,29 metadata.tsv | sed 's/-human /_/g' | while read line 
 do 
@@ -1295,7 +1302,7 @@ Sequences & RNA family & RFAM ID \\
 
 \begin{table}
 \caption*{\textbf{Supplementary Table 3.} Rank-product of best \dotaligner{} parameters}
-\begin{tabular}{lccccccc}
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccccc}
 \hline
 Parameters  & low\_PI rank & high\_PI rank & rank product & low\_PI AUC & high\_PI AUC & AUC  sum  & Combined Time  \\
 \hline
@@ -1320,7 +1327,7 @@ T=5 s=50 k=0.3 t=0.5 o=1 e=0.05 & 11 & 118 & 1298 & 0.983297903 & 0.996178994 & 
 T=10 s=20 k=0.3 t=0.8 o=1 e=0.05 & 187 & 7 & 1309 & 0.959342489 & 0.997188985 & 1.95653 & 0.187293\\
 T=10 s=1 k=0.4 t=0.6 o=1 e=0.05 & 14 & 101 & 1414 & 0.983273039 & 0.996343919 & 1.97962 & 0.144514\\
 \hline
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \begin{table}

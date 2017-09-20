@@ -1,3 +1,4 @@
+## R code -- R version 3.4.1
 cat("File name","TP","TN","FP","FN","SENS","SPEC","ACC","\n",sep="\t", file="accuracies.tsv")
 file.names <- dir(pattern="*_clust.tsv$")
 for(x in 1:length(file.names)){
