@@ -154,7 +154,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Identification and classification of common RNA structure motifs}
+\title{Identification and clustering of functional RNA structure motifs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -256,7 +256,7 @@ for the classification of their biological functions. Sparse sequence conservati
 non-coding sequences and the unreliable nature of RNA structure predictions further 
 exacerbate this conundrum. Here, we describe a computational method for the 
 unsupervised discovery and classification of homologous RNA structure motifs from a set of 
-sequences of interest.  Our approach outperforms other tools at classifying known RNA structure families, both in time and accuracy. It identifies clusters of known and novel structure motifs from ENCODE immunoprecipitation data of 44 RNA-binding proteins. 
+sequences of interest.  Our approach outperforms \textcolor{red}{comparable algorithms at clustering} known RNA structure families, both in time and accuracy. It identifies clusters of known and novel structure motifs from ENCODE immunoprecipitation data of 44 RNA-binding proteins. 
 \end{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -319,14 +319,18 @@ sequences of interest.  Our approach outperforms other tools at classifying know
 \section*{Background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As genomic technologies progress, an ever increasing amount of non-protein coding RNAs (ncRNA) are being discovered. Long non-coding RNAs (lncRNAs) are of particular interest for functional genome
-annotation given their abundance throughout the genome. So far, few lncRNAs have been functionally characterised, and those that have seem to be involved in regulation of gene expression and epigenetic states 
-\cite{morris2014rise,engreitz2016long}. Understanding the
-molecular mechanisms underlying the biological functions of lncRNAs -- and how
-they are disrupted in disease -- is required to improve the functional
+As genomic technologies progress, an ever increasing amount of non-protein 
+coding RNAs (ncRNA) are being discovered. 
+Long non-coding RNAs (lncRNAs) are of particular interest for functional genome
+annotation given their abundance throughout the genome. 
+So far, few lncRNAs have been functionally characterised, 
+and those that have seem to be involved in regulation of gene expression and epigenetic states 
+\cite{morris2014rise,engreitz2016long}. 
+Understanding themolecular mechanisms underlying the biological functions of lncRNAs 
+-- and how they are disrupted in disease -- is required to improve the functional
 annotation of the human genome. \\
 
-Many ncRNAs lack sequence conservation or sequence motifs, in contrast to protein-coding genes.
+Many ncRNAs lack sequence conservation, in contrast to protein-coding genes.
 Most small ncRNAs have well characterised secondary and tertiary structures, as
 evidenced in RFAM, the largest collection of curated RNA families (2,588
 families as of version 12.2 \cite{rfam12}). In contrast, determining the
@@ -337,7 +341,8 @@ concerning the prevalence of functional structural  motifs in lncRNAs
 biochemical support of conserved base pairing interactions
 \cite{smith2013widespread,spitale2015structural,lu2016rna}.
 Nonetheless, the higher-order structure of RNA molecules is an essential feature 
-of ncRNAs that can be used for their classification and the inference of their biological function. 
+of ncRNAs that can be used for their classification and the inference of their biological function. \\
+
 We, and others, hypothesise that lncRNAs act as scaffolds for the recruitment of proteins and assembly of
 ribonucleoproteins (RNPs), mediated by the presence of modular RNA structures,
 akin to the domain organisation of proteins
@@ -347,7 +352,14 @@ sequence and structure motifs that confer binding specificity, which may
 be present in multiple target transcripts. For example, there is evidence that 
 sequence and structure components of transposable elements, 
 which are frequent in lncRNAs \cite{kapusta2013transposable,hezroni2015principles}, 
-have been co-opted into mammalian gene regulatory networks \cite{kunarso2010transposable,kelley2012transposable}. \\
+have been co-opted into mammalian gene regulatory networks \cite{kunarso2010transposable,kelley2012transposable}. 
+\textcolor{red}{ Identifying and annotating the genomic occurrence of homologous 
+RNA structure motifs from sets of biologically related sequences would improve our
+understanding of the structure-function relationship of lncRNAs and the
+molecular mechanisms underlying their regulatory features. Resolving this challenge 
+would be beneficial for the analysis of high-throughput RNA sequencing experiments 
+that measure how RNAs interact with other molecules, such as cross-linked 
+RNA immunoprecipitation or RNAse footprinting methodologies. } \\
 
 Identifying RNAs with similar functions involves comparing both their primary
 sequence and higher-order structures simultaneously. However, sequence-based 
@@ -370,21 +382,38 @@ problem is reduced to a two-dimensional problem by \texttt{RNApaln} \cite{Lorenz
 specific probabilities (such as a base-wise unpaired probability). All these methods fail 
 to explicitly consider suboptimal structures in the alignment. The pairwise
 alignment of base pairing probability matrices (RNA dot plots) was first introduced 
-by \carna{} \cite{Palu2010,Sorescu2012}, which iteratively improves alignments using a constraint programming technique implementing a branch and bound scheme. 
-Another heuristic is pruning of the dynamical programming matrix without pre-folding constraints, as implemented by \texttt{FoldAlign} \cite{Havgaard17937495,Sundfeld26704597}. \\ 
+by \carna{} \cite{Palu2010,Sorescu2012}, which iteratively improves alignments 
+using a constraint programming technique implementing a branch and bound scheme. 
+Another heuristic is pruning of the dynamical programming matrix without pre-folding 
+constraints, as implemented by \texttt{FoldAlign} \cite{Havgaard17937495,Sundfeld26704597}. \\ 
 
-Will \textit{et al.} \nocite{Will17432929} first showed that a (dis)similarity matrix can be constructed from all-vs-all pairwise RNA structure alignments with the pairwise alignment tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold to the resulting dendrogram to extract structurally related sequences. Alternative methods to identify clusters of homologous RNAs include \texttt{NoFold}, which clusters query sequences based on their relative similarity to a panel of reference structure motif profiles \cite{Middleton25234928}, and \graphclust{}, an alignment-free approach that decomposes RNA structures into graph-encoded features \cite{Heyne22689765}. \texttt{RNAscClust}, an extension of \graphclust{}, utilises the evolutionary signatures of RNA structures as additional classification feature \cite{Miladi28334186}. \\
+\textcolor{red}{These pairwise RNA structure alignment algorithms can be used to identify 
+clusters of homolgous RNA structure motifs from a set of sequences of interest.} 
+Will \textit{et al.} \nocite{Will17432929} first showed that a (dis)similarity matrix can be 
+constructed from all-vs-all pairwise RNA structure alignments with the pairwise alignment 
+tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical 
+clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold 
+to the resulting dendrogram to extract structurally related sequences. Alternative methods 
+\textcolor{red}{to all-vs-all pairwise comparisons for the identification of homologous 
+RNA clusters} include \texttt{NoFold}, which clusters query sequences based on their relative similarity 
+to a panel of reference structure motif profiles \cite{Middleton25234928}, and \graphclust{}, 
+an alignment-free approach that decomposes RNA structures into graph-encoded features 
+\cite{Heyne22689765}. \texttt{RNAscClust}, an extension of \graphclust{}, utilises the 
+evolutionary signatures of RNA structures as additional classification feature \cite{Miladi28334186}. \\
 
 Here, we describe a computational pipeline for the identification and classification of
 homologous RNA structures from a large set of query sequences. At its core lies \dotaligner{}, a
 heuristic pairwise sequence alignment algorithm that considers an ensemble of suboptimal 
-base pairing probabilities for each queried sequence. We compare \dotaligner{} with other pairwise RNA structure alignment algorithms to highlight its speed and accuracy at classifying know RNA families. 
+base pairing probabilities for each queried sequence. 
+We \textcolor{red}{ benchmark the performance of \dotaligner{} with other pairwise 
+RNA structure alignment algorithms through several iterations of a stochastic sampling 
+strategy across all RFAM seed alignments, highlighting the speed and accuracy of our method.}  
 We combine \dotaligner{} with density based clustering for the unsupervised identification of 
-RNA structural motifs, which can identify known RFAM families and novel RNA structural 
-motifs from ENCODE eCLIP data. The resulting clusters of homologous RNA structures can then 
-be used to search for homologous structures across reference genomes and transcriptomes 
-to generate a map of functionally related RNA structure motifs.  
-
+RNA structural motifs, which can identify \textcolor{red}{both} known RFAM families and novel RNA structural 
+motifs from ENCODE \textcolor{red}{enhanced cross-linked immunoprecipitation (eCLIP)}  data. 
+\textcolor{red}{Finally, we exemplify how clusters of homologous RNA structures identified 
+by our method} can be used to search for homologous structures across reference genomes 
+and transcriptomes to generate a map of functionally related RNA structure motifs.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Results}
@@ -1355,8 +1384,8 @@ a family shares between 0 and 55\% sequence identity; (bottom) Higher (56-95\%) 
 \end{figure}
 
 \begin{figure}
- \includegraphics{RFAM_vs_NW}
- \caption*{ \textbf{ Figure SA. Difference in sequence identity between structural and sequence alignments}\\
+ \includegraphics{SFX}
+ \caption*{ \textbf{ Figure SFX. Difference in sequence identity between structural and sequence alignments}\\
 The difference in pairwise sequence identity for 1,189,675 randomly sampled alignments is shown for 
 sequence-only alignments using a variant of the Needleman-Wunsch algorithm
 permitting free end gaps (NW) and the native RFAM seed alignments. 
