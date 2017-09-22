@@ -506,10 +506,7 @@ Interestingly, the sequence alignments produced by Needleman-Wunsch are able to 
 RFAM sequences into their respective clans comparably well to more specialised RNA structure
 alignment tools, suggesting that most RFAM clans present sufficient stretches of local sequence identity 
 to cluster them appropriately. Indeed, realigning the sequences from RFAM seed alignments based on their sequence alone, while permitting free end-gaps to evaluate local sequence similarity, 
-shifts the median pairwise sequence identity from 59\% to 72\% (Additional file 2: Figure S4). 
-The relative amount of alignments within the same RFAM clan with $<$50\% pairwise 
-sequence identity drops from 20\% to 2\% when realigning by sequence alone. 
-These local stretches of sequence similarity explain the performance of Needleman-Wunsch and\dotaligner{} at clustering structurally similar RNAs based on their scores alone. }\\
+shifts the median pairwise sequence identity from 59\% to 72\% (Additional file 2: Figure S4). }\\
 
 \textcolor{red} {The efficacy of the heuristics implemented in \dotaligner{} are further accentuated by its runtime, which consistently lies between simple sequence alignment and more sophisticated 
 RNA structure alignment algorithms (Fig. 3C and Additional file 2: Fig. S5). The impact of sequence length
@@ -862,7 +859,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 \begin{figure}[h!]
 \includegraphics[width=\textwidth]{Fig1}
  \caption {\csentence{Schematic of a pairwise alignment with DotAligner.}
- \textcolor{blue}{
+ \textcolor{red}{
   A dynamic  programming matrix is first filled in based on the similarity in sequence 
   and cumulative base-wise pairing probabilities (top left--colour intensity
   indicates cumulative similarity score).  A partition function over all
