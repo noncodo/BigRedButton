@@ -438,6 +438,7 @@ It also makes use of the observation that a significant subset of stochastic seq
  between two RNAs will overlap the correct structure-based alignment, even though 
  the optimal sequence alignment deviates significantly from the structural alignment \cite{Muckstein12385998}. }\\
 
+\textcolor{red}{
 The algorithm combines an alignment-envelope heuristic with a fold-envelope 
 heuristic, which impose constraints on suboptimal sequence alignments and  
 pre-calculated base pair probabilities, respectively. 
@@ -454,42 +455,40 @@ from \texttt{ProbA} \cite{Muckstein12385998}. The detailed implementation
 and mathematical description of \dotaligner{} can be found in Additional file 1.\\
 }
 
-\textcolor{blue}{
-In the following, we benchmark the performance of \dotaligner{} and its combination with
-density-based clustering by (i) the quality of pairwise RNA structure
-alignments (Fig. 2), (ii) the classification of RNA families (Fig. 3), and (iii)
-the clustering of RNA families (Fig. 4).\\
-}
-
 %T=10 s=1 k=0.3 t=0.5 o=1 e=0.05
-\subsection*{Quality of RNA structure alignments}
+\subsection*{ Evaluation of pairwise alignment quality}
 
-\textcolor{blue}{[COMMENT: Which DotAligner parameters are used here?]}
 We first tested \dotaligner{} on \bralibase{} pairwise RNA structure alignments, a reference 
 dataset specifically designed for algorithm benchmarking 
 \cite{Gardner15860779,wilm2006enhanced} (see Methods). In this application, \dotaligner{} seemingly  
-performs worse than three other state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{} \cite{havgaard2007fast,sundfeld2015foldalign} and \locarna{} \cite{Will17432929}
-(Fig. 2). Interestingly, many of the pairwise structure alignments produced Structural 
+performs worse than three other state of the art algorithms, namely \carna{} \cite{Sorescu2012}, \foldalign{} \cite{havgaard2007fast,sundfeld2015foldalign} and \locarna{} \cite{Will17432929}, \textcolor{red}{ as well as the Needleman-Wunsch pairwise sequence alignment algorithm, which ignores RNA structure content (Fig. 2).
+When comparing how well the algorithms perform in function of the pairwise 
+sequence identity of \bralibase{} reference alignments, }
+\dotaligner{} produces alignments of lesser quality than comparable 
+RNA structure alignment tools,\textcolor{red}{ particularly below 60\% sequence identity, 
+albeit with better accuracy than sequence-only alignments. 
+Upon closer inspection, \dotaligner{} outperforms the other tools around the 65-80\%
+sequence identity range. }\\
+
+Interestingly, many of the pairwise structure alignments produced Structural 
 Conservation Index (SCI) scores above those from the \bralibase{} reference alignments 
-(Fig. 2B). The SCI represents the alignment consensus energy normalised
+(Fig. 2). The SCI represents the alignment consensus energy normalised
  by the average energy of the single sequences folded independently \cite{washietl2005fast}; 
 it has been shown to be one of the most reliable metrics for conserved RNA structure 
-detection \cite{gruber2008strategies}. With the exception of \dotaligner{}, all other 
-surveyed algorithm produce a substantial amount of alignments with SCI values 
-above that of the reference  alignment (Fig. 2B), suggesting that many optimization 
-algorithms tend to overestimate the amount of paired bases in consensus RNA structure predictions. \\
+detection \cite{gruber2008strategies}. With the exception of \dotaligner{}, 
+\textcolor{red}{
+the other  RNA structure alignment tools display, on average, SCI values above 0 in the 45-60\% identity range, } 
+suggesting the underlying optimization algorithms tend to overestimate the amount of paired bases in consensus RNA structure predictions.\\
 
 \textcolor{blue}{
-The usability of DotAligner to produce competitive pairwise alignments is
-illustrated at the 5S-adenosyl methionine (SAM) riboswitch (Rfam family
-RF00634) (Additional file 2: Figure S4). In the Rfam alignment the two
-representative sequences AM420293\_1 and CP000580\_2\_6 have a sequence
-identity (PID) of 55\%. The global pairwise sequence alignment has PID=69\% but misses to align many structural features. \dotaligner's pairwise probabilistic string alignment
-(step 1) creates an alignment of PID=56\%, which is increased to PID=63\% through
-\dotaligner's sampling. The dot plots in Additional file 2: Figure S4 show how
-the number of correctly aligned suboptimal base pairs increases through sampling (here 1000
-samples and sampling diversity of 0.25). However, the example also shows that
-the alignment scores do not differ very much between \dotaligner's optimal string alignment (step 1) and the best sample (step 2) (0.58 and 0.60 respectively),
+\dotaligner's capacity to produce competitive pairwise alignments is
+illustrated through the 5S-adenosyl methionine (SAM) riboswitch (Rfam family
+RF00634) (Additional file 2: Figure S4). 
+In the Rfam alignment the two representative sequences AM420293\_1 and CP000580\_2\_6 have a sequence identity (PID) of 55\%. 
+The global pairwise sequence alignment has PID=69\% but fails to align many structural features. 
+\dotaligner's pairwise probabilistic string alignment (step 1) creates an alignment of PID=56\%, which is increased to PID=63\% through \dotaligner's sampling. 
+The dot plots in Additional file 2: Figure S4 show how the number of correctly aligned suboptimal base pairs increases through sampling (here 1000 samples and sampling diversity of 0.25). 
+However, the example also shows that the alignment scores do not differ very much between \dotaligner's optimal string alignment (step 1) and the best sample (step 2) (0.58 and 0.60 respectively), 
 whereas sampling increases the runtime. \\ 
 }
 
@@ -733,9 +732,10 @@ The \dotaligner{} algorithm implements several parameters that
 first need to be tuned before being applied to biological sequence
 analysis. All combinations of core parameters were tested on the 8,976
 pairwise RNA structure alignments curated in the \bralibase{} reference dataset
-\cite{wilm2006enhanced}. For each set of parameter combinations, the amount of
+\cite{wilm2006enhanced}. \textcolor{red}{We first tested all combinations of the following parameters: \textit{\textbf{k}} and \textit{\textit{t}} from 0 to 1 in increments of 0.1;  \textit{\textbf{o}} and \textbf{\textit{e}} from 0.2 to 1 in increments of 0.2. 
+ }. For each set of parameter combinations, the amount of
 alignments producing identical structural topologies to the reference alignment
-was determined using \textit{RNAdistance}. The Structural Conservation Index
+was determined using \textit{RNAdistance}, the Structural Conservation Index
 (SCI), a robust measure of RNA structural alignment integrity
 \cite{gruber2008strategies} based on Minimum Free Energy (MFE), and the Matthews Correlation Coefficient (MCC) of \textit{predicted} and \textit{reference} RNA secondary structure
 were also calculated for all resulting alignments: \\
@@ -914,7 +914,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
  \bralibase{} reference RNA structure alignments were submitted to 5 different pairwise alignment algorithms, 
  including the Needleman-Wunsch sequence-only alignment algorithm. 
  \textbf{(Top)} The total number of surveyed alignments in function of pairwise sequence identity. The 
- Matthews Correlation Coefficient, difference in structural Conservation Index,
+ Matthews Correlation Coefficient (MCC), difference in Structural Conservation Index ($\Delta$-SCI),
  and \texttt{RNAdistance} calculated topological edit distance between 
 the \rnaalifold{} consensus of the computed alignment and the reference \bralibase{} alignment consensus 
  are compared in the lower 3 plots.  }
