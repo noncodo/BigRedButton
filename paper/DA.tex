@@ -154,7 +154,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Identification and clustering of functional RNA structure motifs}
+\title{Identification and clustering of RNA structure motifs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -354,40 +354,40 @@ sequence and structure components of transposable elements,
 which are frequent in lncRNAs \cite{kapusta2013transposable,hezroni2015principles}, 
 have been co-opted into mammalian gene regulatory networks \cite{kunarso2010transposable,kelley2012transposable}. 
 \textcolor{red}{ Identifying and annotating the genomic occurrence of homologous 
-RNA structure motifs from sets of biologically related sequences would improve our
+RNA structure motifs from sets of biologically related sequences will improve our
 understanding of the structure-function relationship of lncRNAs and the
 molecular mechanisms underlying their regulatory features. Resolving this challenge 
-would be beneficial for the analysis of high-throughput RNA sequencing experiments 
-that measure how RNAs interact with other molecules, such as cross-linked 
-RNA immunoprecipitation or RNAse footprinting methodologies. } \\
+can be beneficial for the analysis of high-throughput RNA sequencing experiments 
+that measure how RNAs interact with other molecules, such as crosslinked 
+RNA immunoprecipitation or RNAse footprinting methodologies.} \\
 
-Identifying RNAs with similar functions involves comparing both their primary
+The identification of RNAs with similar functions involves comparing both their primary
 sequence and higher-order structures simultaneously. However, sequence-based
 methods to identify common structural features perform poorly when sequence
 identity falls below 60\%  \cite{Gardner15860779}. Hence, methods are needed
 that find structural similarity independent from sequence conservation and
 freed from single RNA secondary structure predictions. The Sankoff algorithm
 resolves the optimal sequence-structure alignment of two RNAs \cite{sankoff85},
-but its computational complexity limits its practicality.  \textcolor{blue}{Its most similar
-variant employs the minimum free energy-based strategy and pruning of the
-dynamical programming matrix and is implemented by \texttt{FoldAlign}
-\cite{Havgaard17937495,Sundfeld26704597}.} Alternative strategies often employ
-pre-calculated secondary structure ensembles for each sequence, e.g. base pair
-probabilities in thermodynamically equilibrated RNA structure ensembles
-\cite{McCaskill:1990}. The latter can substantially speed up the calculation of
+but its computational complexity limits its practicality.  \textcolor{red}{Its most comparable
+implementation, \texttt{FoldAlign}, employs a minimum free energy-based strategy with pruning of the
+associated dynamical programming matrix \cite{Havgaard17937495,Sundfeld26704597}.} 
+Alternative strategies often employ pre-calculated secondary structure \textcolor{red}{probability 
+distributions (thermodynamically equilibrated canonical ensembles)} for each sequence 
+\cite{McCaskill:1990}. These can substantially speed up the calculation of
 structure-based alignments \cite{Hofacker15073017}, of which there are many
 variants.  The programs \texttt{PMcomp} \cite{Hofacker15073017}, \locarna{}
 \cite{Will17432929}, and \texttt{ProbAlign} \cite{Roshan16954142} use the
 pre-computed base pair probability matrices of both sequences and score the
 alignment based on the notion of a common secondary structure. The
-sequence-structure alignment problem is reduced to a two-dimensional problem by
+sequence-structure alignment problem is reduced to a two-dimensional problem in
 \texttt{RNApaln} \cite{Lorenz22115189} and \texttt{StrAL} \cite{Dalli16613908},
-which reduce base pair probabilities to base specific probabilities (such as a
-base-wise unpaired probability). All these methods fail to explicitly consider
-suboptimal structures in the alignment. The pairwise alignment of base pairing
-probability matrices (RNA \emph{dot plots}) was first introduced by \carna{}
-\cite{Palu2010,Sorescu2012}, which iteratively improves alignments using a
-constraint programming technique implementing a branch and bound scheme. \\ 
+which \textcolor{red}{derive probabilities for individual bases 
+(such as the probability of being unpaired) from all base pairing probabilities}. 
+These methods all fail to explicitly consider suboptimal structures in the alignment. 
+The pairwise alignment of entire base pairing probability matrices (RNA \emph{dot plots}) 
+was first introduced by \carna{} \cite{Palu2010,Sorescu2012}, which iteratively 
+improves alignments using a constraint programming technique implementing 
+a branch and bound scheme. \\ 
 
 \textcolor{red}{These pairwise RNA structure alignment algorithms can be used to identify 
 clusters of homolgous RNA structure motifs from a set of sequences of interest.} 
@@ -395,13 +395,13 @@ Will \textit{et al.} \nocite{Will17432929} first showed that a (dis)similarity m
 constructed from all-vs-all pairwise RNA structure alignments with the pairwise alignment 
 tool \locarna{}, identifying known and novel groups of homologous RNAs using hierarchical 
 clustering \cite{Will17432929}. However, this strategy involves applying a subjective threshold 
-to the resulting dendrogram to extract structurally related sequences. Alternative methods 
-\textcolor{red}{to all-vs-all pairwise comparisons for the identification of homologous 
-RNA clusters} include \texttt{NoFold}, which clusters query sequences based on their relative similarity 
+to the resulting dendrogram to extract structurally related sequences. \textcolor{red}{Alternative 
+approaches to all-vs-all pairwise comparisons for RNA structure clustering } include \texttt{NoFold},
+which clusters query sequences based on their relative similarity 
 to a panel of reference structure motif profiles \cite{Middleton25234928}, and \graphclust{}, 
 an alignment-free approach that decomposes RNA structures into graph-encoded features 
 \cite{Heyne22689765}. \texttt{RNAscClust}, an extension of \graphclust{}, utilises the 
-evolutionary signatures of RNA structures as additional classification feature \cite{Miladi28334186}. \\
+evolutionary signatures of RNA structures  \textcolor{red}{(when available) }as an additional classification feature \cite{Miladi28334186}. \\
 
 Here, we describe a computational pipeline for the identification and \textcolor{blue}{clustering} of
 homologous RNA structures from a large set of query sequences. At its core lies \dotaligner{}, a
@@ -422,33 +422,36 @@ and transcriptomes to generate a map of functionally related RNA structure motif
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Ensemble-guided pairwise RNA structure alignment} 
  
-\textcolor{blue}{
-\dotaligner{} leverages the diversity of suboptimal solutions from a partition
+\textcolor{red}{
+We developed an algorithm that leverages the diversity of suboptimal solutions from a partition
 function of RNA alignments to identify an optimal sequence-structure alignment
-of two RNAs. The algorithm overcomes the limitations of comparing unique RNA
+of two RNAs. The algorithm, termed  \dotaligner{}, overcomes the limitations of comparing unique RNA
 secondary structures (such as minimum free energy predictions) to yield a
-pairwise alignment that considers mutual base pair probabilities. Figure 1
-illustrates a sequence-structure alignment performed with \dotaligner{} in
-contrast to an alignment that considers only sequence composition. A major
-criteria for the implementation was a fast running time to make \dotaligner{}
-applicable for RNA structure clustering of large data sets. Consistently, the
-algorithm performs pairwise sequence-structure alignments from pre-calculated
-RNA dot plots using an alignment-envelope heuristic, which imposes constraints
-on suboptimal string alignments, and a fold-envelope heuristic, which imposes
-constraints to pre-calculated base pair probabilities. \dotaligner{} makes use
-of the observation that large samples from the ensemble of stochastic sequence
-alignments contain the correct structure-based alignment with significant
-probability, even though the optimal sequence alignment deviates significantly
-from the structural alignment \cite{Muckstein12385998}. The alignment procedure
-thus consists of two steps, each considering base pair probabilities:
-(1) Partition function of pairwise probabilistic string alignments; 
-(2) Stochastic sampling of string alignments and scoring of aligned dot plots.
-The presented algorithm combines existing
-building blocks in a novel way: a \texttt{StrAL}-like score is applied during the dynamic programming in step 1, a \carna-like score is used to score the aligned dot plots in step 2, and the partition
-function in step 1 and sampling in step 2 are adapted
-from \texttt{ProbA} \cite{Muckstein12385998}.
-The detailed implementation and mathematical description of
-\dotaligner{} can be found in Additional file 1.\\
+pairwise alignment that considers mutual base pair probabilities. 
+A schematic of how \dotaligner{} functions is illustrated in Figure 1.} \\
+
+\textcolor{red}{
+\dotaligner{} was developed with emphasis on runtime performance to 
+facilitate all-vs-all pairwise comparisons of RNA structures on large data sets. 
+Consequently, it uses pre-calculated RNA dot plots to perform alignments. 
+It also makes use of the observation that a significant subset of stochastic sequence alignments 
+ between two RNAs will overlap the correct structure-based alignment, even though 
+ the optimal sequence alignment deviates significantly from the structural alignment \cite{Muckstein12385998}. }\\
+
+The algorithm combines an alignment-envelope heuristic with a fold-envelope 
+heuristic, which impose constraints on suboptimal sequence alignments and  
+pre-calculated base pair probabilities, respectively. 
+The alignment procedure consists of two steps, each considering base pair probabilities:
+(1) Generating a partition function of pairwise probabilistic string alignments; 
+(2) Stochastic sampling of string alignments and scoring of aligned dot plots.\\}
+
+\textcolor{red}{
+Existing building blocks are integrated to \dotaligner{} in a novel way. 
+A \texttt{StrAL}-like score is applied during the dynamic programming in step 1, 
+then a \carna-like score is used to score the aligned dot plots in step 2, 
+and, lastly, the partition function in step 1 and sampling in step 2 are adapted
+from \texttt{ProbA} \cite{Muckstein12385998}. The detailed implementation 
+and mathematical description of \dotaligner{} can be found in Additional file 1.\\
 }
 
 \textcolor{blue}{
