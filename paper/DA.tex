@@ -68,6 +68,7 @@
 \usepackage{hyperref}
 %\usepackage[margin=1in]{geometry}
 \usepackage{listings}
+\usepackage{rotating}
 
 %Removing Paragraph Indenting in LaTeX
 \setlength{\parindent}{0in}
@@ -723,12 +724,12 @@ Further refinement of the optimal parameters was performed using a binary classi
 200 stochastically sampled RFAM entries with published structures: 
 (i) a low Pairwise Sequence Identity (PSI) set, and (ii) a high PSI set, 
 where any two sequences from the same family share between 0-55\% and 56-95\% PSI, respectively (Fig. 3A-B). 
-The \texttt{JAVA} implementation of this algorithm, derived from \cite{smith2013widespread}, can be found in the Additional file 1.  \textcolor{red}{Further investigation of the impact of local sequence similarity on algorithmic 
+The \texttt{JAVA} implementation of this algorithm, derived from \cite{smith2013widespread}, can be found in the Additional file 1. \textcolor{red}{Further investigation of the impact of local sequence similarity on algorithmic 
 performance was done by sampling all seed alignments of RFAM version 12.3 via 3 replicates of
 our stochastic sampling procedure. The sequences were then striped of gaps and pseudo-knots 
 (not present in the preliminary RFAM version 12.0 alignments), and realigned with a variant of 
 Needleman-Wunsch enabling free end gaps. The samplings were limited to 5 ranges of sequence identity, as
-presented in Fig. 3C.}\\
+presented in Fig. 3C. }\\
 
 A binary classification matrix was then constructed, where sequences \texttt{x} and \texttt{y}
 present a score of 1 if they belong to the same RFAM family, versus a score of 0 if they do not. 
@@ -1424,63 +1425,79 @@ Pairwise identity range & \# sequences & \% unique & Rep. 1  & Rep. 2 & Rep. 3 \
 \end{table}
 
 \begin{figure}
- \includegraphics[width=\textwidth]{SF1}
- \caption*{ \textbf{ Figure S1. Binary classification of similarity matrices  }\\
-Stochastically sampled RFAM sequences are labelled as belonging to the same family in white, and in red when not (Left). Heat maps of the similarity matrices produced by \dotaligner{}, \locarna{} and \carna{} are listed in columns 2, 3 and 4, respectively.  
-(top) Low mean pairwise identity samples, where each sequence within 
-a family shares between 0 and 55\% sequence identity; (bottom) Higher (56-95\%) mean pairwise identity samples. }
-\end{figure}
-
-\begin{figure}
- \includegraphics{SFX}
- \caption*{ \textbf{ Figure SFX. Difference in sequence identity between structural and sequence alignments}\\
-The difference in pairwise sequence identity for 1,189,675 randomly sampled alignments is shown for 
-sequence-only alignments using a variant of the Needleman-Wunsch algorithm
-permitting free end gaps (NW) and the native RFAM seed alignments. 
-Only sequences within the same family are compared, exposing the presence of  
-local sequence similarity within the sequences. 
-Pairwise sequence identity is defined by the number of matching nucleotides divided by the length of the 
-shortest sequence. 
-}
-\end{figure}
-
-\begin{figure}
- \includegraphics[width=\textwidth]{SF2}
- \caption*{ \textbf{ Figure S2. OPTICS clustering optimisation }\\
-Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount 
- of clusters (\textbf{B}) from a \dotaligner{} dissimilarity matrix of 580 reference RFAM 
- structures and their dinucleotide-shuffled controls (horizontal dashed line indicates 
- expected amount of clusters, or unique RFAM families). }
-\end{figure}
-
-\begin{figure}
- \includegraphics[width=\textwidth]{SF3}
- \caption*{ \textbf{ Figure S3. Genomic distribution of a UPF1-associated RNA structure motif }\\
-(\textbf{A}) Multiple sequence alignment of a significant cluster from \textbf{Figure 5F} as produced by \texttt{mLocaRNA} and \texttt{RNAalifold}, and its associated consensus secondary structure prediction  (\textbf{B}). (\textbf{C}) Karyogram illustrating the human genomic coordinates (Grch37) of structural motif homologs, to this motif that do not overlap RepeatMasker annotations \cite{smit2010repeatmodeler}, as identified with \texttt{cmsearch }from the Infernal software package \cite{nawrocki2013infernal}. (\textbf{D}) Distribution of homologs within repeat elements (only repeats classes where $>$ 10\% of the repeats overlap homologs are displayed). 
-}
-\end{figure}
-
-\begin{figure}
- \includegraphics[width=0.45\textwidth]{SF4}
- \caption*{ \textbf{ Figure S4. Pairwise alignments of dot plots of SAM riboswitch. }\\
+ \includegraphics[width=0.45\textwidth]{SF1}
+ \caption*{ \textbf{ Figure S1. Pairwise alignments of dot plots of SAM riboswitch. }\\
  The two sequences AM420293\_1 (upper triangles of the dot plots) and CP000580\_2\_6 (lower triangles) of the 5S-adenosyl methionine (SAM) riboswitch (Rfam family RF00634) are aligned (\textbf{A}) as in the Rfam reference alignment, (\textbf{B}) through \dotaligner's pairwise probabilistic string alignment (step 1), and (\textbf{C}) through \dotaligner's sampling of stochastic alignments (step 2). \dotaligner's sampling increases the combined score of the alignment from 0.58 to 0.60 (and the sequence identity from 56\% to 63\%), and improves the quality of the alignment compared to the Rfam reference.
 }
 \end{figure}
 
 \begin{figure}
- \includegraphics[width=\textwidth]{SF5}
- \caption*{ \textbf{ Figure S5. Impact of sampling of stochastic alignments on combined score.}\\
+ \includegraphics[width=\textwidth]{SF2}
+ \caption*{ \textbf{ Figure S2. Impact of sampling of stochastic alignments on combined score.}\\
  We executed \dotaligner{} (default runtime parameters) while varying parameter T (sampling diversity) with 1000 samples (parameter s) on the RFAM binary classification benchmark datasets corresponding to 0-55\% and 56-65\% sequence identity (PID) (3 replicates each). For parameter T equal 0.1 and 0.25 the majority of pairwise alignments are optimized through the sampling procedure (sample increased the combined score). In few cases, T=0.5 also produced an optimized alignment through sampling. 
 }
 \end{figure}
 
+\begin{sidewaysfigure}
+    \includegraphics[width=\textwidth]{SF3}
+     \caption*{ \textbf{ Figure S3. Binary classification of similarity matrices  }\\
+Stochastically sampled RFAM version 12.0 sequences are labelled as belonging to the same family in white, and in red when not (Left). Heat maps of the similarity matrices produced by \dotaligner{}, \locarna{} and \carna{} are listed in columns 2, 3 and 4, respectively.  
+(top) Low mean pairwise identity samples, where each sequence within 
+a family shares between 0 and 55\% sequence identity; (bottom) Higher (56-95\%) mean pairwise identity samples. }
+\end{sidewaysfigure}
+
+
 \begin{figure}
- \includegraphics[width=\textwidth]{SF6}
- \caption*{ \textbf{ Figure S6. Impact of sampling of stochastic alignments on sequence identity.}\\
-The sequence identity (PID) of the \dotaligner{} predicted alignment is higher if the optimal alignment originates from the probabilistic sampling (Sample) for the benchmark dataset of low PIDs, whereas there is no difference for the benchmark dataset of medium PIDs. We executed \dotaligner{} (default runtime parameters but sampling diversity T=0.25 and number of samples s=1000) on the RFAM binary classification benchmark datasets corresponding to 0-55\% and 56-65\% sequence identity (PID) (3 replicates each). 
+ \includegraphics{SF4}
+ \caption*{ \textbf{ Figure S4. Difference in sequence identity between structural and sequence alignments}\\
+The difference in pairwise sequence identity for 1,189,675 randomly sampled RFAM version 12.3 seed 
+ alignments is shown for sequence-only alignments using a variant of the Needleman-Wunsch algorithm
+permitting free end gaps (NW) and the native RFAM seed alignments. 
+Only sequences within the same family are compared, exposing the presence of  local sequence similarity within the sequences. Pairwise sequence identity is defined by the number of matching nucleotides divided by the length of the 
+shortest sequence. 
 }
 \end{figure}
 
+\begin{figure}
+ \includegraphics[width=\textwidth]{SF5}
+  \caption* {{\textbf{Figure S5. Classification of known RNA structures.} }
+ (\textbf{A})  Area Under the Curve (AUC) of ROC values with 95\% confidence intervals 
+associated to Figure 3A. 
+ (\textbf{B}) Associated runtime distribution of single thread computation on a 2.6 GHz AMD Opteron processor 
+ (N.B. a fixed upper limit of 120 s was  imposed for \carna{}). } 
+\end{figure}
+
+\begin{figure}
+ \includegraphics{SF6}
+  \caption* {{\textbf{Figure S6. \dotaligner{} clustering performance in function of sequence length.} }
+ (\textbf{A})  Area Under the Curve (AUC) of ROC values with 95\% confidence intervals 
+for 3 replicates of stochastically sampled RFAM version 12.3 clans, controlling for sequence length (x-axis). 
+ (\textbf{B}) Associated runtime distribution of single thread computation on a 2.6 GHz AMD Opteron processor. } 
+\end{figure}
+
+%\begin{figure}
+% \includegraphics[width=\textwidth]{SF6}
+% \caption*{ \textbf{ Figure S6. Impact of sampling of stochastic alignments on sequence identity.}\\
+%The sequence identity (PID) of the \dotaligner{} predicted alignment is higher if the optimal alignment originates from the probabilistic sampling (Sample) for the benchmark dataset of low PIDs, whereas there is no difference for the benchmark dataset of medium PIDs. We executed \dotaligner{} (default runtime parameters but sampling diversity T=0.25 and number of samples s=1000) on the RFAM binary classification benchmark datasets corresponding to 0-55\% and 56-65\% sequence identity (PID) (3 replicates each). 
+%}
+%\end{figure}
+
+\begin{sidewaysfigure}
+ \includegraphics[width=\textwidth]{SF7}
+ \caption*{ \textbf{ Figure S7. OPTICS clustering optimisation }\\
+Effect of OPTICS parameters on clustering accuracy (\textbf{A}) and amount 
+ of clusters (\textbf{B}) from a \dotaligner{} dissimilarity matrix of 580 reference RFAM 
+ structures and their dinucleotide-shuffled controls (horizontal dashed line indicates 
+ expected amount of clusters, or unique RFAM families). }
+\end{sidewaysfigure}
+
+
+\begin{figure}
+ \includegraphics[width=\textwidth]{SF8}
+ \caption*{ \textbf{ Figure S8. Genomic distribution of a UPF1-associated RNA structure motif }\\
+(\textbf{A}) Multiple sequence alignment of a significant cluster from \textbf{Figure 5F} as produced by \texttt{mLocaRNA} and \texttt{RNAalifold}, and its associated consensus secondary structure prediction  (\textbf{B}). (\textbf{C}) Karyogram illustrating the human genomic coordinates (Grch37) of structural motif homologs, to this motif that do not overlap RepeatMasker annotations \cite{smit2010repeatmodeler}, as identified with \texttt{cmsearch }from the Infernal software package \cite{nawrocki2013infernal}. (\textbf{D}) Distribution of homologs within repeat elements (only repeats classes where $>$ 10\% of the repeats overlap homologs are displayed). 
+}
+\end{figure}
 
 
 \end{document}
