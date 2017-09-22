@@ -453,7 +453,7 @@ and mathematical description of \dotaligner{} can be found in Additional file 1.
 }
 
 %T=10 s=1 k=0.3 t=0.5 o=1 e=0.05
-\subsection*{ Evaluation of pairwise alignment quality}
+\subsection*{Evaluation of pairwise alignment quality}
 
 We first tested \dotaligner{} on \bralibase{} pairwise RNA structure alignments, a reference 
 dataset specifically designed for algorithm benchmarking 
@@ -462,7 +462,7 @@ performs worse than three other state of the art algorithms, namely \carna{} \ci
 When comparing how well the algorithms perform in function of the pairwise 
 sequence identity of \bralibase{} reference alignments, }
 \dotaligner{} produces alignments of lesser quality than comparable 
-RNA structure alignment tools,\textcolor{red}{ particularly below 60\% sequence identity, 
+RNA structure alignment tools, \textcolor{red}{particularly below 60\% sequence identity, 
 albeit with better accuracy than sequence-only alignments. 
 Upon closer inspection, \dotaligner{} outperforms the other tools around the 65-80\%
 sequence identity range. As mentioned in the next section, this roughly corresponds to the 
@@ -485,7 +485,7 @@ In the RFAM alignment, the two representative sequences (AM420293\_1 and CP00058
 have a sequence identity of 55\%. Pure sequence alignment increases this to 69\%, 
 but fails to align most structural features. 
 \dotaligner's pairwise probabilistic string alignment (step 1) creates an alignment of PID=56\%, which is increased to PID=63\% through \dotaligner's sampling.
-However, the number of correctly aligned suboptimal base pairs increases via \dotaligner{}'s sampling. In this example, the alignment scores do not differ very much between \dotaligner{}'s optimal string alignment (step 1) and the best sample (step 2): 0.58 and 0.60, respectively. However, the sampling (s=1000 in this example) increased the runtime ~25x, from 0.03 to 0.84 seconds. As justified below, the benefits of sampling are outweighed by other properties of the algorithm. \\ 
+The number of correctly aligned suboptimal base pairs increases via \dotaligner{}'s sampling. In this example, the alignment scores do not differ very much between \dotaligner{}'s optimal string alignment (step 1) and the best sample (step 2) (0.58 and 0.60, respectively), despite of a $\sim$25x increase of runtime through sampling (s=1000 in this example). As justified below, the benefits of sampling are outweighed by other properties of the algorithm. \\ 
 }
 
 \subsection*{Fast and accurate classification of RNA structures} 
@@ -700,8 +700,8 @@ The \dotaligner{} algorithm implements several parameters that
 first need to be tuned before being applied to biological sequence
 analysis. All combinations of core parameters were tested on the 8,976
 pairwise RNA structure alignments curated in the \bralibase{} reference dataset
-\cite{wilm2006enhanced}. \textcolor{red}{We first tested all combinations of the following parameters: \textit{\textbf{k}} and \textit{\textit{t}} from 0 to 1 in increments of 0.1;  \textit{\textbf{o}} and \textbf{\textit{e}} from 0.2 to 1 in increments of 0.2. 
- }. For each set of parameter combinations, the amount of
+\cite{wilm2006enhanced}. \textcolor{red}{We first tested all combinations of the following parameters: \textit{\textbf{k}} and \textit{\textit{t}} from 0 to 1 in increments of 0.1;  \textit{\textbf{o}} and \textbf{\textit{e}} from 0.2 to 1 in increments of 0.2.} 
+For each set of parameter combinations, the amount of
 alignments producing identical structural topologies to the reference alignment
 was determined using \textit{RNAdistance}, the Structural Conservation Index
 (SCI), a robust measure of RNA structural alignment integrity
@@ -735,7 +735,7 @@ A more restricted range of parameter values were then tested on both datasets, w
 \textcolor{red}{
 namely $\theta=0.5$, $\kappa=0.3$, $g_o=1$, and $g_{ext}=0.05$ (Additional file 2: Table S4). Parameter $\theta$ (or -t in the command line) is the weight of sequence similarity compared to similarity of unpaired probabilities, $\kappa$ (or -k) is the weight between sequence-based similarity and dot plot similarity, $g_o$ (or -go) is gap opening penalty, and $g_{ext}$ (-go) is gap extension penalty.
 Sampling specific parameters $s$ (number of samples) and $T$ (measure of sampling diversity) had minimal impact 
-in the refined parameter optimization from sampled RFAM clans, although the parameters can increased alignment scores in lower pairwise sequence identity ranges (Additional file 2: Figures S1 and S2).}
+in the refined parameter optimization from sampled RFAM clans, although the parameters can increase alignment scores in low and medium pairwise sequence identity ranges (Additional file 2: Figures S1 and S2A). We also show that in average the alignment score saturates after 1000 samples of the stochastic backtracking  for $T=0.25$ (Additional file 2: Figure S2B). }
 \carna{} version 1.2.5 was run with parameters ``--write-structure --noLP --time-limit=120000'' ;  \locarna{} version 1.7.13 was run with parameter ``--noLP''; \foldalign{} version 2.1.1 was run with and without parameter ``-global''. Default parameters were used for \texttt{pmcomp}, downloaded from \url{https://www.tbi.univie.ac.at/RNA/PMcomp/} and \texttt{RNApaln} version 2.3.5. The custom implementation of Needleman-Wunsch can be found in the GitHub repository associated to this work as well as the benchmark implementation scripts. \\
 
 \subsection*{Clustering RNA structures with randomised controls}
@@ -1429,8 +1429,8 @@ T=10 s=1 k=0.4 t=0.6 o=1 e=0.05 & 14 & 101 & 1414 & 0.983273039 & 0.996343919 & 
 
 \begin{figure}
  \includegraphics[width=\textwidth]{SF2}
- \caption*{ \textbf{ Figure S2. Impact of sampling of stochastic alignments on combined score.}\\
- We executed \dotaligner{} (default runtime parameters) while varying parameter T (sampling diversity) with 1000 samples (parameter s) on the RFAM binary classification benchmark datasets corresponding to 0-55\% and 56-65\% sequence identity (PID) (3 replicates each). For parameter T equal 0.1 and 0.25 the majority of pairwise alignments are optimized through the sampling procedure (sample increased the combined score). In few cases, T=0.5 also produced an optimized alignment through sampling. 
+ \caption*{ \textbf{ Figure S2. Impact of sampling of stochastic alignments on the alignment score.}\\
+	We executed \dotaligner{} (default runtime parameters) while (\textbf{A}) varying parameter $T$ (sampling diversity) with 1000 samples (parameter $s$) and (\textbf{B}) varying the number of samples with $T=0.25$ on the RFAM binary classification benchmark datasets corresponding to 0-55\% and 56-65\% sequence identity (PID) (3 replicates each). For parameter $T$ equal 0.1 and 0.25 the majority of pairwise alignments are optimized through the sampling procedure (sample increased the alignment score) (\textbf{A}). In few cases, $T$=0.5 also produced an optimized alignment through sampling. In average the alignment score saturates after 1000 samples of the stochastic backtracking for $T=0.25$ (\textbf{B}).
 }
 \end{figure}
 
