@@ -857,7 +857,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%         FIGURE 1       %%%%%%%%%
 \begin{figure}[h!]
-\includegraphics[width=\textwidth]{Fig1}
+% \includegraphics[width=\textwidth]{Fig1}
  \caption {\csentence{Schematic of a pairwise alignment with DotAligner.}
  \textcolor{red}{
   A dynamic  programming matrix is first filled in based on the similarity in sequence 
@@ -881,7 +881,7 @@ Thanks to Michael Hahsler for developing and disseminating a fast DBSCAN R packa
 
 %%%%%%%%%       FIGURE 2       %%%%%%%%%% 
 \begin{figure}[h!]
- \includegraphics[width=\textwidth]{Fig2}
+%  \includegraphics[width=\textwidth]{Fig2}
  \caption {\csentence{  
  \textcolor{red} {
  Comparison of RNA structure alignment quality in function of sequence identity.}  
@@ -900,7 +900,7 @@ the \rnaalifold{} consensus of the computed alignment and the reference \braliba
 
 %%%%%%%%%       FIGURE 3      %%%%%%%%%% 
 \begin{figure}[h!]
- \includegraphics[width=\textwidth]{Fig3}
+%  \includegraphics[width=\textwidth]{Fig3}
  \caption {\csentence{Classification of known RNA structures. }
   \textcolor{red} {
  (\textbf{A}) Receiving Operator Characteristic (ROC) curves measuring the classification
@@ -919,7 +919,7 @@ for the top 4 performing algorithms across 5 ranges of pairwise sequence identit
 
 %%%%%%%%%       FIGURE 4      %%%%%%%%%% 
 \begin{figure}[h!]
- \includegraphics[width=\textwidth]{Fig4}
+%  \includegraphics[width=\textwidth]{Fig4}
  \caption {\csentence{Comparative clustering benchmark of RFAM sequences and their shuffled controls}. Clustering performance metrics of 3 algorithms on 580 reference RFAM 
  structures and their dinucleotide-shuffled controls. (\textbf{A}) Sensitivity vs false positive rate; (\textbf{B}) Qualitative cluster statistics (horizontal dashed line indicate real amount of clusters from unique RFAM families). }
 \end{figure}
@@ -927,7 +927,7 @@ for the top 4 performing algorithms across 5 ranges of pairwise sequence identit
 
 %%%%%%%%%       FIGURE 5      %%%%%%%%%% 
 \begin{figure}[h!]
- \includegraphics[width=\textwidth]{Fig5}
+%  \includegraphics[width=\textwidth]{Fig5}
  \caption {\csentence{ De novo homologous RNA motif identification}. 
  \textcolor{red} {
  (\textbf{A,B}) Reachability plots of OPTICS clustering display the OPTICS-derived ordering of points (x axis) and their distance to the nearest neighbour (y axis). Colours represent significant clusters: (\textbf{A}) Clustering of RFAM benchmarking data indicating the distance to the nearest neighbour,
@@ -1311,9 +1311,11 @@ cat All_ECS_merged_50nt_peaks_renamed.fasta spike-ins.fasta > All_ECS_merged_50n
 %\end{tabular}
 %\end{table}
 
+\newpage
+
 \section*{Additional file 2 --- Supplementary Tables and Figures}
 
-\begin{table}
+\begin{table}[h]
 \caption*{\textbf{Table S1.} Uniqueness and diversity of stochastically sampled RFAM subsets }
 \begin{tabular}{cccccc}
 \hline
@@ -1396,26 +1398,26 @@ Sequences & RNA family & RFAM ID \\
 \hline
 Parameters  & low\_PI rank & high\_PI rank & rank product & low\_PI AUC & high\_PI AUC & AUC  sum  & Combined Time  \\
 \hline
-T=10 s=1 k=0.3 t=0.5 o=1 e=0.05 & 1 & 112 & 112 & 0.983297903 & 0.996178994 & 1.97948 & 0.140273\\
-T=1 s=1 k=0.3 t=0.8 o=1 e=0.05 & 181 & 1 & 181 & 0.959342489 & 0.997188985 & 1.95653 & 0.133496\\
-T=1 s=1 k=0.3 t=0.5 o=1 e=0.05 & 2 & 110 & 220 & 0.983297903 & 0.996178994 & 1.97948 & 0.135262\\
-T=5 s=1 k=0.3 t=0.5 o=1 e=0.05 & 3 & 109 & 327 & 0.983297903 & 0.996178994 & 1.97948 & 0.134188\\
-T=10 s=5 k=0.3 t=0.8 o=1 e=0.05 & 184 & 2 & 368 & 0.959342489 & 0.997188985 & 1.95653 & 0.144565\\
-T=1 s=5 k=0.3 t=0.5 o=1 e=0.05 & 4 & 113 & 452 & 0.983297903 & 0.996178994 & 1.97948 & 0.150288\\
-T=10 s=1 k=0.3 t=0.8 o=1 e=0.05 & 182 & 3 & 546 & 0.959342489 & 0.997188985 & 1.95653 & 0.142137\\
-T=10 s=5 k=0.3 t=0.5 o=1 e=0.05 & 5 & 114 & 570 & 0.983297903 & 0.996178994 & 1.97948 & 0.156738\\
-T=5 s=5 k=0.3 t=0.5 o=1 e=0.05 & 6 & 111 & 666 & 0.983297903 & 0.996178994 & 1.97948 & 0.155101\\
-T=5 s=1 k=0.3 t=0.8 o=1 e=0.05 & 185 & 4 & 740 & 0.959342489 & 0.997188985 & 1.95653 & 0.146729\\
-T=10 s=20 k=0.3 t=0.5 o=1 e=0.05 & 7 & 115 & 805 & 0.983297903 & 0.996178994 & 1.97948 & 0.186257\\
-T=5 s=20 k=0.3 t=0.5 o=1 e=0.05 & 8 & 116 & 928 & 0.983297903 & 0.996178994 & 1.97948 & 0.192388\\
-T=1 s=5 k=0.3 t=0.8 o=1 e=0.05 & 186 & 5 & 930 & 0.959342489 & 0.997188985 & 1.95653 & 0.154183\\
-T=1 s=20 k=0.3 t=0.5 o=1 e=0.05 & 9 & 117 & 1053 & 0.983297903 & 0.996178994 & 1.97948 & 0.210514\\
-T=5 s=5 k=0.3 t=0.8 o=1 e=0.05 & 183 & 6 & 1098 & 0.959342489 & 0.997188985 & 1.95653 & 0.154234\\
-T=10 s=50 k=0.3 t=0.5 o=1 e=0.05 & 10 & 119 & 1190 & 0.983297903 & 0.996178994 & 1.97948 & 0.285647\\
-T=5 s=1 k=0.4 t=0.6 o=1 e=0.05 & 13 & 97 & 1261 & 0.983273039 & 0.996343919 & 1.97962 & 0.133738\\
-T=5 s=50 k=0.3 t=0.5 o=1 e=0.05 & 11 & 118 & 1298 & 0.983297903 & 0.996178994 & 1.97948 & 0.269801\\
-T=10 s=20 k=0.3 t=0.8 o=1 e=0.05 & 187 & 7 & 1309 & 0.959342489 & 0.997188985 & 1.95653 & 0.187293\\
-T=10 s=1 k=0.4 t=0.6 o=1 e=0.05 & 14 & 101 & 1414 & 0.983273039 & 0.996343919 & 1.97962 & 0.144514\\
+k=0.3 t=0.5 o=1 e=0.05 & 1 & 112 & 112 & 0.983297903 & 0.996178994 & 1.97948 & 0.140273\\
+k=0.3 t=0.8 o=1 e=0.05 & 181 & 1 & 181 & 0.959342489 & 0.997188985 & 1.95653 & 0.133496\\
+k=0.3 t=0.5 o=1 e=0.05 & 2 & 110 & 220 & 0.983297903 & 0.996178994 & 1.97948 & 0.135262\\
+k=0.3 t=0.5 o=1 e=0.05 & 3 & 109 & 327 & 0.983297903 & 0.996178994 & 1.97948 & 0.134188\\
+k=0.3 t=0.8 o=1 e=0.05 & 184 & 2 & 368 & 0.959342489 & 0.997188985 & 1.95653 & 0.144565\\
+k=0.3 t=0.5 o=1 e=0.05 & 4 & 113 & 452 & 0.983297903 & 0.996178994 & 1.97948 & 0.150288\\
+k=0.3 t=0.8 o=1 e=0.05 & 182 & 3 & 546 & 0.959342489 & 0.997188985 & 1.95653 & 0.142137\\
+k=0.3 t=0.5 o=1 e=0.05 & 5 & 114 & 570 & 0.983297903 & 0.996178994 & 1.97948 & 0.156738\\
+k=0.3 t=0.5 o=1 e=0.05 & 6 & 111 & 666 & 0.983297903 & 0.996178994 & 1.97948 & 0.155101\\
+k=0.3 t=0.8 o=1 e=0.05 & 185 & 4 & 740 & 0.959342489 & 0.997188985 & 1.95653 & 0.146729\\
+k=0.3 t=0.5 o=1 e=0.05 & 7 & 115 & 805 & 0.983297903 & 0.996178994 & 1.97948 & 0.186257\\
+k=0.3 t=0.5 o=1 e=0.05 & 8 & 116 & 928 & 0.983297903 & 0.996178994 & 1.97948 & 0.192388\\
+k=0.3 t=0.8 o=1 e=0.05 & 186 & 5 & 930 & 0.959342489 & 0.997188985 & 1.95653 & 0.154183\\
+k=0.3 t=0.5 o=1 e=0.05 & 9 & 117 & 1053 & 0.983297903 & 0.996178994 & 1.97948 & 0.210514\\
+k=0.3 t=0.8 o=1 e=0.05 & 183 & 6 & 1098 & 0.959342489 & 0.997188985 & 1.95653 & 0.154234\\
+k=0.3 t=0.5 o=1 e=0.05 & 10 & 119 & 1190 & 0.983297903 & 0.996178994 & 1.97948 & 0.285647\\
+k=0.4 t=0.6 o=1 e=0.05 & 13 & 97 & 1261 & 0.983273039 & 0.996343919 & 1.97962 & 0.133738\\
+k=0.3 t=0.5 o=1 e=0.05 & 11 & 118 & 1298 & 0.983297903 & 0.996178994 & 1.97948 & 0.269801\\
+k=0.3 t=0.8 o=1 e=0.05 & 187 & 7 & 1309 & 0.959342489 & 0.997188985 & 1.95653 & 0.187293\\
+k=0.4 t=0.6 o=1 e=0.05 & 14 & 101 & 1414 & 0.983273039 & 0.996343919 & 1.97962 & 0.144514\\
 \hline
 \end{tabular}}
 \end{table}
