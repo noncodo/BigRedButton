@@ -468,7 +468,8 @@ sequence identity of \bralibase{} reference alignments, }
 RNA structure alignment tools,\textcolor{red}{ particularly below 60\% sequence identity, 
 albeit with better accuracy than sequence-only alignments. 
 Upon closer inspection, \dotaligner{} outperforms the other tools around the 65-80\%
-sequence identity range. }\\
+sequence identity range. As mentioned in the next section, this roughly corresponds to the 
+average pairwise intra-family sequence identity of RFAM clans.}\\
 
 Interestingly, many of the pairwise structure alignments produced Structural 
 Conservation Index (SCI) scores above those from the \bralibase{} reference alignments 
@@ -480,16 +481,14 @@ detection \cite{gruber2008strategies}. With the exception of \dotaligner{},
 the other  RNA structure alignment tools display, on average, SCI values above 0 in the 45-60\% identity range, } 
 suggesting the underlying optimization algorithms tend to overestimate the amount of paired bases in consensus RNA structure predictions.\\
 
-\textcolor{blue}{
-\dotaligner's capacity to produce competitive pairwise alignments is
-illustrated through the 5S-adenosyl methionine (SAM) riboswitch (Rfam family
-RF00634) (Additional file 2: Figure S4). 
-In the Rfam alignment the two representative sequences AM420293\_1 and CP000580\_2\_6 have a sequence identity (PID) of 55\%. 
-The global pairwise sequence alignment has PID=69\% but fails to align many structural features. 
-\dotaligner's pairwise probabilistic string alignment (step 1) creates an alignment of PID=56\%, which is increased to PID=63\% through \dotaligner's sampling. 
-The dot plots in Additional file 2: Figure S4 show how the number of correctly aligned suboptimal base pairs increases through sampling (here 1000 samples and sampling diversity of 0.25). 
-However, the example also shows that the alignment scores do not differ very much between \dotaligner's optimal string alignment (step 1) and the best sample (step 2) (0.58 and 0.60 respectively), 
-whereas sampling increases the runtime. \\ 
+\textcolor{red}{
+\dotaligner's capacity to produce competitive pairwise alignments is demonstrated 
+via a 5S-Adenosyl Methionine (SAM) riboswitch (RFAM clan RF00634, Additional file 2: Figure S1). 
+In the RFAM alignment, the two representative sequences (AM420293\_1 and CP000580\_2\_6) 
+have a sequence identity of 55\%. Pure sequence alignment increases this to 69\%, 
+but fails to align most structural features. 
+\dotaligner's pairwise probabilistic string alignment (step 1) creates an alignment of PID=56\%, which is increased to PID=63\% through \dotaligner's sampling.
+However, the number of correctly aligned suboptimal base pairs increases via \dotaligner{}'s sampling (Additional file 2: Figure S1). In this example, the alignment scores do not differ very much between \dotaligner's optimal string alignment (step 1) and the best sample (step 2): 0.58 and 0.60, respectively. However, the sampling (s=1000 in this example) increased the runtime. \\ 
 }
 
 \subsection*{Fast and accurate classification of RNA structures} 
