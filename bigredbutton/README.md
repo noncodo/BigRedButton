@@ -6,16 +6,19 @@ A local version will soon be developped.
 
 ### From the command line: 
 1. Copy bigredbutton folder contents to working directory
-```cd /path/to/workdir
+```
+cd /path/to/workdir
 cp /path/to/bigredbutton/bigredbutton/* ./
 ```
 
 2. Make sure the launcher script is executable 
-```chmod 755 ./launcher.sh
+```
+chmod 755 ./launcher.sh
 ```
 
 3. Press the Big Red Button
-```./launcher.sh /path/to/sequences.fasta
+```
+./launcher.sh /path/to/sequences.fasta
 ```
 
 ### From the precompiled Docker image 
