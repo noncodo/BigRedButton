@@ -19,10 +19,11 @@ BigRedButton employs the following software dependencies (supported version in p
 
 ## Installation
 ### Local installation
-Once the dependencies have been downloaded, installed and linkes to your enviromental PATH variable, run the following: 
+Once the dependencies have been downloaded, installed and linke to your enviromental PATH variable, run the following: 
 ``` git clone https://github.com/noncodo/BigRedButton.git
 cd BigRedButton/dotaligner
-./configure
+make clean
+./configure --prefix=/opt/DotAligner/
 make
 make install 
 ```
@@ -37,6 +38,7 @@ docker pull noncodo/bigredbutton
 At the core of the pipeline lies DotAligner, a fast pairwise sequence/structure alignment heuristic that considers the ensemble of sub-optimal RNA base pair probabilities for both sequences. DotAligner outperforms most more specialised RNA structure alignment algorithms, particularly within the 65-85% sequence identity range. DotAligner's can segregate structurally distinct RNA families with excellent accuracy.
 
 More information on the usage of DotAligner for pairwise alignments can be found in the ./dotaligner directory.
+
 ## Benchmark data generation
 To assess the performance of BigRedButton and other RNA structure clustering tools, we provide a tool to sample RFAM seed alignments stochastically, while allowing user-provided constraints on sequence composition, sequence length, and sample diversity.
 

@@ -1,4 +1,4 @@
 make clean
-./configure --prefix=/media/data/phd/projects/DotAligner/
+./configure --prefix=/opt/DotAligner/
 make
 make install
