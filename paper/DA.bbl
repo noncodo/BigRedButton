@@ -1,0 +1,1757 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{52}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\textsf{#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem{morris2014rise}
+\begin{barticle}
+\bauthor{\bsnm{Morris}, \binits{K.V.}},
+\bauthor{\bsnm{Mattick}, \binits{J.S.}}:
+\batitle{{The rise of regulatory RNA}}.
+\bjtitle{Nature Reviews Genetics}
+\bvolume{15}(\bissue{6}),
+\bfpage{423}--\blpage{437}
+(\byear{2014})
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem{engreitz2016long}
+\begin{botherref}
+\oauthor{\bsnm{Engreitz}, \binits{J.M.}},
+\oauthor{\bsnm{Ollikainen}, \binits{N.}},
+\oauthor{\bsnm{Guttman}, \binits{M.}}:
+Long non-coding RNAs: spatial amplifiers that control nuclear structure and
+  gene expression.
+Nature Reviews Molecular Cell Biology
+(2016)
+\end{botherref}
+\endbibitem
+
+%%% 3
+\bibitem{rfam12}
+\begin{barticle}
+\bauthor{\bsnm{Nawrocki}, \binits{E.P.}},
+\bauthor{\bsnm{Burge}, \binits{S.W.}},
+\bauthor{\bsnm{Bateman}, \binits{A.}},
+\bauthor{\bsnm{Daub}, \binits{J.}},
+\bauthor{\bsnm{Eberhardt}, \binits{R.Y.}},
+\bauthor{\bsnm{Eddy}, \binits{S.R.}},
+\bauthor{\bsnm{Floden}, \binits{E.W.}},
+\bauthor{\bsnm{Gardner}, \binits{P.P.}},
+\bauthor{\bsnm{Jones}, \binits{T.A.}},
+\bauthor{\bsnm{Tate}, \binits{J.}}, \betal:
+\batitle{Rfam 12.0: updates to the RNA families database}.
+\bjtitle{Nucleic acids research}
+\bvolume{43}(\bissue{D1}),
+\bfpage{130}--\blpage{137}
+(\byear{2015})
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem{eddy2014computational}
+\begin{barticle}
+\bauthor{\bsnm{Eddy}, \binits{S.R.}}:
+\batitle{Computational analysis of conserved RNA secondary structure in
+  transcriptomes and genomes}.
+\bjtitle{Annual review of biophysics}
+\bvolume{43},
+\bfpage{433}--\blpage{456}
+(\byear{2014})
+\end{barticle}
+\endbibitem
+
+%%% 5
+\bibitem{rivas2016statistical}
+\begin{botherref}
+\oauthor{\bsnm{Rivas}, \binits{E.}},
+\oauthor{\bsnm{Clements}, \binits{J.}},
+\oauthor{\bsnm{Eddy}, \binits{S.R.}}:
+A statistical test for conserved RNA structure shows lack of evidence for
+  structure in lncRNAs.
+Nature Methods
+(2016)
+\end{botherref}
+\endbibitem
+
+%%% 6
+\bibitem{smith2013widespread}
+\begin{botherref}
+\oauthor{\bsnm{Smith}, \binits{M.A.}},
+\oauthor{\bsnm{Gesell}, \binits{T.}},
+\oauthor{\bsnm{Stadler}, \binits{P.F.}},
+\oauthor{\bsnm{Mattick}, \binits{J.S.}}:
+{Widespread purifying selection on RNA structure in mammals}.
+Nucleic acids research,
+596
+(2013)
+\end{botherref}
+\endbibitem
+
+%%% 7
+\bibitem{spitale2015structural}
+\begin{barticle}
+\bauthor{\bsnm{Spitale}, \binits{R.C.}},
+\bauthor{\bsnm{Flynn}, \binits{R.A.}},
+\bauthor{\bsnm{Zhang}, \binits{Q.C.}},
+\bauthor{\bsnm{Crisalli}, \binits{P.}},
+\bauthor{\bsnm{Lee}, \binits{B.}},
+\bauthor{\bsnm{Jung}, \binits{J.-W.}},
+\bauthor{\bsnm{Kuchelmeister}, \binits{H.Y.}},
+\bauthor{\bsnm{Batista}, \binits{P.J.}},
+\bauthor{\bsnm{Torre}, \binits{E.A.}},
+\bauthor{\bsnm{Kool}, \binits{E.T.}}, \betal:
+\batitle{{Structural imprints in vivo decode RNA regulatory mechanisms}}.
+\bjtitle{Nature}
+\bvolume{519}(\bissue{7544}),
+\bfpage{486}--\blpage{490}
+(\byear{2015})
+\end{barticle}
+\endbibitem
+
+%%% 8
+\bibitem{lu2016rna}
+\begin{barticle}
+\bauthor{\bsnm{Lu}, \binits{Z.}},
+\bauthor{\bsnm{Zhang}, \binits{Q.C.}},
+\bauthor{\bsnm{Lee}, \binits{B.}},
+\bauthor{\bsnm{Flynn}, \binits{R.A.}},
+\bauthor{\bsnm{Smith}, \binits{M.A.}},
+\bauthor{\bsnm{Robinson}, \binits{J.T.}},
+\bauthor{\bsnm{Davidovich}, \binits{C.}},
+\bauthor{\bsnm{Gooding}, \binits{A.R.}},
+\bauthor{\bsnm{Goodrich}, \binits{K.J.}},
+\bauthor{\bsnm{Mattick}, \binits{J.S.}}, \betal:
+\batitle{RNA duplex map in living cells reveals higher-order transcriptome
+  structure}.
+\bjtitle{Cell}
+\bvolume{165}(\bissue{5}),
+\bfpage{1267}--\blpage{1279}
+(\byear{2016})
+\end{barticle}
+\endbibitem
+
+%%% 9
+\bibitem{zappulla2006rna}
+\begin{bchapter}
+\bauthor{\bsnm{Zappulla}, \binits{D.}},
+\bauthor{\bsnm{Cech}, \binits{T.}}:
+\bctitle{RNA as a flexible scaffold for proteins: yeast telomerase and beyond}.
+In: \bbtitle{Cold Spring Harbor Symposia on Quantitative Biology},
+vol. \bseriesno{71},
+pp. \bfpage{217}--\blpage{224}
+(\byear{2006}).
+\bcomment{Cold Spring Harbor Laboratory Press}
+\end{bchapter}
+\endbibitem
+
+%%% 10
+\bibitem{hogg2008structured}
+\begin{barticle}
+\bauthor{\bsnm{Hogg}, \binits{J.R.}},
+\bauthor{\bsnm{Collins}, \binits{K.}}:
+\batitle{{Structured non-coding RNAs and the RNP Renaissance}}.
+\bjtitle{Current opinion in chemical biology}
+\bvolume{12}(\bissue{6}),
+\bfpage{684}--\blpage{689}
+(\byear{2008})
+\end{barticle}
+\endbibitem
+
+%%% 11
+\bibitem{rinn2012genome}
+\begin{barticle}
+\bauthor{\bsnm{Rinn}, \binits{J.L.}},
+\bauthor{\bsnm{Chang}, \binits{H.Y.}}:
+\batitle{Genome regulation by long noncoding RNAs}.
+\bjtitle{Annual review of biochemistry}
+\bvolume{81},
+\bfpage{145}--\blpage{166}
+(\byear{2012})
+\end{barticle}
+\endbibitem
+
+%%% 12
+\bibitem{mercer2013structure}
+\begin{barticle}
+\bauthor{\bsnm{Mercer}, \binits{T.R.}},
+\bauthor{\bsnm{Mattick}, \binits{J.S.}}:
+\batitle{Structure and function of long noncoding RNAs in epigenetic
+  regulation}.
+\bjtitle{Nature structural \&amp; molecular biology}
+\bvolume{20}(\bissue{3}),
+\bfpage{300}--\blpage{307}
+(\byear{2013})
+\end{barticle}
+\endbibitem
+
+%%% 13
+\bibitem{chujo2016architectural}
+\begin{barticle}
+\bauthor{\bsnm{Chujo}, \binits{T.}},
+\bauthor{\bsnm{Yamazaki}, \binits{T.}},
+\bauthor{\bsnm{Hirose}, \binits{T.}}:
+\batitle{Architectural RNAs (arcRNAs): A class of long noncoding RNAs that
+  function as the scaffold of nuclear bodies}.
+\bjtitle{Biochimica et Biophysica Acta (BBA)-Gene Regulatory Mechanisms}
+\bvolume{1859}(\bissue{1}),
+\bfpage{139}--\blpage{146}
+(\byear{2016})
+\end{barticle}
+\endbibitem
+
+%%% 14
+\bibitem{blythe2016ins}
+\begin{barticle}
+\bauthor{\bsnm{Blythe}, \binits{A.J.}},
+\bauthor{\bsnm{Fox}, \binits{A.H.}},
+\bauthor{\bsnm{Bond}, \binits{C.S.}}:
+\batitle{The ins and outs of lncRNA structure: How, why and what comes next?}
+\bjtitle{Biochimica et Biophysica Acta (BBA)-Gene Regulatory Mechanisms}
+\bvolume{1859}(\bissue{1}),
+\bfpage{46}--\blpage{58}
+(\byear{2016})
+\end{barticle}
+\endbibitem
+
+%%% 15
+\bibitem{kapusta2013transposable}
+\begin{barticle}
+\bauthor{\bsnm{Kapusta}, \binits{A.}},
+\bauthor{\bsnm{Kronenberg}, \binits{Z.}},
+\bauthor{\bsnm{Lynch}, \binits{V.J.}},
+\bauthor{\bsnm{Zhuo}, \binits{X.}},
+\bauthor{\bsnm{Ramsay}, \binits{L.}},
+\bauthor{\bsnm{Bourque}, \binits{G.}},
+\bauthor{\bsnm{Yandell}, \binits{M.}},
+\bauthor{\bsnm{Feschotte}, \binits{C.}}:
+\batitle{Transposable elements are major contributors to the origin,
+  diversification, and regulation of vertebrate long noncoding RNAs}.
+\bjtitle{PLoS genetics}
+\bvolume{9}(\bissue{4}),
+\bfpage{1003470}
+(\byear{2013})
+\end{barticle}
+\endbibitem
+
+%%% 16
+\bibitem{hezroni2015principles}
+\begin{barticle}
+\bauthor{\bsnm{Hezroni}, \binits{H.}},
+\bauthor{\bsnm{Koppstein}, \binits{D.}},
+\bauthor{\bsnm{Schwartz}, \binits{M.G.}},
+\bauthor{\bsnm{Avrutin}, \binits{A.}},
+\bauthor{\bsnm{Bartel}, \binits{D.P.}},
+\bauthor{\bsnm{Ulitsky}, \binits{I.}}:
+\batitle{Principles of long noncoding RNA evolution derived from direct
+  comparison of transcriptomes in 17 species}.
+\bjtitle{Cell reports}
+\bvolume{11}(\bissue{7}),
+\bfpage{1110}--\blpage{1122}
+(\byear{2015})
+\end{barticle}
+\endbibitem
+
+%%% 17
+\bibitem{kunarso2010transposable}
+\begin{barticle}
+\bauthor{\bsnm{Kunarso}, \binits{G.}},
+\bauthor{\bsnm{Chia}, \binits{N.-Y.}},
+\bauthor{\bsnm{Jeyakani}, \binits{J.}},
+\bauthor{\bsnm{Hwang}, \binits{C.}},
+\bauthor{\bsnm{Lu}, \binits{X.}},
+\bauthor{\bsnm{Chan}, \binits{Y.-S.}},
+\bauthor{\bsnm{Ng}, \binits{H.-H.}},
+\bauthor{\bsnm{Bourque}, \binits{G.}}:
+\batitle{Transposable elements have rewired the core regulatory network of
+  human embryonic stem cells}.
+\bjtitle{Nature genetics}
+\bvolume{42}(\bissue{7}),
+\bfpage{631}--\blpage{634}
+(\byear{2010})
+\end{barticle}
+\endbibitem
+
+%%% 18
+\bibitem{kelley2012transposable}
+\begin{barticle}
+\bauthor{\bsnm{Kelley}, \binits{D.}},
+\bauthor{\bsnm{Rinn}, \binits{J.}}:
+\batitle{Transposable elements reveal a stem cell-specific class of long
+  noncoding RNAs}.
+\bjtitle{Genome biology}
+\bvolume{13}(\bissue{11}),
+\bfpage{107}
+(\byear{2012})
+\end{barticle}
+\endbibitem
+
+%%% 19
+\bibitem{Gardner15860779}
+\begin{barticle}
+\bauthor{\bsnm{Gardner}, \binits{P.P.}},
+\bauthor{\bsnm{Wilm}, \binits{A.}},
+\bauthor{\bsnm{Washietl}, \binits{S.}}:
+\batitle{{A benchmark of multiple sequence alignment programs upon structural
+  RNAs.}}
+\bjtitle{Nucleic Acids Res}
+\bvolume{33}(\bissue{8}),
+\bfpage{2433}--\blpage{2439}
+(\byear{2005}).
+doi:\doiurl{10.1093/nar/gki541}
+\end{barticle}
+\endbibitem
+
+%%% 20
+\bibitem{sankoff85}
+\begin{barticle}
+\bauthor{\bsnm{Sankoff}, \binits{D.}}:
+\batitle{{Simultaneous solution of the RNA folding, alignment and protosequence
+  problems.}}
+\bjtitle{SIAM J. Appl. Math.}
+\bvolume{45},
+\bfpage{810}--\blpage{825}
+(\byear{1985})
+\end{barticle}
+\endbibitem
+
+%%% 21
+\bibitem{Havgaard17937495}
+\begin{barticle}
+\bauthor{\bsnm{Havgaard}, \binits{J.H.}},
+\bauthor{\bsnm{Torarinsson}, \binits{E.}},
+\bauthor{\bsnm{Gorodkin}, \binits{J.}}:
+\batitle{Fast pairwise structural {RNA} alignments by pruning of the dynamical
+  programming matrix.}
+\bjtitle{PLoS Comput Biol}
+\bvolume{3}(\bissue{10}),
+\bfpage{1896}--\blpage{1908}
+(\byear{2007}).
+doi:\doiurl{10.1371/journal.pcbi.0030193}
+\end{barticle}
+\endbibitem
+
+%%% 22
+\bibitem{Sundfeld26704597}
+\begin{barticle}
+\bauthor{\bsnm{Sundfeld}, \binits{D.}},
+\bauthor{\bsnm{Havgaard}, \binits{J.H.}},
+\bauthor{\bparticle{de} \bsnm{Melo}, \binits{A.C.}},
+\bauthor{\bsnm{Gorodkin}, \binits{J.}}:
+\batitle{Foldalign 2.5: multithreaded implementation for pairwise structural
+  {RNA} alignment.}
+\bjtitle{Bioinformatics}
+\bvolume{32}(\bissue{8}),
+\bfpage{1238}--\blpage{1240}
+(\byear{2016}).
+doi:\doiurl{10.1093/bioinformatics/btv748}
+\end{barticle}
+\endbibitem
+
+%%% 23
+\bibitem{McCaskill:1990}
+\begin{barticle}
+\bauthor{\bsnm{McCaskill}, \binits{J.S.}}:
+\batitle{{The equilibrium partition function and base pair binding
+  probabilities for RNA secondary structure}}.
+\bjtitle{Biopolymers}
+\bvolume{29}(\bissue{6-7}),
+\bfpage{1105}--\blpage{1119}
+(\byear{1990}).
+doi:\doiurl{10.1002/bip.360290621}
+\end{barticle}
+\endbibitem
+
+%%% 24
+\bibitem{Hofacker15073017}
+\begin{barticle}
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}},
+\bauthor{\bsnm{Bernhart}, \binits{S.H.}},
+\bauthor{\bsnm{Stadler}, \binits{P.F.}}:
+\batitle{{Alignment of RNA base pairing probability matrices.}}
+\bjtitle{Bioinformatics}
+\bvolume{20}(\bissue{14}),
+\bfpage{2222}--\blpage{2227}
+(\byear{2004}).
+doi:\doiurl{10.1093/bioinformatics/bth229}
+\end{barticle}
+\endbibitem
+
+%%% 25
+\bibitem{Will17432929}
+\begin{barticle}
+\bauthor{\bsnm{Will}, \binits{S.}},
+\bauthor{\bsnm{Reiche}, \binits{K.}},
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}},
+\bauthor{\bsnm{Stadler}, \binits{P.F.}},
+\bauthor{\bsnm{Backofen}, \binits{R.}}:
+\batitle{{Inferring noncoding RNA families and classes by means of genome-scale
+  structure-based clustering.}}
+\bjtitle{PLoS Comput Biol}
+\bvolume{3}(\bissue{4}),
+\bfpage{65}
+(\byear{2007}).
+doi:\doiurl{10.1371/journal.pcbi.0030065}
+\end{barticle}
+\endbibitem
+
+%%% 26
+\bibitem{Roshan16954142}
+\begin{barticle}
+\bauthor{\bsnm{Roshan}, \binits{U.}},
+\bauthor{\bsnm{Livesay}, \binits{D.R.}}:
+\batitle{Probalign: multiple sequence alignment using partition function
+  posterior probabilities.}
+\bjtitle{Bioinformatics}
+\bvolume{22}(\bissue{22}),
+\bfpage{2715}--\blpage{2721}
+(\byear{2006}).
+doi:\doiurl{10.1093/bioinformatics/btl472}
+\end{barticle}
+\endbibitem
+
+%%% 27
+\bibitem{Lorenz22115189}
+\begin{barticle}
+\bauthor{\bsnm{Lorenz}, \binits{R.}},
+\bauthor{\bsnm{Bernhart}, \binits{S.H.}},
+\bauthor{\bsnm{Honer Zu~Siederdissen}, \binits{C.}},
+\bauthor{\bsnm{Tafer}, \binits{H.}},
+\bauthor{\bsnm{Flamm}, \binits{C.}},
+\bauthor{\bsnm{Stadler}, \binits{P.F.}},
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}}:
+\batitle{{ViennaRNA} Package 2.0.}
+\bjtitle{Algorithms Mol Biol}
+\bvolume{6},
+\bfpage{26}
+(\byear{2011}).
+doi:\doiurl{10.1186/1748-7188-6-26}
+\end{barticle}
+\endbibitem
+
+%%% 28
+\bibitem{Dalli16613908}
+\begin{barticle}
+\bauthor{\bsnm{Dalli}, \binits{D.}},
+\bauthor{\bsnm{Wilm}, \binits{A.}},
+\bauthor{\bsnm{Mainz}, \binits{I.}},
+\bauthor{\bsnm{Steger}, \binits{G.}}:
+\batitle{{STRAL}: progressive alignment of non-coding {RNA} using base pairing
+  probability vectors in quadratic time.}
+\bjtitle{Bioinformatics}
+\bvolume{22}(\bissue{13}),
+\bfpage{1593}--\blpage{1599}
+(\byear{2006}).
+doi:\doiurl{10.1093/bioinformatics/btl142}
+\end{barticle}
+\endbibitem
+
+%%% 29
+\bibitem{Palu2010}
+\begin{bchapter}
+\bauthor{\bsnm{Pal\`{u}}, \binits{A.}},
+\bauthor{\bsnm{M\"{o}hl}, \binits{M.}},
+\bauthor{\bsnm{Will}, \binits{S.}}:
+\bctitle{{A Propagator for Maximum Weight String Alignment with Arbitrary
+  Pairwise Dependencies}}.
+In: \beditor{\bsnm{Cohen}, \binits{D.}} (ed.)
+\bbtitle{Principles and Practice of Constraint Programming -- CP 2010},
+\bedition{Lecture no} edn.,
+pp. \bfpage{167}--\blpage{175}
+(\byear{2010}).
+doi:\doiurl{10.1007/978-3-642-15396-9\_16}.
+\burl{http://dx.doi.org/10.1007/978-3-642-15396-9\_16}
+\end{bchapter}
+\endbibitem
+
+%%% 30
+\bibitem{Sorescu2012}
+\begin{barticle}
+\bauthor{\bsnm{Sorescu}, \binits{D.A.}},
+\bauthor{\bsnm{M\"{o}hl}, \binits{M.}},
+\bauthor{\bsnm{Mann}, \binits{M.}},
+\bauthor{\bsnm{Backofen}, \binits{R.}},
+\bauthor{\bsnm{Will}, \binits{S.}}:
+\batitle{{CARNA--alignment of RNA structure ensembles.}}
+\bjtitle{Nucleic acids research}
+\bvolume{40}(\bissue{Web Server issue}),
+\bfpage{49}--\blpage{53}
+(\byear{2012}).
+doi:\doiurl{10.1093/nar/gks491}
+\end{barticle}
+\endbibitem
+
+%%% 31
+\bibitem{Middleton25234928}
+\begin{barticle}
+\bauthor{\bsnm{Middleton}, \binits{S.A.}},
+\bauthor{\bsnm{Kim}, \binits{J.}}:
+\batitle{NoFold: {RNA} structure clustering without folding or alignment.}
+\bjtitle{RNA}
+\bvolume{20}(\bissue{11}),
+\bfpage{1671}--\blpage{1683}
+(\byear{2014}).
+doi:\doiurl{10.1261/rna.041913.113}
+\end{barticle}
+\endbibitem
+
+%%% 32
+\bibitem{Heyne22689765}
+\begin{barticle}
+\bauthor{\bsnm{Heyne}, \binits{S.}},
+\bauthor{\bsnm{Costa}, \binits{F.}},
+\bauthor{\bsnm{Rose}, \binits{D.}},
+\bauthor{\bsnm{Backofen}, \binits{R.}}:
+\batitle{{GraphClust: alignment-free structural clustering of local RNA
+  secondary structures.}}
+\bjtitle{Bioinformatics}
+\bvolume{28}(\bissue{12}),
+\bfpage{224}--\blpage{32}
+(\byear{2012}).
+doi:\doiurl{10.1093/bioinformatics/bts224}
+\end{barticle}
+\endbibitem
+
+%%% 33
+\bibitem{Miladi28334186}
+\begin{barticle}
+\bauthor{\bsnm{Miladi}, \binits{M.}},
+\bauthor{\bsnm{Junge}, \binits{A.}},
+\bauthor{\bsnm{Costa}, \binits{F.}},
+\bauthor{\bsnm{Seemann}, \binits{S.E.}},
+\bauthor{\bsnm{Hull~Havgaard}, \binits{J.}},
+\bauthor{\bsnm{Gorodkin}, \binits{J.}},
+\bauthor{\bsnm{Backofen}, \binits{R.}}:
+\batitle{{RNAscClust}: clustering {RNA} sequences using structure conservation
+  and graph based motifs.}
+\bjtitle{Bioinformatics}
+(\byear{2017}).
+doi:\doiurl{10.1093/bioinformatics/btx114}
+\end{barticle}
+\endbibitem
+
+%%% 34
+\bibitem{Muckstein12385998}
+\begin{barticle}
+\bauthor{\bsnm{Muckstein}, \binits{U.}},
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}},
+\bauthor{\bsnm{Stadler}, \binits{P.F.}}:
+\batitle{Stochastic pairwise alignments.}
+\bjtitle{Bioinformatics}
+\bvolume{18 Suppl 2},
+\bfpage{153}--\blpage{60}
+(\byear{2002})
+\end{barticle}
+\endbibitem
+
+%%% 35
+\bibitem{wilm2006enhanced}
+\begin{barticle}
+\bauthor{\bsnm{Wilm}, \binits{A.}},
+\bauthor{\bsnm{Mainz}, \binits{I.}},
+\bauthor{\bsnm{Steger}, \binits{G.}}:
+\batitle{An enhanced RNA alignment benchmark for sequence alignment programs}.
+\bjtitle{Algorithms for molecular biology}
+\bvolume{1}(\bissue{1}),
+\bfpage{1}
+(\byear{2006})
+\end{barticle}
+\endbibitem
+
+%%% 36
+\bibitem{havgaard2007fast}
+\begin{barticle}
+\bauthor{\bsnm{Havgaard}, \binits{J.H.}},
+\bauthor{\bsnm{Torarinsson}, \binits{E.}},
+\bauthor{\bsnm{Gorodkin}, \binits{J.}}:
+\batitle{Fast pairwise structural RNA alignments by pruning of the dynamical
+  programming matrix}.
+\bjtitle{PLoS Comput Biol}
+\bvolume{3}(\bissue{10}),
+\bfpage{193}
+(\byear{2007})
+\end{barticle}
+\endbibitem
+
+%%% 37
+\bibitem{sundfeld2015foldalign}
+\begin{botherref}
+\oauthor{\bsnm{Sundfeld}, \binits{D.}},
+\oauthor{\bsnm{Havgaard}, \binits{J.H.}},
+\oauthor{\bparticle{de} \bsnm{Melo}, \binits{A.C.}},
+\oauthor{\bsnm{Gorodkin}, \binits{J.}}:
+Foldalign 2.5: multithreaded implementation for pairwise structural RNA
+  alignment.
+Bioinformatics,
+748
+(2015)
+\end{botherref}
+\endbibitem
+
+%%% 38
+\bibitem{washietl2005fast}
+\begin{barticle}
+\bauthor{\bsnm{Washietl}, \binits{S.}},
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}},
+\bauthor{\bsnm{Stadler}, \binits{P.F.}}:
+\batitle{{Fast and reliable prediction of noncoding RNAs}}.
+\bjtitle{Proceedings of the National Academy of Sciences of the United States
+  of America}
+\bvolume{102}(\bissue{7}),
+\bfpage{2454}--\blpage{2459}
+(\byear{2005})
+\end{barticle}
+\endbibitem
+
+%%% 39
+\bibitem{gruber2008strategies}
+\begin{barticle}
+\bauthor{\bsnm{Gruber}, \binits{A.R.}},
+\bauthor{\bsnm{Bernhart}, \binits{S.H.}},
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}},
+\bauthor{\bsnm{Washietl}, \binits{S.}}:
+\batitle{Strategies for measuring evolutionary conservation of RNA secondary
+  structures}.
+\bjtitle{BMC bioinformatics}
+\bvolume{9}(\bissue{1}),
+\bfpage{122}
+(\byear{2008})
+\end{barticle}
+\endbibitem
+
+%%% 40
+\bibitem{suzuki2006pvclust}
+\begin{barticle}
+\bauthor{\bsnm{Suzuki}, \binits{R.}},
+\bauthor{\bsnm{Shimodaira}, \binits{H.}}:
+\batitle{Pvclust: an R package for assessing the uncertainty in hierarchical
+  clustering}.
+\bjtitle{Bioinformatics}
+\bvolume{22}(\bissue{12}),
+\bfpage{1540}--\blpage{1542}
+(\byear{2006})
+\end{barticle}
+\endbibitem
+
+%%% 41
+\bibitem{ankerst99ordering}
+\begin{bchapter}
+\bauthor{\bsnm{Ankerst}, \binits{M.}},
+\bauthor{\bsnm{Breunig}, \binits{M.}},
+\bauthor{\bsnm{Kriegel}, \binits{H.}}, \betal:
+\bctitle{Ordering points to identify the clustering structure}.
+In: \bbtitle{Proc. ACM SIGMOD},
+vol. \bseriesno{99}
+(\byear{1999})
+\end{bchapter}
+\endbibitem
+
+%%% 42
+\bibitem{ester1996density}
+\begin{bchapter}
+\bauthor{\bsnm{Ester}, \binits{M.}},
+\bauthor{\bsnm{Kriegel}, \binits{H.-P.}},
+\bauthor{\bsnm{Sander}, \binits{J.}},
+\bauthor{\bsnm{Xu}, \binits{X.}}, \betal:
+\bctitle{A density-based algorithm for discovering clusters in large spatial
+  databases with noise.}
+In: \bbtitle{Kdd},
+vol. \bseriesno{96},
+pp. \bfpage{226}--\blpage{231}
+(\byear{1996})
+\end{bchapter}
+\endbibitem
+
+%%% 43
+\bibitem{van2016robust}
+\begin{barticle}
+\bauthor{\bsnm{Van~Nostrand}, \binits{E.L.}},
+\bauthor{\bsnm{Pratt}, \binits{G.A.}},
+\bauthor{\bsnm{Shishkin}, \binits{A.A.}},
+\bauthor{\bsnm{Gelboin-Burkhart}, \binits{C.}},
+\bauthor{\bsnm{Fang}, \binits{M.Y.}},
+\bauthor{\bsnm{Sundararaman}, \binits{B.}},
+\bauthor{\bsnm{Blue}, \binits{S.M.}},
+\bauthor{\bsnm{Nguyen}, \binits{T.B.}},
+\bauthor{\bsnm{Surka}, \binits{C.}},
+\bauthor{\bsnm{Elkins}, \binits{K.}}, \betal:
+\batitle{Robust transcriptome-wide discovery of RNA-binding protein binding
+  sites with enhanced CLIP (eCLIP)}.
+\bjtitle{Nature methods}
+\bvolume{13}(\bissue{6}),
+\bfpage{508}--\blpage{514}
+(\byear{2016})
+\end{barticle}
+\endbibitem
+
+%%% 44
+\bibitem{iyer2015landscape}
+\begin{barticle}
+\bauthor{\bsnm{Iyer}, \binits{M.K.}},
+\bauthor{\bsnm{Niknafs}, \binits{Y.S.}},
+\bauthor{\bsnm{Malik}, \binits{R.}},
+\bauthor{\bsnm{Singhal}, \binits{U.}},
+\bauthor{\bsnm{Sahu}, \binits{A.}},
+\bauthor{\bsnm{Hosono}, \binits{Y.}},
+\bauthor{\bsnm{Barrette}, \binits{T.R.}},
+\bauthor{\bsnm{Prensner}, \binits{J.R.}},
+\bauthor{\bsnm{Evans}, \binits{J.R.}},
+\bauthor{\bsnm{Zhao}, \binits{S.}}, \betal:
+\batitle{The landscape of long noncoding RNAs in the human transcriptome}.
+\bjtitle{Nature genetics}
+\bvolume{47}(\bissue{3}),
+\bfpage{199}--\blpage{208}
+(\byear{2015})
+\end{barticle}
+\endbibitem
+
+%%% 45
+\bibitem{gong2011lncrnas}
+\begin{barticle}
+\bauthor{\bsnm{Gong}, \binits{C.}},
+\bauthor{\bsnm{Maquat}, \binits{L.E.}}:
+\batitle{LncRNAs transactivate Staufen1-mediated mRNA decay by duplexing with
+  3'UTRs via Alu elements}.
+\bjtitle{Nature}
+\bvolume{470}(\bissue{7333}),
+\bfpage{284}
+(\byear{2011})
+\end{barticle}
+\endbibitem
+
+%%% 46
+\bibitem{seemann2017identification}
+\begin{botherref}
+\oauthor{\bsnm{Seemann}, \binits{S.E.}},
+\oauthor{\bsnm{Mirza}, \binits{A.H.}},
+\oauthor{\bsnm{Hansen}, \binits{C.}},
+\oauthor{\bsnm{Bang-Berthelsen}, \binits{C.H.}},
+\oauthor{\bsnm{Garde}, \binits{C.}},
+\oauthor{\bsnm{Christensen-Dalsgaard}, \binits{M.}},
+\oauthor{\bsnm{Torarinsson}, \binits{E.}},
+\oauthor{\bsnm{Yao}, \binits{Z.}},
+\oauthor{\bsnm{Workman}, \binits{C.T.}},
+\oauthor{\bsnm{Pociot}, \binits{F.}}, et al.:
+The identification and functional annotation of RNA structures conserved in
+  vertebrates.
+Genome Research,
+208652
+(2017)
+\end{botherref}
+\endbibitem
+
+%%% 47
+\bibitem{will2012locarna}
+\begin{barticle}
+\bauthor{\bsnm{Will}, \binits{S.}},
+\bauthor{\bsnm{Joshi}, \binits{T.}},
+\bauthor{\bsnm{Hofacker}, \binits{I.L.}},
+\bauthor{\bsnm{Stadler}, \binits{P.F.}},
+\bauthor{\bsnm{Backofen}, \binits{R.}}:
+\batitle{LocARNA-P: accurate boundary prediction and improved detection of
+  structural RNAs}.
+\bjtitle{Rna}
+\bvolume{18}(\bissue{5}),
+\bfpage{900}--\blpage{914}
+(\byear{2012})
+\end{barticle}
+\endbibitem
+
+%%% 48
+\bibitem{robin2011proc}
+\begin{barticle}
+\bauthor{\bsnm{Robin}, \binits{X.}},
+\bauthor{\bsnm{Turck}, \binits{N.}},
+\bauthor{\bsnm{Hainard}, \binits{A.}},
+\bauthor{\bsnm{Tiberti}, \binits{N.}},
+\bauthor{\bsnm{Lisacek}, \binits{F.}},
+\bauthor{\bsnm{Sanchez}, \binits{J.-C.}},
+\bauthor{\bsnm{M{\"u}ller}, \binits{M.}}:
+\batitle{pROC: an open-source package for R and S+ to analyze and compare ROC
+  curves}.
+\bjtitle{BMC bioinformatics}
+\bvolume{12}(\bissue{1}),
+\bfpage{1}
+(\byear{2011})
+\end{barticle}
+\endbibitem
+
+%%% 49
+\bibitem{nawrocki2013infernal}
+\begin{barticle}
+\bauthor{\bsnm{Nawrocki}, \binits{E.P.}},
+\bauthor{\bsnm{Eddy}, \binits{S.R.}}:
+\batitle{Infernal 1.1: 100-fold faster RNA homology searches}.
+\bjtitle{Bioinformatics}
+\bvolume{29}(\bissue{22}),
+\bfpage{2933}--\blpage{2935}
+(\byear{2013})
+\end{barticle}
+\endbibitem
+
+%%% 50
+\bibitem{Gotoh7166760}
+\begin{barticle}
+\bauthor{\bsnm{Gotoh}, \binits{O.}}:
+\batitle{An improved algorithm for matching biological sequences.}
+\bjtitle{J Mol Biol}
+\bvolume{162}(\bissue{3}),
+\bfpage{705}--\blpage{708}
+(\byear{1982})
+\end{barticle}
+\endbibitem
+
+%%% 51
+\bibitem{Klein14499004}
+\begin{barticle}
+\bauthor{\bsnm{Klein}, \binits{R.J.}},
+\bauthor{\bsnm{Eddy}, \binits{S.R.}}:
+\batitle{{RSEARCH}: finding homologs of single structured {RNA} sequences.}
+\bjtitle{BMC Bioinformatics}
+\bvolume{4},
+\bfpage{44}
+(\byear{2003}).
+doi:\doiurl{10.1186/1471-2105-4-44}
+\end{barticle}
+\endbibitem
+
+%%% 52
+\bibitem{smit2010repeatmodeler}
+\begin{botherref}
+\oauthor{\bsnm{Smit}, \binits{A.}},
+\oauthor{\bsnm{Hubley}, \binits{R.}}:
+RepeatModeler Open-1.0.
+Repeat Masker Website
+(2010)
+\end{botherref}
+\endbibitem
+
+\end{thebibliography}
+
+\newcommand{\BMCxmlcomment}[1]{}
+
+\BMCxmlcomment{
+
+<refgrp>
+
+<bibl id="B1">
+  <title><p>{The rise of regulatory RNA}</p></title>
+  <aug>
+    <au><snm>Morris</snm><fnm>KV</fnm></au>
+    <au><snm>Mattick</snm><fnm>JS</fnm></au>
+  </aug>
+  <source>Nature Reviews Genetics</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2014</pubdate>
+  <volume>15</volume>
+  <issue>6</issue>
+  <fpage>423</fpage>
+  <lpage>-437</lpage>
+</bibl>
+
+<bibl id="B2">
+  <title><p>Long non-coding RNAs: spatial amplifiers that control nuclear
+  structure and gene expression</p></title>
+  <aug>
+    <au><snm>Engreitz</snm><fnm>JM</fnm></au>
+    <au><snm>Ollikainen</snm><fnm>N</fnm></au>
+    <au><snm>Guttman</snm><fnm>M</fnm></au>
+  </aug>
+  <source>Nature Reviews Molecular Cell Biology</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2016</pubdate>
+</bibl>
+
+<bibl id="B3">
+  <title><p>Rfam 12.0: updates to the RNA families database</p></title>
+  <aug>
+    <au><snm>Nawrocki</snm><fnm>EP</fnm></au>
+    <au><snm>Burge</snm><fnm>SW</fnm></au>
+    <au><snm>Bateman</snm><fnm>A</fnm></au>
+    <au><snm>Daub</snm><fnm>J</fnm></au>
+    <au><snm>Eberhardt</snm><fnm>RY</fnm></au>
+    <au><snm>Eddy</snm><fnm>SR</fnm></au>
+    <au><snm>Floden</snm><fnm>EW</fnm></au>
+    <au><snm>Gardner</snm><fnm>PP</fnm></au>
+    <au><snm>Jones</snm><fnm>TA</fnm></au>
+    <au><snm>Tate</snm><fnm>J</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Nucleic acids research</source>
+  <publisher>Oxford University Press</publisher>
+  <pubdate>2015</pubdate>
+  <volume>43</volume>
+  <issue>D1</issue>
+  <fpage>D130</fpage>
+  <lpage>-D137</lpage>
+</bibl>
+
+<bibl id="B4">
+  <title><p>Computational analysis of conserved RNA secondary structure in
+  transcriptomes and genomes</p></title>
+  <aug>
+    <au><snm>Eddy</snm><fnm>SR</fnm></au>
+  </aug>
+  <source>Annual review of biophysics</source>
+  <publisher>Annual Reviews</publisher>
+  <pubdate>2014</pubdate>
+  <volume>43</volume>
+  <fpage>433</fpage>
+  <lpage>-456</lpage>
+</bibl>
+
+<bibl id="B5">
+  <title><p>A statistical test for conserved RNA structure shows lack of
+  evidence for structure in lncRNAs</p></title>
+  <aug>
+    <au><snm>Rivas</snm><fnm>E</fnm></au>
+    <au><snm>Clements</snm><fnm>J</fnm></au>
+    <au><snm>Eddy</snm><fnm>SR</fnm></au>
+  </aug>
+  <source>Nature Methods</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2016</pubdate>
+</bibl>
+
+<bibl id="B6">
+  <title><p>{Widespread purifying selection on RNA structure in
+  mammals}</p></title>
+  <aug>
+    <au><snm>Smith</snm><fnm>MA</fnm></au>
+    <au><snm>Gesell</snm><fnm>T</fnm></au>
+    <au><snm>Stadler</snm><fnm>PF</fnm></au>
+    <au><snm>Mattick</snm><fnm>JS</fnm></au>
+  </aug>
+  <source>Nucleic acids research</source>
+  <publisher>Oxford Univ Press</publisher>
+  <pubdate>2013</pubdate>
+  <fpage>gkt596</fpage>
+</bibl>
+
+<bibl id="B7">
+  <title><p>{Structural imprints in vivo decode RNA regulatory
+  mechanisms}</p></title>
+  <aug>
+    <au><snm>Spitale</snm><fnm>RC</fnm></au>
+    <au><snm>Flynn</snm><fnm>RA</fnm></au>
+    <au><snm>Zhang</snm><fnm>QC</fnm></au>
+    <au><snm>Crisalli</snm><fnm>P</fnm></au>
+    <au><snm>Lee</snm><fnm>B</fnm></au>
+    <au><snm>Jung</snm><fnm>JW</fnm></au>
+    <au><snm>Kuchelmeister</snm><fnm>HY</fnm></au>
+    <au><snm>Batista</snm><fnm>PJ</fnm></au>
+    <au><snm>Torre</snm><fnm>EA</fnm></au>
+    <au><snm>Kool</snm><fnm>ET</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Nature</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2015</pubdate>
+  <volume>519</volume>
+  <issue>7544</issue>
+  <fpage>486</fpage>
+  <lpage>-490</lpage>
+</bibl>
+
+<bibl id="B8">
+  <title><p>RNA duplex map in living cells reveals higher-order transcriptome
+  structure</p></title>
+  <aug>
+    <au><snm>Lu</snm><fnm>Z</fnm></au>
+    <au><snm>Zhang</snm><fnm>QC</fnm></au>
+    <au><snm>Lee</snm><fnm>B</fnm></au>
+    <au><snm>Flynn</snm><fnm>RA</fnm></au>
+    <au><snm>Smith</snm><fnm>MA</fnm></au>
+    <au><snm>Robinson</snm><fnm>JT</fnm></au>
+    <au><snm>Davidovich</snm><fnm>C</fnm></au>
+    <au><snm>Gooding</snm><fnm>AR</fnm></au>
+    <au><snm>Goodrich</snm><fnm>KJ</fnm></au>
+    <au><snm>Mattick</snm><fnm>JS</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Cell</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>2016</pubdate>
+  <volume>165</volume>
+  <issue>5</issue>
+  <fpage>1267</fpage>
+  <lpage>-1279</lpage>
+</bibl>
+
+<bibl id="B9">
+  <title><p>RNA as a flexible scaffold for proteins: yeast telomerase and
+  beyond</p></title>
+  <aug>
+    <au><snm>Zappulla</snm><fnm>DC</fnm></au>
+    <au><snm>Cech</snm><fnm>TR</fnm></au>
+  </aug>
+  <source>Cold Spring Harbor Symposia on Quantitative Biology</source>
+  <pubdate>2006</pubdate>
+  <volume>71</volume>
+  <fpage>217</fpage>
+  <lpage>-224</lpage>
+</bibl>
+
+<bibl id="B10">
+  <title><p>{Structured non-coding RNAs and the RNP Renaissance}</p></title>
+  <aug>
+    <au><snm>Hogg</snm><fnm>JR</fnm></au>
+    <au><snm>Collins</snm><fnm>K</fnm></au>
+  </aug>
+  <source>Current opinion in chemical biology</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>2008</pubdate>
+  <volume>12</volume>
+  <issue>6</issue>
+  <fpage>684</fpage>
+  <lpage>-689</lpage>
+</bibl>
+
+<bibl id="B11">
+  <title><p>Genome regulation by long noncoding RNAs</p></title>
+  <aug>
+    <au><snm>Rinn</snm><fnm>JL</fnm></au>
+    <au><snm>Chang</snm><fnm>HY</fnm></au>
+  </aug>
+  <source>Annual review of biochemistry</source>
+  <publisher>Annual Reviews</publisher>
+  <pubdate>2012</pubdate>
+  <volume>81</volume>
+  <fpage>145</fpage>
+  <lpage>-166</lpage>
+</bibl>
+
+<bibl id="B12">
+  <title><p>Structure and function of long noncoding RNAs in epigenetic
+  regulation</p></title>
+  <aug>
+    <au><snm>Mercer</snm><fnm>TR</fnm></au>
+    <au><snm>Mattick</snm><fnm>JS</fnm></au>
+  </aug>
+  <source>Nature structural \&amp; molecular biology</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2013</pubdate>
+  <volume>20</volume>
+  <issue>3</issue>
+  <fpage>300</fpage>
+  <lpage>-307</lpage>
+</bibl>
+
+<bibl id="B13">
+  <title><p>Architectural RNAs (arcRNAs): A class of long noncoding RNAs that
+  function as the scaffold of nuclear bodies</p></title>
+  <aug>
+    <au><snm>Chujo</snm><fnm>T</fnm></au>
+    <au><snm>Yamazaki</snm><fnm>T</fnm></au>
+    <au><snm>Hirose</snm><fnm>T</fnm></au>
+  </aug>
+  <source>Biochimica et Biophysica Acta (BBA)-Gene Regulatory
+  Mechanisms</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>2016</pubdate>
+  <volume>1859</volume>
+  <issue>1</issue>
+  <fpage>139</fpage>
+  <lpage>-146</lpage>
+</bibl>
+
+<bibl id="B14">
+  <title><p>The ins and outs of lncRNA structure: How, why and what comes
+  next?</p></title>
+  <aug>
+    <au><snm>Blythe</snm><fnm>AJ</fnm></au>
+    <au><snm>Fox</snm><fnm>AH</fnm></au>
+    <au><snm>Bond</snm><fnm>CS</fnm></au>
+  </aug>
+  <source>Biochimica et Biophysica Acta (BBA)-Gene Regulatory
+  Mechanisms</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>2016</pubdate>
+  <volume>1859</volume>
+  <issue>1</issue>
+  <fpage>46</fpage>
+  <lpage>-58</lpage>
+</bibl>
+
+<bibl id="B15">
+  <title><p>Transposable elements are major contributors to the origin,
+  diversification, and regulation of vertebrate long noncoding RNAs</p></title>
+  <aug>
+    <au><snm>Kapusta</snm><fnm>A</fnm></au>
+    <au><snm>Kronenberg</snm><fnm>Z</fnm></au>
+    <au><snm>Lynch</snm><fnm>VJ</fnm></au>
+    <au><snm>Zhuo</snm><fnm>X</fnm></au>
+    <au><snm>Ramsay</snm><fnm>L</fnm></au>
+    <au><snm>Bourque</snm><fnm>G</fnm></au>
+    <au><snm>Yandell</snm><fnm>M</fnm></au>
+    <au><snm>Feschotte</snm><fnm>C</fnm></au>
+  </aug>
+  <source>PLoS genetics</source>
+  <publisher>Public Library of Science</publisher>
+  <pubdate>2013</pubdate>
+  <volume>9</volume>
+  <issue>4</issue>
+  <fpage>e1003470</fpage>
+</bibl>
+
+<bibl id="B16">
+  <title><p>Principles of long noncoding RNA evolution derived from direct
+  comparison of transcriptomes in 17 species</p></title>
+  <aug>
+    <au><snm>Hezroni</snm><fnm>H</fnm></au>
+    <au><snm>Koppstein</snm><fnm>D</fnm></au>
+    <au><snm>Schwartz</snm><fnm>MG</fnm></au>
+    <au><snm>Avrutin</snm><fnm>A</fnm></au>
+    <au><snm>Bartel</snm><fnm>DP</fnm></au>
+    <au><snm>Ulitsky</snm><fnm>I</fnm></au>
+  </aug>
+  <source>Cell reports</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>2015</pubdate>
+  <volume>11</volume>
+  <issue>7</issue>
+  <fpage>1110</fpage>
+  <lpage>-1122</lpage>
+</bibl>
+
+<bibl id="B17">
+  <title><p>Transposable elements have rewired the core regulatory network of
+  human embryonic stem cells</p></title>
+  <aug>
+    <au><snm>Kunarso</snm><fnm>G</fnm></au>
+    <au><snm>Chia</snm><fnm>NY</fnm></au>
+    <au><snm>Jeyakani</snm><fnm>J</fnm></au>
+    <au><snm>Hwang</snm><fnm>C</fnm></au>
+    <au><snm>Lu</snm><fnm>X</fnm></au>
+    <au><snm>Chan</snm><fnm>YS</fnm></au>
+    <au><snm>Ng</snm><fnm>HH</fnm></au>
+    <au><snm>Bourque</snm><fnm>G</fnm></au>
+  </aug>
+  <source>Nature genetics</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2010</pubdate>
+  <volume>42</volume>
+  <issue>7</issue>
+  <fpage>631</fpage>
+  <lpage>-634</lpage>
+</bibl>
+
+<bibl id="B18">
+  <title><p>Transposable elements reveal a stem cell-specific class of long
+  noncoding RNAs</p></title>
+  <aug>
+    <au><snm>Kelley</snm><fnm>D</fnm></au>
+    <au><snm>Rinn</snm><fnm>J</fnm></au>
+  </aug>
+  <source>Genome biology</source>
+  <publisher>BioMed Central</publisher>
+  <pubdate>2012</pubdate>
+  <volume>13</volume>
+  <issue>11</issue>
+  <fpage>R107</fpage>
+</bibl>
+
+<bibl id="B19">
+  <title><p>{A benchmark of multiple sequence alignment programs upon
+  structural RNAs.}</p></title>
+  <aug>
+    <au><snm>Gardner</snm><fnm>P P</fnm></au>
+    <au><snm>Wilm</snm><fnm>A</fnm></au>
+    <au><snm>Washietl</snm><fnm>S</fnm></au>
+  </aug>
+  <source>Nucleic Acids Res</source>
+  <pubdate>2005</pubdate>
+  <volume>33</volume>
+  <issue>8</issue>
+  <fpage>2433</fpage>
+  <lpage>-2439</lpage>
+</bibl>
+
+<bibl id="B20">
+  <title><p>{Simultaneous solution of the RNA folding, alignment and
+  protosequence problems.}</p></title>
+  <aug>
+    <au><snm>Sankoff</snm><fnm>D</fnm></au>
+  </aug>
+  <source>SIAM J. Appl. Math.</source>
+  <pubdate>1985</pubdate>
+  <volume>45</volume>
+  <fpage>810</fpage>
+  <lpage>-825</lpage>
+</bibl>
+
+<bibl id="B21">
+  <title><p>Fast pairwise structural {RNA} alignments by pruning of the
+  dynamical programming matrix.</p></title>
+  <aug>
+    <au><snm>Havgaard</snm><fnm>J.H.</fnm></au>
+    <au><snm>Torarinsson</snm><fnm>E.</fnm></au>
+    <au><snm>Gorodkin</snm><fnm>J.</fnm></au>
+  </aug>
+  <source>PLoS Comput Biol</source>
+  <pubdate>2007</pubdate>
+  <volume>3</volume>
+  <issue>10</issue>
+  <fpage>1896</fpage>
+  <lpage>1908</lpage>
+</bibl>
+
+<bibl id="B22">
+  <title><p>Foldalign 2.5: multithreaded implementation for pairwise structural
+  {RNA} alignment.</p></title>
+  <aug>
+    <au><snm>Sundfeld</snm><fnm>D.</fnm></au>
+    <au><snm>Havgaard</snm><fnm>J.H.</fnm></au>
+    <au><snm>Melo</snm><fnm>A.C.</fnm></au>
+    <au><snm>Gorodkin</snm><fnm>J.</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2016</pubdate>
+  <volume>32</volume>
+  <issue>8</issue>
+  <fpage>1238</fpage>
+  <lpage>1240</lpage>
+</bibl>
+
+<bibl id="B23">
+  <title><p>{The equilibrium partition function and base pair binding
+  probabilities for RNA secondary structure}</p></title>
+  <aug>
+    <au><snm>McCaskill</snm><fnm>J S</fnm></au>
+  </aug>
+  <source>Biopolymers</source>
+  <pubdate>1990</pubdate>
+  <volume>29</volume>
+  <issue>6-7</issue>
+  <fpage>1105</fpage>
+  <lpage>-1119</lpage>
+</bibl>
+
+<bibl id="B24">
+  <title><p>{Alignment of RNA base pairing probability matrices.}</p></title>
+  <aug>
+    <au><snm>Hofacker</snm><fnm>I L</fnm></au>
+    <au><snm>Bernhart</snm><fnm>S H</fnm></au>
+    <au><snm>Stadler</snm><fnm>P F</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2004</pubdate>
+  <volume>20</volume>
+  <issue>14</issue>
+  <fpage>2222</fpage>
+  <lpage>-2227</lpage>
+</bibl>
+
+<bibl id="B25">
+  <title><p>{Inferring noncoding RNA families and classes by means of
+  genome-scale structure-based clustering.}</p></title>
+  <aug>
+    <au><snm>Will</snm><fnm>S</fnm></au>
+    <au><snm>Reiche</snm><fnm>K</fnm></au>
+    <au><snm>Hofacker</snm><fnm>I L</fnm></au>
+    <au><snm>Stadler</snm><fnm>P F</fnm></au>
+    <au><snm>Backofen</snm><fnm>R</fnm></au>
+  </aug>
+  <source>PLoS Comput Biol</source>
+  <pubdate>2007</pubdate>
+  <volume>3</volume>
+  <issue>4</issue>
+  <fpage>e65</fpage>
+</bibl>
+
+<bibl id="B26">
+  <title><p>Probalign: multiple sequence alignment using partition function
+  posterior probabilities.</p></title>
+  <aug>
+    <au><snm>Roshan</snm><fnm>U.</fnm></au>
+    <au><snm>Livesay</snm><fnm>D.R.</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2006</pubdate>
+  <volume>22</volume>
+  <issue>22</issue>
+  <fpage>2715</fpage>
+  <lpage>2721</lpage>
+</bibl>
+
+<bibl id="B27">
+  <title><p>{ViennaRNA} Package 2.0.</p></title>
+  <aug>
+    <au><snm>Lorenz</snm><fnm>R.</fnm></au>
+    <au><snm>Bernhart</snm><fnm>S.H.</fnm></au>
+    <au><snm>Honer Zu Siederdissen</snm><fnm>C.</fnm></au>
+    <au><snm>Tafer</snm><fnm>H.</fnm></au>
+    <au><snm>Flamm</snm><fnm>C.</fnm></au>
+    <au><snm>Stadler</snm><fnm>P.F.</fnm></au>
+    <au><snm>Hofacker</snm><fnm>I.L.</fnm></au>
+  </aug>
+  <source>Algorithms Mol Biol</source>
+  <pubdate>2011</pubdate>
+  <volume>6</volume>
+  <fpage>26</fpage>
+</bibl>
+
+<bibl id="B28">
+  <title><p>{STRAL}: progressive alignment of non-coding {RNA} using base
+  pairing probability vectors in quadratic time.</p></title>
+  <aug>
+    <au><snm>Dalli</snm><fnm>D.</fnm></au>
+    <au><snm>Wilm</snm><fnm>A.</fnm></au>
+    <au><snm>Mainz</snm><fnm>I.</fnm></au>
+    <au><snm>Steger</snm><fnm>G.</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2006</pubdate>
+  <volume>22</volume>
+  <issue>13</issue>
+  <fpage>1593</fpage>
+  <lpage>1599</lpage>
+</bibl>
+
+<bibl id="B29">
+  <title><p>{A Propagator for Maximum Weight String Alignment with Arbitrary
+  Pairwise Dependencies}</p></title>
+  <aug>
+    <au><snm>Pal\`{u}</snm><fnm>A</fnm></au>
+    <au><snm>M\"{o}hl</snm><fnm>M</fnm></au>
+    <au><snm>Will</snm><fnm>S</fnm></au>
+  </aug>
+  <source>Principles and Practice of Constraint Programming -- CP 2010</source>
+  <editor>Cohen, David</editor>
+  <edition>Lecture No</edition>
+  <pubdate>2010</pubdate>
+  <fpage>167</fpage>
+  <lpage>-175</lpage>
+  <url>http://dx.doi.org/10.1007/978-3-642-15396-9\_16</url>
+</bibl>
+
+<bibl id="B30">
+  <title><p>{CARNA--alignment of RNA structure ensembles.}</p></title>
+  <aug>
+    <au><snm>Sorescu</snm><fnm>DA</fnm></au>
+    <au><snm>M\"{o}hl</snm><fnm>M</fnm></au>
+    <au><snm>Mann</snm><fnm>M</fnm></au>
+    <au><snm>Backofen</snm><fnm>R</fnm></au>
+    <au><snm>Will</snm><fnm>S</fnm></au>
+  </aug>
+  <source>Nucleic acids research</source>
+  <pubdate>2012</pubdate>
+  <volume>40</volume>
+  <issue>Web Server issue</issue>
+  <fpage>W49</fpage>
+  <lpage>-53</lpage>
+  <url>http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=3394245\&tool=pmcentrez\&rendertype=abstract</url>
+</bibl>
+
+<bibl id="B31">
+  <title><p>NoFold: {RNA} structure clustering without folding or
+  alignment.</p></title>
+  <aug>
+    <au><snm>Middleton</snm><fnm>S.A.</fnm></au>
+    <au><snm>Kim</snm><fnm>J.</fnm></au>
+  </aug>
+  <source>RNA</source>
+  <pubdate>2014</pubdate>
+  <volume>20</volume>
+  <issue>11</issue>
+  <fpage>1671</fpage>
+  <lpage>1683</lpage>
+</bibl>
+
+<bibl id="B32">
+  <title><p>{GraphClust: alignment-free structural clustering of local RNA
+  secondary structures.}</p></title>
+  <aug>
+    <au><snm>Heyne</snm><fnm>S</fnm></au>
+    <au><snm>Costa</snm><fnm>F</fnm></au>
+    <au><snm>Rose</snm><fnm>D</fnm></au>
+    <au><snm>Backofen</snm><fnm>R</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2012</pubdate>
+  <volume>28</volume>
+  <issue>12</issue>
+  <fpage>i224</fpage>
+  <lpage>-32</lpage>
+</bibl>
+
+<bibl id="B33">
+  <title><p>{RNAscClust}: clustering {RNA} sequences using structure
+  conservation and graph based motifs.</p></title>
+  <aug>
+    <au><snm>Miladi</snm><fnm>M.</fnm></au>
+    <au><snm>Junge</snm><fnm>A.</fnm></au>
+    <au><snm>Costa</snm><fnm>F.</fnm></au>
+    <au><snm>Seemann</snm><fnm>S.E.</fnm></au>
+    <au><snm>Hull Havgaard</snm><fnm>J.</fnm></au>
+    <au><snm>Gorodkin</snm><fnm>J.</fnm></au>
+    <au><snm>Backofen</snm><fnm>R.</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2017</pubdate>
+</bibl>
+
+<bibl id="B34">
+  <title><p>Stochastic pairwise alignments.</p></title>
+  <aug>
+    <au><snm>Muckstein</snm><fnm>U.</fnm></au>
+    <au><snm>Hofacker</snm><fnm>I.L.</fnm></au>
+    <au><snm>Stadler</snm><fnm>P.F.</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <pubdate>2002</pubdate>
+  <volume>18 Suppl 2</volume>
+  <fpage>S153</fpage>
+  <lpage>60</lpage>
+</bibl>
+
+<bibl id="B35">
+  <title><p>An enhanced RNA alignment benchmark for sequence alignment
+  programs</p></title>
+  <aug>
+    <au><snm>Wilm</snm><fnm>A</fnm></au>
+    <au><snm>Mainz</snm><fnm>I</fnm></au>
+    <au><snm>Steger</snm><fnm>G</fnm></au>
+  </aug>
+  <source>Algorithms for molecular biology</source>
+  <publisher>BioMed Central</publisher>
+  <pubdate>2006</pubdate>
+  <volume>1</volume>
+  <issue>1</issue>
+  <fpage>1</fpage>
+</bibl>
+
+<bibl id="B36">
+  <title><p>Fast pairwise structural RNA alignments by pruning of the dynamical
+  programming matrix</p></title>
+  <aug>
+    <au><snm>Havgaard</snm><fnm>JH</fnm></au>
+    <au><snm>Torarinsson</snm><fnm>E</fnm></au>
+    <au><snm>Gorodkin</snm><fnm>J</fnm></au>
+  </aug>
+  <source>PLoS Comput Biol</source>
+  <publisher>Public Library of Science</publisher>
+  <pubdate>2007</pubdate>
+  <volume>3</volume>
+  <issue>10</issue>
+  <fpage>e193</fpage>
+</bibl>
+
+<bibl id="B37">
+  <title><p>Foldalign 2.5: multithreaded implementation for pairwise structural
+  RNA alignment</p></title>
+  <aug>
+    <au><snm>Sundfeld</snm><fnm>D</fnm></au>
+    <au><snm>Havgaard</snm><fnm>JH</fnm></au>
+    <au><snm>Melo</snm><fnm>AC</fnm></au>
+    <au><snm>Gorodkin</snm><fnm>J</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <publisher>Oxford Univ Press</publisher>
+  <pubdate>2015</pubdate>
+  <fpage>btv748</fpage>
+</bibl>
+
+<bibl id="B38">
+  <title><p>{Fast and reliable prediction of noncoding RNAs}</p></title>
+  <aug>
+    <au><snm>Washietl</snm><fnm>S</fnm></au>
+    <au><snm>Hofacker</snm><fnm>IL</fnm></au>
+    <au><snm>Stadler</snm><fnm>PF</fnm></au>
+  </aug>
+  <source>Proceedings of the National Academy of Sciences of the United States
+  of America</source>
+  <publisher>National Acad Sciences</publisher>
+  <pubdate>2005</pubdate>
+  <volume>102</volume>
+  <issue>7</issue>
+  <fpage>2454</fpage>
+  <lpage>-2459</lpage>
+</bibl>
+
+<bibl id="B39">
+  <title><p>Strategies for measuring evolutionary conservation of RNA secondary
+  structures</p></title>
+  <aug>
+    <au><snm>Gruber</snm><fnm>AR</fnm></au>
+    <au><snm>Bernhart</snm><fnm>SH</fnm></au>
+    <au><snm>Hofacker</snm><fnm>IL</fnm></au>
+    <au><snm>Washietl</snm><fnm>S</fnm></au>
+  </aug>
+  <source>BMC bioinformatics</source>
+  <publisher>BioMed Central Ltd</publisher>
+  <pubdate>2008</pubdate>
+  <volume>9</volume>
+  <issue>1</issue>
+  <fpage>122</fpage>
+</bibl>
+
+<bibl id="B40">
+  <title><p>Pvclust: an R package for assessing the uncertainty in hierarchical
+  clustering</p></title>
+  <aug>
+    <au><snm>Suzuki</snm><fnm>R</fnm></au>
+    <au><snm>Shimodaira</snm><fnm>H</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <publisher>Oxford Univ Press</publisher>
+  <pubdate>2006</pubdate>
+  <volume>22</volume>
+  <issue>12</issue>
+  <fpage>1540</fpage>
+  <lpage>-1542</lpage>
+</bibl>
+
+<bibl id="B41">
+  <title><p>Ordering points to identify the clustering structure</p></title>
+  <aug>
+    <au><snm>Ankerst</snm><fnm>M</fnm></au>
+    <au><snm>Breunig</snm><fnm>M</fnm></au>
+    <au><snm>Kriegel</snm><fnm>HP</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Proc. ACM SIGMOD</source>
+  <pubdate>1999</pubdate>
+  <volume>99</volume>
+</bibl>
+
+<bibl id="B42">
+  <title><p>A density-based algorithm for discovering clusters in large spatial
+  databases with noise.</p></title>
+  <aug>
+    <au><snm>Ester</snm><fnm>M</fnm></au>
+    <au><snm>Kriegel</snm><fnm>HP</fnm></au>
+    <au><snm>Sander</snm><fnm>J</fnm></au>
+    <au><snm>Xu</snm><fnm>X</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Kdd</source>
+  <pubdate>1996</pubdate>
+  <volume>96</volume>
+  <issue>34</issue>
+  <fpage>226</fpage>
+  <lpage>-231</lpage>
+</bibl>
+
+<bibl id="B43">
+  <title><p>Robust transcriptome-wide discovery of RNA-binding protein binding
+  sites with enhanced CLIP (eCLIP)</p></title>
+  <aug>
+    <au><snm>Van Nostrand</snm><fnm>EL</fnm></au>
+    <au><snm>Pratt</snm><fnm>GA</fnm></au>
+    <au><snm>Shishkin</snm><fnm>AA</fnm></au>
+    <au><snm>Gelboin Burkhart</snm><fnm>C</fnm></au>
+    <au><snm>Fang</snm><fnm>MY</fnm></au>
+    <au><snm>Sundararaman</snm><fnm>B</fnm></au>
+    <au><snm>Blue</snm><fnm>SM</fnm></au>
+    <au><snm>Nguyen</snm><fnm>TB</fnm></au>
+    <au><snm>Surka</snm><fnm>C</fnm></au>
+    <au><snm>Elkins</snm><fnm>K</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Nature methods</source>
+  <publisher>Nature Publishing Group</publisher>
+  <pubdate>2016</pubdate>
+  <volume>13</volume>
+  <issue>6</issue>
+  <fpage>508</fpage>
+  <lpage>-514</lpage>
+</bibl>
+
+<bibl id="B44">
+  <title><p>The landscape of long noncoding RNAs in the human
+  transcriptome</p></title>
+  <aug>
+    <au><snm>Iyer</snm><fnm>MK</fnm></au>
+    <au><snm>Niknafs</snm><fnm>YS</fnm></au>
+    <au><snm>Malik</snm><fnm>R</fnm></au>
+    <au><snm>Singhal</snm><fnm>U</fnm></au>
+    <au><snm>Sahu</snm><fnm>A</fnm></au>
+    <au><snm>Hosono</snm><fnm>Y</fnm></au>
+    <au><snm>Barrette</snm><fnm>TR</fnm></au>
+    <au><snm>Prensner</snm><fnm>JR</fnm></au>
+    <au><snm>Evans</snm><fnm>JR</fnm></au>
+    <au><snm>Zhao</snm><fnm>S</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Nature genetics</source>
+  <publisher>Nature Research</publisher>
+  <pubdate>2015</pubdate>
+  <volume>47</volume>
+  <issue>3</issue>
+  <fpage>199</fpage>
+  <lpage>-208</lpage>
+</bibl>
+
+<bibl id="B45">
+  <title><p>LncRNAs transactivate Staufen1-mediated mRNA decay by duplexing
+  with 3'UTRs via Alu elements</p></title>
+  <aug>
+    <au><snm>Gong</snm><fnm>C</fnm></au>
+    <au><snm>Maquat</snm><fnm>LE</fnm></au>
+  </aug>
+  <source>Nature</source>
+  <publisher>NIH Public Access</publisher>
+  <pubdate>2011</pubdate>
+  <volume>470</volume>
+  <issue>7333</issue>
+  <fpage>284</fpage>
+</bibl>
+
+<bibl id="B46">
+  <title><p>The identification and functional annotation of RNA structures
+  conserved in vertebrates</p></title>
+  <aug>
+    <au><snm>Seemann</snm><fnm>SE</fnm></au>
+    <au><snm>Mirza</snm><fnm>AH</fnm></au>
+    <au><snm>Hansen</snm><fnm>C</fnm></au>
+    <au><snm>Bang Berthelsen</snm><fnm>CH</fnm></au>
+    <au><snm>Garde</snm><fnm>C</fnm></au>
+    <au><snm>Christensen Dalsgaard</snm><fnm>M</fnm></au>
+    <au><snm>Torarinsson</snm><fnm>E</fnm></au>
+    <au><snm>Yao</snm><fnm>Z</fnm></au>
+    <au><snm>Workman</snm><fnm>CT</fnm></au>
+    <au><snm>Pociot</snm><fnm>F</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>Genome Research</source>
+  <publisher>Cold Spring Harbor Lab</publisher>
+  <pubdate>2017</pubdate>
+  <fpage>gr</fpage>
+  <lpage>-208652</lpage>
+</bibl>
+
+<bibl id="B47">
+  <title><p>LocARNA-P: accurate boundary prediction and improved detection of
+  structural RNAs</p></title>
+  <aug>
+    <au><snm>Will</snm><fnm>S</fnm></au>
+    <au><snm>Joshi</snm><fnm>T</fnm></au>
+    <au><snm>Hofacker</snm><fnm>IL</fnm></au>
+    <au><snm>Stadler</snm><fnm>PF</fnm></au>
+    <au><snm>Backofen</snm><fnm>R</fnm></au>
+  </aug>
+  <source>Rna</source>
+  <publisher>Cold Spring Harbor Lab</publisher>
+  <pubdate>2012</pubdate>
+  <volume>18</volume>
+  <issue>5</issue>
+  <fpage>900</fpage>
+  <lpage>-914</lpage>
+</bibl>
+
+<bibl id="B48">
+  <title><p>pROC: an open-source package for R and S+ to analyze and compare
+  ROC curves</p></title>
+  <aug>
+    <au><snm>Robin</snm><fnm>X</fnm></au>
+    <au><snm>Turck</snm><fnm>N</fnm></au>
+    <au><snm>Hainard</snm><fnm>A</fnm></au>
+    <au><snm>Tiberti</snm><fnm>N</fnm></au>
+    <au><snm>Lisacek</snm><fnm>F</fnm></au>
+    <au><snm>Sanchez</snm><fnm>JC</fnm></au>
+    <au><snm>M{\"u}ller</snm><fnm>M</fnm></au>
+  </aug>
+  <source>BMC bioinformatics</source>
+  <publisher>BioMed Central</publisher>
+  <pubdate>2011</pubdate>
+  <volume>12</volume>
+  <issue>1</issue>
+  <fpage>1</fpage>
+</bibl>
+
+<bibl id="B49">
+  <title><p>Infernal 1.1: 100-fold faster RNA homology searches</p></title>
+  <aug>
+    <au><snm>Nawrocki</snm><fnm>EP</fnm></au>
+    <au><snm>Eddy</snm><fnm>SR</fnm></au>
+  </aug>
+  <source>Bioinformatics</source>
+  <publisher>Oxford Univ Press</publisher>
+  <pubdate>2013</pubdate>
+  <volume>29</volume>
+  <issue>22</issue>
+  <fpage>2933</fpage>
+  <lpage>-2935</lpage>
+</bibl>
+
+<bibl id="B50">
+  <title><p>An improved algorithm for matching biological
+  sequences.</p></title>
+  <aug>
+    <au><snm>Gotoh</snm><fnm>O.</fnm></au>
+  </aug>
+  <source>J Mol Biol</source>
+  <pubdate>1982</pubdate>
+  <volume>162</volume>
+  <issue>3</issue>
+  <fpage>705</fpage>
+  <lpage>708</lpage>
+</bibl>
+
+<bibl id="B51">
+  <title><p>{RSEARCH}: finding homologs of single structured {RNA}
+  sequences.</p></title>
+  <aug>
+    <au><snm>Klein</snm><fnm>R.J.</fnm></au>
+    <au><snm>Eddy</snm><fnm>S.R.</fnm></au>
+  </aug>
+  <source>BMC Bioinformatics</source>
+  <pubdate>2003</pubdate>
+  <volume>4</volume>
+  <fpage>44</fpage>
+</bibl>
+
+<bibl id="B52">
+  <title><p>RepeatModeler Open-1.0</p></title>
+  <aug>
+    <au><snm>Smit</snm><fnm>AFA</fnm></au>
+    <au><snm>Hubley</snm><fnm>R</fnm></au>
+  </aug>
+  <source>Repeat Masker Website</source>
+  <pubdate>2010</pubdate>
+</bibl>
+
+</refgrp>
+} % end of \BMCxmlcomment
