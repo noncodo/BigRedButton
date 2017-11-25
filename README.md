@@ -1,4 +1,3 @@
-[![DOI](https://zenodo.org/badge/89537637.svg)](https://zenodo.org/badge/latestdoi/89537637)
 # BigRedButton
 An all-inclusive pipeline (with associated tools and controls) to identify clusters of homologous RNA structure motifs from sequence data. It can identify clusters of homologous RNA structure motifs from a set of user-provided sequences, such as RIPseq, CLIPseq, RNAse footprinting, etc. BigRedButton can identify known (and novel) RNA structures with good accuracy, as detailed in the paper. 
 
