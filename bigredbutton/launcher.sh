@@ -228,6 +228,8 @@ awk 'OFS="\t"{ print $1,$2,$3,$4,1-$5 }'  scores_normalized.tsv \
     > dist.tsv
 >&2 echo -e "[ \x1B[92mDONE\x1B[39m ]"
 
+# get unique IDs; can make this prettier by stripping 
+cut -f 3 dist.tsv | uniq > ids.txt 
 
 ################################################################
 #                PREPARE CLUSTER ANALYSIS 
